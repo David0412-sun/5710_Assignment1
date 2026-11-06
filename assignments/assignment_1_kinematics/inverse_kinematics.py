@@ -1,5 +1,14 @@
-"""Student gradient-descent IK template: complete TODOs 1-3 after the FK TODOs."""
+"""Finite-difference, fixed-step inverse kinematics and trajectory comparison.
+
+Run normally for the MuJoCo viewer, or pass ``--headless`` for the same
+numerical comparison without a display. All poses are expressed in the base
+frame, translations in metres, and angles in radians.
+"""
+import argparse
+from contextlib import nullcontext
+import json
 import os
+from pathlib import Path
 import sys
 import time
 
@@ -25,10 +34,12 @@ def objective(q, target, dh_table, signs, T_base_0):
     """
     position_scale = 10.0  # Inverse metres; scales position relative to rotation.
 
-    # TODO 1: Predict the site pose with forward_kinematics(). Compute the
-    # position error and the orientation error as a rotation vector.
-    # Return sum((position_error * position_scale)**2) + sum(rotation_error**2).
-    raise NotImplementedError("IK TODO 1: pose-error objective")
+    predicted = forward_kinematics(q, dh_table, signs, T_base_0)
+    position_error = target[:3, 3] - predicted[:3, 3]
+    rotation_error = Rotation.from_matrix(
+        target[:3, :3] @ predicted[:3, :3].T).as_rotvec()
+    return float(np.sum((position_scale * position_error)**2)
+                 + np.sum(rotation_error**2))
 
 
 def inverse_kinematics(target, part, env, max_iterations=5000, alpha=0.1):
@@ -60,15 +71,15 @@ def inverse_kinematics(target, part, env, max_iterations=5000, alpha=0.1):
         # 3b. Perturb one joint at a time to estimate d(cost)/d(q_i).
         gradient = np.zeros(len(q))
         for i in range(len(q)):
-            # TODO 2: Copy q into q_plus and q_minus. Change only joint i by
-            # +h and -h, evaluate both costs, and store their central difference
-            # (cost_plus - cost_minus) / (2 * h) in gradient[i].
-            raise NotImplementedError("IK TODO 2: finite-difference gradient")
+            q_plus, q_minus = q.copy(), q.copy()
+            q_plus[i] += h
+            q_minus[i] -= h
+            cost_plus = objective(q_plus, target, dh_table, signs, T_base_0)
+            cost_minus = objective(q_minus, target, dh_table, signs, T_base_0)
+            gradient[i] = (cost_plus - cost_minus) / (2 * h)
 
         # 3c. Take a fixed-size gradient step and enforce the joint limits.
-        # TODO 3: Update q using q - alpha * gradient. Clip each joint between
-        # its lower limit limits[:, 0] and upper limit limits[:, 1].
-        raise NotImplementedError("IK TODO 3: bounded gradient-descent update")
+        q = np.clip(q - alpha * gradient, limits[:, 0], limits[:, 1])
         cost = objective(q, target, dh_table, signs, T_base_0)
 
     # 4. Write the solved angles once and update MuJoCo's kinematics.
@@ -115,8 +126,17 @@ def head_trajectory(start, phase):
     return target
 
 
-def run(parts, cycles=5):
-    """Repeat the selected trajectories with the base fixed."""
+def run(parts, cycles=5, samples=101, headless=False):
+    """Repeat the supplied trajectories and return measured MuJoCo errors.
+
+    Headless mode removes only rendering and its delay: the initial poses,
+    trajectories, IK solver and number of targets are identical.
+    """
+    if cycles < 1 or samples < 2:
+        raise ValueError("cycles must be positive and samples must be at least 2")
+    parts = tuple(parts)
+    if not parts or any(part not in ("left", "right", "head") for part in parts):
+        raise ValueError("parts must contain left, right, or head")
     env = MJInferBase(FLAT_TERRAIN_XML)
     # Keep the soles above the floor for the bent-leg starting configuration.
     base_pose = env.get_floating_base_qpos(env.data.qpos).copy()
@@ -128,9 +148,9 @@ def run(parts, cycles=5):
         "head": [0.2, -0.4, 0, 0],
     }
     trajectories = {"left": left_foot_trajectory,
-                    "right": right_foot_trajectory, 
+                    "right": right_foot_trajectory,
                     "head": head_trajectory}
-    
+
     angles = env.get_actuator_joints_qpos(env.data.qpos)
     for part in parts:
         indices = [env.actuator_names.index(name) for name in joint_names(part)]
@@ -140,27 +160,85 @@ def run(parts, cycles=5):
 
     starts = {part: site_pose(env, part) for part in parts}
     max_errors = {part: np.zeros(2) for part in parts}
+    measurements = []
+    cycles_completed = 0
+    interrupted = False
+    started = time.perf_counter()
 
-    with mujoco.viewer.launch_passive(env.model, env.data) as viewer:
-        viewer.cam.lookat[:] = [0, 0, 0.25]
-        viewer.cam.distance = 0.85
+    viewer_context = (nullcontext(None) if headless else
+                      mujoco.viewer.launch_passive(env.model, env.data))
+    with viewer_context as viewer:
+        if viewer is not None:
+            viewer.cam.lookat[:] = [0, 0, 0.25]
+            viewer.cam.distance = 0.85
         for cycle in range(cycles):
-            for phase in np.linspace(0, 1, 101):
-                if not viewer.is_running():
-                    return
-                with viewer.lock():
+            for phase in np.linspace(0, 1, samples):
+                if viewer is not None and not viewer.is_running():
+                    interrupted = True
+                    break
+                with (viewer.lock() if viewer is not None else nullcontext()):
                     for part in parts:
                         target = trajectories[part](starts[part], phase)
                         errors = inverse_kinematics(target, part, env)
                         max_errors[part] = np.maximum(max_errors[part], errors)
-                viewer.sync()
-                time.sleep(0.03)
+                        measurements.append({
+                            "chain": part, "cycle": cycle + 1,
+                            "phase": float(phase),
+                            "position_error_m": float(errors[0]),
+                            "orientation_error_rad": float(errors[1]),
+                        })
+                if viewer is not None:
+                    viewer.sync()
+                    time.sleep(0.03)
+            if interrupted:
+                break
+            cycles_completed += 1
+            print(f"Completed cycle {cycles_completed}/{cycles}", flush=True)
 
+    results = {}
     for part in parts:
         position_error, orientation_error = max_errors[part]
-        print(f"{part}: {cycles} cycles, max position={position_error * 1000:.6f} mm, "
+        passed = bool(np.all(np.isfinite(max_errors[part]))
+                      and position_error < 1e-5 and orientation_error < 1e-4)
+        results[part] = {
+            "max_position_error_m": float(position_error),
+            "max_orientation_error_rad": float(orientation_error),
+            "passed": passed,
+        }
+        print(f"{part}: {cycles_completed} cycles, "
+              f"max position={position_error * 1000:.6f} mm, "
               f"max orientation={orientation_error:.3e} rad")
+    complete = not interrupted and cycles_completed == cycles
+    passed = complete and all(result["passed"] for result in results.values())
+    print("PASS" if passed else "FAIL (incomplete run or target tolerances exceeded)")
+    return {
+        "cycles_requested": cycles, "cycles_completed": cycles_completed,
+        "samples_per_cycle": samples, "headless": headless,
+        "completed": complete, "passed": passed,
+        "position_tolerance_m": 1e-5, "orientation_tolerance_rad": 1e-4,
+        "elapsed_seconds": time.perf_counter() - started,
+        "chains": results, "measurements": measurements,
+    }
 
 
 if __name__ == "__main__":
-    run(("left", "right", "head"))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--headless", action="store_true",
+                        help="run the same trajectories without a graphical viewer")
+    parser.add_argument("--cycles", type=int, default=5)
+    parser.add_argument("--samples", type=int, default=101,
+                        help="target phases per cycle, including both endpoints")
+    parser.add_argument("--parts", nargs="+", choices=("left", "right", "head"),
+                        default=("left", "right", "head"))
+    parser.add_argument("--output-json", type=Path,
+                        help="save all measured errors and the comparison summary")
+    args = parser.parse_args()
+    if args.cycles < 1 or args.samples < 2:
+        parser.error("--cycles must be positive and --samples must be at least 2")
+    summary = run(args.parts, cycles=args.cycles, samples=args.samples,
+                  headless=args.headless)
+    if args.output_json is not None:
+        args.output_json.parent.mkdir(parents=True, exist_ok=True)
+        args.output_json.write_text(json.dumps(summary, indent=2) + "\n",
+                                    encoding="utf-8")
+    raise SystemExit(0 if summary["passed"] else 1)

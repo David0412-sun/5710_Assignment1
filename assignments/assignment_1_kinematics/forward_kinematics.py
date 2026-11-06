@@ -1,5 +1,8 @@
-"""Student FK template: complete TODOs 1-7, then run this file to check each site."""
+"""Modified D-H forward kinematics and MuJoCo site-pose verification."""
+import argparse
+import json
 import os
+from pathlib import Path
 import sys
 
 import numpy as np
@@ -56,8 +59,10 @@ def forward_kinematics_transforms(q, dh_table, signs, T_base_0):
     for i, (alpha, a, theta_offset, d) in enumerate(dh_table):
         theta = signs[i] * q[i] + theta_offset if i < len(q) else theta_offset
 
-        # TODO 1: Form A_i = Rx(alpha) Tx(a) Rz(theta) Tz(d).
-        # Update T = T @ A_i and append the resulting T_base_i to T_list.
+        A_i = (rotation_matrix_x(alpha) @ translation_matrix_x(a)
+               @ rotation_matrix_z(theta) @ translation_matrix_z(d))
+        T = T @ A_i
+        T_list.append(T.copy())
 
     return T_list
 
@@ -67,15 +72,26 @@ def right_leg_parameters():
     """
     beta = np.arctan2(19, 35)
 
-    # T_base_0 is the transform from the base frame to the frame 0, which needs to be defined in the DH table. 
-    # z_0 is the axis of the base frame, and z_1 is the axis of the first joint.
-    # The angle beta can be deined in different ways, you can modify it as you wish, but it should be consistent with the DH table.
+    # Frame 0's x axis points from the base to the right yaw axis.
     T_base_0 = rotation_matrix_z(-np.pi / 2 - beta)
 
-    # TODO 2: Define dh_table with five joint rows and one fixed site row.
-    # Each row is [alpha, a, theta_offset, d] in radians and metres.
-
-    # TODO 3: Define five signs (+1 or -1) so DH theta follows MuJoCo q.
+    # Dimensions from Figure 2, converted from millimetres to metres.
+    radius = np.hypot(19.0, 35.0) / 1000
+    d4, d5, d6 = np.array([0.0741, -16.060, 74.150]) / 1000
+    d7, d8 = np.array([78.650, 78.650]) / 1000
+    d9x, d9y, d9z = np.array([0.500, 17.350, 36.225]) / 1000
+    # Choose the pitch axes along +Y in the zero pose. Parallel-axis axial
+    # offsets are absorbed into d9y; the final row aligns the foot site.
+    # Rows are [alpha_previous, a_previous, theta_offset, d].
+    dh_table = np.array([
+        [0,         radius, np.pi + beta, -d4],
+        [np.pi / 2, 0,      np.pi / 2,     d5],
+        [np.pi / 2, 0,      np.pi,        -d6],
+        [0,         d7,     0,              0],
+        [0,         d8,    -np.pi / 2,   d9y],
+        [np.pi / 2, d9x,    0,          -d9z],
+    ])
+    signs = np.array([1, -1, 1, -1, -1])
 
     return dh_table, signs, T_base_0
 
@@ -87,10 +103,21 @@ def left_leg_parameters():
 
     T_base_0 = rotation_matrix_z(np.pi / 2 + beta)
 
-    # TODO 4: Define dh_table with five joint rows and one fixed site row.
-    # Each row is [alpha, a, theta_offset, d] in radians and metres.
-
-    # TODO 5: Define five signs (+1 or -1) so DH theta follows MuJoCo q.
+    radius = np.hypot(19.0, 35.0) / 1000
+    d4, d5, d6 = np.array([0.0741, -16.060, 74.150]) / 1000
+    d7, d8 = np.array([78.650, 78.650]) / 1000
+    d9x, d9y, d9z = np.array([0.500, 19.750, 36.225]) / 1000
+    # The yaw/roll and roll/pitch axes intersect. Locate their DH origins
+    # at those intersections rather than at the CAD bodies' origins.
+    dh_table = np.array([
+        [0,         radius, -beta,       -d4],
+        [np.pi / 2, 0,       np.pi / 2,    d5],
+        [np.pi / 2, 0,       np.pi,        d6],
+        [0,         d7,      0,            0],
+        [0,         d8,     -np.pi / 2, -d9y],
+        [np.pi / 2, d9x,     0,        -d9z],
+    ])
+    signs = np.array([1, -1, -1, -1, -1])
 
     return dh_table, signs, T_base_0
 
@@ -101,10 +128,18 @@ def head_parameters():
     T_base_0 = np.eye(4)
     T_base_0[:3, 3] = np.array([1, 19.15, 90.0009]) / 1000
 
-    # TODO 6: Define dh_table with four joint rows and one fixed site row.
-    # Each row is [alpha, a, theta_offset, d] in radians and metres.
-
-    # TODO 7: Define four signs (+1 or -1) so DH theta follows MuJoCo q.
+    # Figure 4's d1 is the length of the base-to-neck vector already in
+    # T_base_0; adding it again would count the neck-anchor offset twice.
+    d2, d3, d4, d5, d6 = np.array(
+        [66.000, 19.050, 37.850, 5.000, 42.450]) / 1000
+    dh_table = np.array([
+        [ np.pi / 2, 0,  np.pi / 2,     0],
+        [ 0,         d2, -np.pi / 2,   d3],
+        [-np.pi / 2, 0,  np.pi / 2,    d4],
+        [-np.pi / 2, 0,  0,          -d5],
+        [ np.pi / 2, 0, -np.pi / 2,    d6],
+    ])
+    signs = np.array([1, 1, 1, 1])
 
     return dh_table, signs, T_base_0
 
@@ -149,11 +184,11 @@ def site_pose(env, part):
     pose[:3, :3] = R @ data.site_xmat[site_id].reshape(3, 3)
     return pose
 
-def validate(part="right"):
+def validate(part="right", report=None):
     """Compare FK with MuJoCo at 100 seeded random joint configurations.
 
     Return True when both site position and orientation errors pass.
-    Run this file directly to check all three chains after TODOs 1-7.
+    Run this file directly to check all three chains.
     """
     import mujoco
     from scipy.spatial.transform import Rotation
@@ -199,10 +234,34 @@ def validate(part="right"):
     passed = bool(np.all(np.isfinite(errors)) and max(errors) < 1e-6
                   and np.all(np.isfinite(orientation_errors))
                   and max(orientation_errors) < 1e-5)
+    if report is not None:
+        report[part] = {
+            "samples": 100, "seed": 0,
+            "max_position_error_m": float(max(errors)),
+            "max_orientation_error_rad": float(max(orientation_errors)),
+            "passed": passed,
+            "measurements": [
+                {"joint_angles_rad": q.tolist(),
+                 "position_error_m": float(position),
+                 "orientation_error_rad": float(orientation)}
+                for q, position, orientation in zip(random_q, errors, orientation_errors)
+            ],
+        }
     print("PASS" if passed else "FAIL (position <0.001 mm, orientation <1e-5 rad)")
     return passed
 
 
 if __name__ == "__main__":
-    results = [validate(part) for part in ("left", "right", "head")]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-json", type=Path,
+                        help="save seeded configurations and MuJoCo comparison errors")
+    args = parser.parse_args()
+    report = {}
+    results = [validate(part, report) for part in ("left", "right", "head")]
+    if args.output_json is not None:
+        args.output_json.parent.mkdir(parents=True, exist_ok=True)
+        args.output_json.write_text(json.dumps({
+            "passed": all(results), "position_tolerance_m": 1e-6,
+            "orientation_tolerance_rad": 1e-5, "chains": report,
+        }, indent=2) + "\n", encoding="utf-8")
     raise SystemExit(0 if all(results) else 1)

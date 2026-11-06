@@ -1,0 +1,5 @@
+# Minimal, reproducible environment for the kinematics assignment (Python 3.11).
+numpy==1.26.4
+scipy==1.14.1
+mujoco==3.2.4
+etils[epath]==1.13.0

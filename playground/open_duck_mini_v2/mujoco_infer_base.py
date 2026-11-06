@@ -1,15 +1,13 @@
 import mujoco
 import numpy as np
-from etils import epath
-from playground.open_duck_mini_v2 import base
 
 
 class MJInferBase:
     def __init__(self, model_path):
 
-        self.model = mujoco.MjModel.from_xml_string(
-            epath.Path(model_path).read_text(), assets=base.get_assets()
-        )
+        # MuJoCo resolves includes and mesh paths relative to the XML file.
+        # Classical kinematics does not require the JAX/MJX training environment.
+        self.model = mujoco.MjModel.from_xml_path(str(model_path))
         print(model_path)
 
         self.sim_dt = 0.002

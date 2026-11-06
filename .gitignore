@@ -9,6 +9,8 @@ checkpoints/
 .tmp/
 *.onnx
 *.TXT
+!assignments/assignment_1_kinematics/requirements.txt
+!assignments/assignment_1_kinematics/requirements-report.txt
 
 # Local system, editor, and environment files
 .DS_Store
