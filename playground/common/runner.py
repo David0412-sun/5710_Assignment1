@@ -83,10 +83,16 @@ class BaseRunner(ABC):
             output_path=onnx_export_path
         )
 
-    def train(self) -> None:
-        self.ppo_params = locomotion_params.brax_ppo_config(
+    def get_ppo_config(self):
+        return locomotion_params.brax_ppo_config(
             "BerkeleyHumanoidJoystickFlatTerrain"
         )  # TODO
+
+    def get_training_wrapper(self):
+        return wrapper.wrap_for_brax_training
+
+    def train(self) -> None:
+        self.ppo_params = self.get_ppo_config()
         self.ppo_training_params = dict(self.ppo_params)
         # self.ppo_training_params["num_timesteps"] = 150000000 * 20
         
@@ -114,5 +120,5 @@ class BaseRunner(ABC):
         _, params, _ = train_fn(
             environment=self.env,
             eval_env=self.eval_env,
-            wrap_env_fn=wrapper.wrap_for_brax_training,
+            wrap_env_fn=self.get_training_wrapper(),
         )

@@ -112,7 +112,7 @@ class OpenDuckMiniV2Env(mjx_env.MjxEnv):
         # self.all_joint_no_backlash_ids=jp.zeros(7+self._mj_model.nu)
         # all_idx=self.actuator_joint_ids+list(range(self._floating_base_qpos_addr,self._floating_base_qpos_addr+7))
         # all_idx=jp.array(all_idx).sort()
-        all_idx=self.actuator_joint_ids+list([self.get_joint_id_from_name("trunk_assembly_freejoint")])
+        all_idx=self.actuator_joint_ids+[self.get_joint_id_from_name(self.floating_base_name)]
         all_idx=jp.array(all_idx).sort()
         # self.all_joint_no_backlash_ids=[idx for idx in self.all_joint_ids if idx not in self.backlash_joint_ids]+list(range(self._floating_base_add,self._floating_base_add+7))
         self.all_joint_no_backlash_ids=[idx for idx in all_idx]
@@ -132,6 +132,12 @@ class OpenDuckMiniV2Env(mjx_env.MjxEnv):
         print(f"floating qpos addr: {self._floating_base_qpos_addr} qvel addr: {self._floating_base_qvel_addr}")
 
 
+
+    def init_data(self, qpos, qvel, ctrl):
+        if hasattr(mjx_env, "init"):
+            return mjx_env.init(self.mjx_model, qpos=qpos, qvel=qvel, ctrl=ctrl)
+        data = mjx_env.make_data(self.mj_model, qpos=qpos, qvel=qvel, ctrl=ctrl)
+        return mjx.forward(self.mjx_model, data)
 
     def get_actuator_id_from_name(self, name: str) -> int:
         """Return the id of a specified actuator"""

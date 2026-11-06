@@ -9,3 +9,11 @@ checkpoints/
 .tmp/
 *.onnx
 *.TXT
+
+# Local system, editor, and environment files
+.DS_Store
+._*
+.vscode/
+.venv/
+.env
+.env.*

@@ -24,7 +24,7 @@ from mujoco.mjx._src import math
 import numpy as np
 
 from mujoco_playground._src import mjx_env
-from mujoco_playground._src.collision import geoms_colliding
+from playground.common.collision import geoms_colliding
 
 from . import constants
 from . import base as open_duck_mini_v2_base
@@ -110,9 +110,10 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
         task: str = "flat_terrain",
         config: config_dict.ConfigDict = default_config(),
         config_overrides: Optional[Dict[str, Union[str, int, list[Any]]]] = None,
+        xml_path: Optional[str] = None,
     ):
         super().__init__(
-            xml_path=constants.task_to_xml(task).as_posix(),
+            xml_path=xml_path or constants.task_to_xml(task).as_posix(),
             config=config,
             config_overrides=config_overrides,
         )
@@ -180,23 +181,16 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
             )
         self._foot_linvel_sensor_adr = jp.array(foot_linvel_sensor_adr)
 
-        # # noise in the simu?
+        # Build the noise vector in the same order as the MuJoCo actuators.
+        # Head actuators have no configured joint-position noise, so they stay zero.
         qpos_noise_scale = np.zeros(self._actuators)
-
-        hip_ids = [
-            idx for idx, j in enumerate(constants.JOINTS_ORDER_NO_HEAD) if "_hip" in j
-        ]
-        knee_ids = [
-            idx for idx, j in enumerate(constants.JOINTS_ORDER_NO_HEAD) if "_knee" in j
-        ]
-        ankle_ids = [
-            idx for idx, j in enumerate(constants.JOINTS_ORDER_NO_HEAD) if "_ankle" in j
-        ]
-
-        qpos_noise_scale[hip_ids] = self._config.noise_config.scales.hip_pos
-        qpos_noise_scale[knee_ids] = self._config.noise_config.scales.knee_pos
-        qpos_noise_scale[ankle_ids] = self._config.noise_config.scales.ankle_pos
-        # qpos_noise_scale[faa_ids] = self._config.noise_config.scales.faa_pos
+        for idx, actuator_name in enumerate(self.actuator_names):
+            if "_hip" in actuator_name:
+                qpos_noise_scale[idx] = self._config.noise_config.scales.hip_pos
+            elif "_knee" in actuator_name:
+                qpos_noise_scale[idx] = self._config.noise_config.scales.knee_pos
+            elif "_ankle" in actuator_name:
+                qpos_noise_scale[idx] = self._config.noise_config.scales.ankle_pos
         self._qpos_noise_scale = jp.array(qpos_noise_scale)
 
         # self.action_filter = LowPassActionFilter(
@@ -255,7 +249,7 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
         # print(f'DEBUG3 base qvel: {qvel}')
         ctrl = self.get_actuator_joints_qpos(qpos)
         # print(f'DEBUG4 ctrl: {ctrl}')
-        data = mjx_env.init(self.mjx_model, qpos=qpos, qvel=qvel, ctrl=ctrl)
+        data = self.init_data(qpos=qpos, qvel=qvel, ctrl=ctrl)
         rng, cmd_rng = jax.random.split(rng)
         cmd = self.sample_command(cmd_rng)
 
@@ -310,12 +304,7 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
                     metrics[f"cost/{k}"] = jp.zeros(())
         metrics["swing_peak"] = jp.zeros(())
 
-        contact = jp.array(
-            [
-                geoms_colliding(data, geom_id, self._floor_geom_id)
-                for geom_id in self._feet_geom_id
-            ]
-        )
+        contact = self._get_contacts(data)
         obs = self._get_obs(data, info, contact)
         reward, done = jp.zeros(2)
         return mjx_env.State(data, obs, reward, done, metrics, info)
@@ -421,12 +410,7 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
 
         state.info["motor_targets"] = motor_targets
 
-        contact = jp.array(
-            [
-                geoms_colliding(data, geom_id, self._floor_geom_id)
-                for geom_id in self._feet_geom_id
-            ]
-        )
+        contact = self._get_contacts(data)
         contact_filt = contact | state.info["last_contact"]
         first_contact = (state.info["feet_air_time"] > 0.0) * contact_filt
         state.info["feet_air_time"] += self.dt
@@ -480,6 +464,12 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
         state = state.replace(data=data, obs=obs, reward=reward, done=done)
         return state
 
+    def _get_contacts(self, data: mjx.Data) -> jax.Array:
+        return jp.array([
+            geoms_colliding(data, geom_id, self._floor_geom_id)
+            for geom_id in self._feet_geom_id
+        ])
+
     def _get_termination(self, data: mjx.Data) -> jax.Array:
         fall_termination = self.get_gravity(data)[-1] < 0.0
         return fall_termination | jp.isnan(data.qpos).any() | jp.isnan(data.qvel).any()
@@ -499,7 +489,7 @@ class Joystick(open_duck_mini_v2_base.OpenDuckMiniV2Env):
 
         accelerometer = self.get_accelerometer(data)
         # accelerometer[0] += 1.3 # TODO testing
-        accelerometer.at[0].set(accelerometer[0] + 1.3)
+        accelerometer = accelerometer.at[0].set(accelerometer[0] + 1.3)
 
         info["rng"], noise_rng = jax.random.split(info["rng"])
         noisy_accelerometer = (
