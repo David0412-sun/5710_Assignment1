@@ -6,8 +6,8 @@
     "left": {
       "samples": 100,
       "seed": 0,
-      "max_position_error_m": 8.450861337481403e-15,
-      "max_orientation_error_rad": 2.2853478972425948e-14,
+      "max_position_error_m": 8.455733378107837e-15,
+      "max_orientation_error_rad": 2.2835097972000577e-14,
       "passed": true,
       "measurements": [
         {
@@ -18,8 +18,8 @@
             -1.51887322843726,
             0.984167482059894
           ],
-          "position_error_m": 5.93432851806778e-15,
-          "orientation_error_rad": 2.1502852995936837e-14
+          "position_error_m": 5.8957082890264565e-15,
+          "orientation_error_rad": 2.1462751007816158e-14
         },
         {
           "joint_angles_rad": [
@@ -29,8 +29,8 @@
             0.13705195270068993,
             1.3668203303511586
           ],
-          "position_error_m": 5.085030524327561e-15,
-          "orientation_error_rad": 2.122610551531383e-14
+          "position_error_m": 5.069653899735349e-15,
+          "orientation_error_rad": 2.1227490510811334e-14
         },
         {
           "joint_angles_rad": [
@@ -40,8 +40,8 @@
             -1.465284130148663,
             0.7214838633611973
           ],
-          "position_error_m": 5.414418513051904e-15,
-          "orientation_error_rad": 2.1613539580985176e-14
+          "position_error_m": 5.391891160762487e-15,
+          "orientation_error_rad": 2.159963878561765e-14
         },
         {
           "joint_angles_rad": [
@@ -52,7 +52,7 @@
             -0.24288525791404791
           ],
           "position_error_m": 7.74420351593634e-15,
-          "orientation_error_rad": 2.214236162959257e-14
+          "orientation_error_rad": 2.2127413518230318e-14
         },
         {
           "joint_angles_rad": [
@@ -63,7 +63,7 @@
             0.3624930185631472
           ],
           "position_error_m": 7.902068922118902e-15,
-          "orientation_error_rad": 2.2508834925760715e-14
+          "orientation_error_rad": 2.252980527567588e-14
         },
         {
           "joint_angles_rad": [
@@ -73,8 +73,8 @@
             0.5828973353770217,
             0.4726817569874098
           ],
-          "position_error_m": 6.896835572496016e-15,
-          "orientation_error_rad": 2.0953621463394443e-14
+          "position_error_m": 6.908601961887322e-15,
+          "orientation_error_rad": 2.0964272156849555e-14
         },
         {
           "joint_angles_rad": [
@@ -84,8 +84,8 @@
             0.695826142409524,
             0.07965295322648802
           ],
-          "position_error_m": 6.244588166003558e-15,
-          "orientation_error_rad": 2.1832413495351193e-14
+          "position_error_m": 6.245497926479807e-15,
+          "orientation_error_rad": 2.1846208051172048e-14
         },
         {
           "joint_angles_rad": [
@@ -95,8 +95,8 @@
             1.3635879210664381,
             -0.4467495653239657
           ],
-          "position_error_m": 6.52859579130455e-15,
-          "orientation_error_rad": 2.1637316243774936e-14
+          "position_error_m": 6.538338242670188e-15,
+          "orientation_error_rad": 2.1645446026151286e-14
         },
         {
           "joint_angles_rad": [
@@ -107,7 +107,7 @@
             -0.34048895172944693
           ],
           "position_error_m": 6.553784373911316e-15,
-          "orientation_error_rad": 2.1913303799428495e-14
+          "orientation_error_rad": 2.1926588531306686e-14
         },
         {
           "joint_angles_rad": [
@@ -117,8 +117,8 @@
             -1.306854340607654,
             1.0450324105275537
           ],
-          "position_error_m": 5.535985062483428e-15,
-          "orientation_error_rad": 2.1555153182025716e-14
+          "position_error_m": 5.5173064915773285e-15,
+          "orientation_error_rad": 2.141757805398539e-14
         },
         {
           "joint_angles_rad": [
@@ -128,8 +128,8 @@
             -1.3867994189157067,
             -0.5148534386384533
           ],
-          "position_error_m": 5.457941811875163e-15,
-          "orientation_error_rad": 2.1543395791708734e-14
+          "position_error_m": 5.439951208740434e-15,
+          "orientation_error_rad": 2.1644758704359392e-14
         },
         {
           "joint_angles_rad": [
@@ -140,7 +140,7 @@
             -1.4073665895407634
           ],
           "position_error_m": 6.8666306802163396e-15,
-          "orientation_error_rad": 2.2155620391817474e-14
+          "orientation_error_rad": 2.2190201366020466e-14
         },
         {
           "joint_angles_rad": [
@@ -150,8 +150,8 @@
             0.25237163366162974,
             -0.6324147502752874
           ],
-          "position_error_m": 6.783839709716163e-15,
-          "orientation_error_rad": 2.23941760594161e-14
+          "position_error_m": 6.751739880332189e-15,
+          "orientation_error_rad": 2.2167146680125326e-14
         },
         {
           "joint_angles_rad": [
@@ -161,8 +161,8 @@
             -0.4237689044860098,
             -1.2393731315086611
           ],
-          "position_error_m": 5.672200933253688e-15,
-          "orientation_error_rad": 2.1935669925534026e-14
+          "position_error_m": 5.6268054999942094e-15,
+          "orientation_error_rad": 2.1880519892835163e-14
         },
         {
           "joint_angles_rad": [
@@ -183,8 +183,8 @@
             1.4103981510600878,
             -0.12552189682174641
           ],
-          "position_error_m": 5.999138294602804e-15,
-          "orientation_error_rad": 2.170214252361943e-14
+          "position_error_m": 5.978991658778102e-15,
+          "orientation_error_rad": 2.1671403484783864e-14
         },
         {
           "joint_angles_rad": [
@@ -195,7 +195,7 @@
             -0.26811655669108436
           ],
           "position_error_m": 5.7352476715263984e-15,
-          "orientation_error_rad": 2.1546465694211534e-14
+          "orientation_error_rad": 2.1577863760005012e-14
         },
         {
           "joint_angles_rad": [
@@ -205,8 +205,8 @@
             -1.209724810421875,
             0.7194722093679409
           ],
-          "position_error_m": 5.955822853642704e-15,
-          "orientation_error_rad": 2.173540842131976e-14
+          "position_error_m": 5.9453364583996784e-15,
+          "orientation_error_rad": 2.175877174907823e-14
         },
         {
           "joint_angles_rad": [
@@ -216,8 +216,8 @@
             1.1424090360662302,
             1.511718802816274
           ],
-          "position_error_m": 4.8277429135807825e-15,
-          "orientation_error_rad": 2.150412815763606e-14
+          "position_error_m": 4.8204819196738386e-15,
+          "orientation_error_rad": 2.148208738975235e-14
         },
         {
           "joint_angles_rad": [
@@ -227,8 +227,8 @@
             1.2250186772250409,
             1.012767248318934
           ],
-          "position_error_m": 4.4939879087594885e-15,
-          "orientation_error_rad": 2.2488748537707563e-14
+          "position_error_m": 4.543327883220705e-15,
+          "orientation_error_rad": 2.262253516869784e-14
         },
         {
           "joint_angles_rad": [
@@ -238,8 +238,8 @@
             1.330559238549459,
             -0.734723418463578
           ],
-          "position_error_m": 6.081211146896676e-15,
-          "orientation_error_rad": 2.2365625559700162e-14
+          "position_error_m": 6.077425383126438e-15,
+          "orientation_error_rad": 2.2410904335371422e-14
         },
         {
           "joint_angles_rad": [
@@ -249,8 +249,8 @@
             -1.4435281741336126,
             0.7288689598619684
           ],
-          "position_error_m": 6.305480978079669e-15,
-          "orientation_error_rad": 2.1565708570129623e-14
+          "position_error_m": 6.284983353388984e-15,
+          "orientation_error_rad": 2.1623593588517726e-14
         },
         {
           "joint_angles_rad": [
@@ -260,8 +260,8 @@
             -1.520556826805448,
             0.8103769739890789
           ],
-          "position_error_m": 5.867350778922921e-15,
-          "orientation_error_rad": 2.180175288335456e-14
+          "position_error_m": 5.8671374156397344e-15,
+          "orientation_error_rad": 2.188201508660973e-14
         },
         {
           "joint_angles_rad": [
@@ -271,8 +271,8 @@
             1.0722798581735162,
             -1.361283485184331
           ],
-          "position_error_m": 6.60436908481835e-15,
-          "orientation_error_rad": 2.1546922853203404e-14
+          "position_error_m": 6.582728639325396e-15,
+          "orientation_error_rad": 2.1515897722438066e-14
         },
         {
           "joint_angles_rad": [
@@ -282,8 +282,8 @@
             0.1955070983642797,
             -0.7575492226145843
           ],
-          "position_error_m": 7.279769495507794e-15,
-          "orientation_error_rad": 2.1895890420096217e-14
+          "position_error_m": 7.291734273541615e-15,
+          "orientation_error_rad": 2.185918962090544e-14
         },
         {
           "joint_angles_rad": [
@@ -293,8 +293,8 @@
             -1.1794961779727322,
             -0.6649785387759062
           ],
-          "position_error_m": 5.876478129066312e-15,
-          "orientation_error_rad": 2.2414272819719358e-14
+          "position_error_m": 5.923110110955741e-15,
+          "orientation_error_rad": 2.2568035320915463e-14
         },
         {
           "joint_angles_rad": [
@@ -304,8 +304,8 @@
             0.18999080654148237,
             -0.6646943583983583
           ],
-          "position_error_m": 6.623136974148721e-15,
-          "orientation_error_rad": 2.1700592294850482e-14
+          "position_error_m": 6.6085852141094285e-15,
+          "orientation_error_rad": 2.1701056009218604e-14
         },
         {
           "joint_angles_rad": [
@@ -315,8 +315,8 @@
             1.4422349497256044,
             -0.41027814270560725
           ],
-          "position_error_m": 6.628488949114869e-15,
-          "orientation_error_rad": 2.1695421360863515e-14
+          "position_error_m": 6.595972539376197e-15,
+          "orientation_error_rad": 2.163141162535389e-14
         },
         {
           "joint_angles_rad": [
@@ -326,8 +326,8 @@
             -1.113777727936374,
             -0.29370643925866813
           ],
-          "position_error_m": 6.376552797468062e-15,
-          "orientation_error_rad": 2.108479280854552e-14
+          "position_error_m": 6.4118533637211425e-15,
+          "orientation_error_rad": 2.1419996842426586e-14
         },
         {
           "joint_angles_rad": [
@@ -337,8 +337,8 @@
             -0.265828886570989,
             1.0361097772743246
           ],
-          "position_error_m": 4.874739646260291e-15,
-          "orientation_error_rad": 2.2336983870918762e-14
+          "position_error_m": 4.881273901348001e-15,
+          "orientation_error_rad": 2.2390119383358787e-14
         },
         {
           "joint_angles_rad": [
@@ -348,8 +348,8 @@
             0.47945283184990206,
             -0.7104740104423399
           ],
-          "position_error_m": 7.32727483220662e-15,
-          "orientation_error_rad": 2.2708263736138465e-14
+          "position_error_m": 7.319753634779629e-15,
+          "orientation_error_rad": 2.2646564103652158e-14
         },
         {
           "joint_angles_rad": [
@@ -359,8 +359,8 @@
             1.1459848130200792,
             -1.3839841849753225
           ],
-          "position_error_m": 6.0267329494718705e-15,
-          "orientation_error_rad": 2.170687537837512e-14
+          "position_error_m": 6.06052006753193e-15,
+          "orientation_error_rad": 2.1751537667260707e-14
         },
         {
           "joint_angles_rad": [
@@ -370,8 +370,8 @@
             1.4968505303066126,
             0.8661094112001466
           ],
-          "position_error_m": 6.04319898542556e-15,
-          "orientation_error_rad": 2.198908032505709e-14
+          "position_error_m": 6.045716142076953e-15,
+          "orientation_error_rad": 2.2004692962692166e-14
         },
         {
           "joint_angles_rad": [
@@ -381,8 +381,8 @@
             1.1979118126338206,
             0.0336354791615352
           ],
-          "position_error_m": 6.4670044472964565e-15,
-          "orientation_error_rad": 2.1874710073906687e-14
+          "position_error_m": 6.457363150230153e-15,
+          "orientation_error_rad": 2.189623881549384e-14
         },
         {
           "joint_angles_rad": [
@@ -392,8 +392,8 @@
             -0.9967884594392934,
             1.1941134655321486
           ],
-          "position_error_m": 6.948005628022126e-15,
-          "orientation_error_rad": 2.2569396434360266e-14
+          "position_error_m": 6.954835048603628e-15,
+          "orientation_error_rad": 2.2653468469850898e-14
         },
         {
           "joint_angles_rad": [
@@ -403,8 +403,8 @@
             1.3374217883029025,
             0.7798956742374532
           ],
-          "position_error_m": 4.905380853528966e-15,
-          "orientation_error_rad": 2.2047045559338032e-14
+          "position_error_m": 4.929115947858023e-15,
+          "orientation_error_rad": 2.233950247670448e-14
         },
         {
           "joint_angles_rad": [
@@ -414,8 +414,8 @@
             0.5342650564636973,
             0.6742440180787637
           ],
-          "position_error_m": 5.728282816035881e-15,
-          "orientation_error_rad": 2.1782766234755517e-14
+          "position_error_m": 5.717732786076916e-15,
+          "orientation_error_rad": 2.1798692850489043e-14
         },
         {
           "joint_angles_rad": [
@@ -425,8 +425,8 @@
             0.19289620026055498,
             0.24609953484461422
           ],
-          "position_error_m": 7.944085046856691e-15,
-          "orientation_error_rad": 2.1906382576501644e-14
+          "position_error_m": 7.911325042348522e-15,
+          "orientation_error_rad": 2.187995215452887e-14
         },
         {
           "joint_angles_rad": [
@@ -436,8 +436,8 @@
             -1.2913967727549038,
             1.5140676241781414
           ],
-          "position_error_m": 6.873484914711666e-15,
-          "orientation_error_rad": 2.2129328766575942e-14
+          "position_error_m": 6.8668831046107235e-15,
+          "orientation_error_rad": 2.2091154452295e-14
         },
         {
           "joint_angles_rad": [
@@ -447,8 +447,8 @@
             1.5025160530640802,
             0.2823350207510056
           ],
-          "position_error_m": 5.241800467834973e-15,
-          "orientation_error_rad": 2.234122556969991e-14
+          "position_error_m": 5.237352827520862e-15,
+          "orientation_error_rad": 2.2342311728888118e-14
         },
         {
           "joint_angles_rad": [
@@ -458,8 +458,8 @@
             -0.9578483571419814,
             0.24406371240698088
           ],
-          "position_error_m": 6.823921494813107e-15,
-          "orientation_error_rad": 2.2255199561158585e-14
+          "position_error_m": 6.833524741784807e-15,
+          "orientation_error_rad": 2.2337966775255462e-14
         },
         {
           "joint_angles_rad": [
@@ -469,8 +469,8 @@
             -8.53769944355598e-05,
             0.7668548476741552
           ],
-          "position_error_m": 6.716881556159459e-15,
-          "orientation_error_rad": 2.204743428773589e-14
+          "position_error_m": 6.723907241482504e-15,
+          "orientation_error_rad": 2.2031442719721886e-14
         },
         {
           "joint_angles_rad": [
@@ -481,7 +481,7 @@
             -1.295065378530191
           ],
           "position_error_m": 6.914161241435899e-15,
-          "orientation_error_rad": 2.2312184162729332e-14
+          "orientation_error_rad": 2.2359648932615453e-14
         },
         {
           "joint_angles_rad": [
@@ -491,8 +491,8 @@
             1.2962900354362215,
             0.8354032635522146
           ],
-          "position_error_m": 6.493447909620578e-15,
-          "orientation_error_rad": 2.1011704319179745e-14
+          "position_error_m": 6.5033170528009815e-15,
+          "orientation_error_rad": 2.1001077967534562e-14
         },
         {
           "joint_angles_rad": [
@@ -502,8 +502,8 @@
             -1.3498598852273482,
             1.1587899413665865
           ],
-          "position_error_m": 5.880511986747008e-15,
-          "orientation_error_rad": 2.1012979211912753e-14
+          "position_error_m": 5.8634146188471716e-15,
+          "orientation_error_rad": 2.067709932542814e-14
         },
         {
           "joint_angles_rad": [
@@ -514,7 +514,7 @@
             -0.5717152374247206
           ],
           "position_error_m": 6.55983520627103e-15,
-          "orientation_error_rad": 2.1233324111025915e-14
+          "orientation_error_rad": 2.1152896654001444e-14
         },
         {
           "joint_angles_rad": [
@@ -524,8 +524,8 @@
             0.9100117370926353,
             -1.2794278222369506
           ],
-          "position_error_m": 5.8319783063834515e-15,
-          "orientation_error_rad": 2.1767867581362682e-14
+          "position_error_m": 5.823022030109572e-15,
+          "orientation_error_rad": 2.1774940074265368e-14
         },
         {
           "joint_angles_rad": [
@@ -535,8 +535,8 @@
             -0.0350412109547229,
             1.5352816691519582
           ],
-          "position_error_m": 5.9531827670272815e-15,
-          "orientation_error_rad": 2.2569324967279306e-14
+          "position_error_m": 5.970453510156008e-15,
+          "orientation_error_rad": 2.257866283780958e-14
         },
         {
           "joint_angles_rad": [
@@ -546,8 +546,8 @@
             -0.058871886291056885,
             0.9849963126768944
           ],
-          "position_error_m": 7.916339070331799e-15,
-          "orientation_error_rad": 2.1522641390987192e-14
+          "position_error_m": 7.91922375787742e-15,
+          "orientation_error_rad": 2.154058438247958e-14
         },
         {
           "joint_angles_rad": [
@@ -557,8 +557,8 @@
             -1.365743266100437,
             1.0523964805949513
           ],
-          "position_error_m": 6.2131741001111655e-15,
-          "orientation_error_rad": 2.1788639811067305e-14
+          "position_error_m": 6.1939880091235186e-15,
+          "orientation_error_rad": 2.1765548285361567e-14
         },
         {
           "joint_angles_rad": [
@@ -568,8 +568,8 @@
             0.8833860155823752,
             -0.04544270174524212
           ],
-          "position_error_m": 6.600781251630176e-15,
-          "orientation_error_rad": 2.2227243341875865e-14
+          "position_error_m": 6.610446451427113e-15,
+          "orientation_error_rad": 2.2238409370245616e-14
         },
         {
           "joint_angles_rad": [
@@ -579,8 +579,8 @@
             0.6547668355909182,
             0.9084060415836084
           ],
-          "position_error_m": 7.03118156945917e-15,
-          "orientation_error_rad": 2.1971255628607363e-14
+          "position_error_m": 7.043086693195251e-15,
+          "orientation_error_rad": 2.204509198617153e-14
         },
         {
           "joint_angles_rad": [
@@ -590,8 +590,8 @@
             -0.8629061491534722,
             -0.43257233121539884
           ],
-          "position_error_m": 5.7580110628264536e-15,
-          "orientation_error_rad": 2.1466924826845808e-14
+          "position_error_m": 5.71544185218739e-15,
+          "orientation_error_rad": 2.1472571716062502e-14
         },
         {
           "joint_angles_rad": [
@@ -601,8 +601,8 @@
             -0.2923321059119286,
             -1.5698516809639795
           ],
-          "position_error_m": 6.172870592901411e-15,
-          "orientation_error_rad": 2.1954477343516725e-14
+          "position_error_m": 6.1871436495052295e-15,
+          "orientation_error_rad": 2.208609587591359e-14
         },
         {
           "joint_angles_rad": [
@@ -612,8 +612,8 @@
             0.6402118756347166,
             1.008775103545592
           ],
-          "position_error_m": 5.938259227275066e-15,
-          "orientation_error_rad": 2.1963693928440268e-14
+          "position_error_m": 5.985997607464237e-15,
+          "orientation_error_rad": 2.2049538325033083e-14
         },
         {
           "joint_angles_rad": [
@@ -623,8 +623,8 @@
             1.5069865226639125,
             1.4890659242002902
           ],
-          "position_error_m": 4.187471919599078e-15,
-          "orientation_error_rad": 2.144041415523603e-14
+          "position_error_m": 4.2006851032259884e-15,
+          "orientation_error_rad": 2.141840870032783e-14
         },
         {
           "joint_angles_rad": [
@@ -634,8 +634,8 @@
             -0.07493618346957143,
             1.142868182507648
           ],
-          "position_error_m": 6.8105199481316114e-15,
-          "orientation_error_rad": 2.1606153041799742e-14
+          "position_error_m": 6.7962631401565226e-15,
+          "orientation_error_rad": 2.1619197240670522e-14
         },
         {
           "joint_angles_rad": [
@@ -645,8 +645,8 @@
             0.22206280397677003,
             -1.2759730821938138
           ],
-          "position_error_m": 5.780248560094351e-15,
-          "orientation_error_rad": 2.1953335653821272e-14
+          "position_error_m": 5.769693410484919e-15,
+          "orientation_error_rad": 2.19110108851965e-14
         },
         {
           "joint_angles_rad": [
@@ -667,8 +667,8 @@
             0.5782115355624335,
             1.0171891368960564
           ],
-          "position_error_m": 5.707888743154221e-15,
-          "orientation_error_rad": 2.2395744185844428e-14
+          "position_error_m": 5.7018626961030944e-15,
+          "orientation_error_rad": 2.2069998271681788e-14
         },
         {
           "joint_angles_rad": [
@@ -678,8 +678,8 @@
             0.664405452979385,
             0.21685111666152657
           ],
-          "position_error_m": 5.7608377561561415e-15,
-          "orientation_error_rad": 2.15776886052127e-14
+          "position_error_m": 5.764550581676422e-15,
+          "orientation_error_rad": 2.1370315349052922e-14
         },
         {
           "joint_angles_rad": [
@@ -689,8 +689,8 @@
             1.56140388547505,
             -0.4694959067209825
           ],
-          "position_error_m": 4.92475743460208e-15,
-          "orientation_error_rad": 2.241989330738306e-14
+          "position_error_m": 4.921960482517482e-15,
+          "orientation_error_rad": 2.2394041547485748e-14
         },
         {
           "joint_angles_rad": [
@@ -700,8 +700,8 @@
             -0.19091794122474903,
             0.2776543025062841
           ],
-          "position_error_m": 7.982759078786045e-15,
-          "orientation_error_rad": 2.2087661470339668e-14
+          "position_error_m": 7.995316977154465e-15,
+          "orientation_error_rad": 2.212889230200383e-14
         },
         {
           "joint_angles_rad": [
@@ -711,8 +711,8 @@
             -0.9719535993844243,
             1.1402410491693908
           ],
-          "position_error_m": 7.059798569704974e-15,
-          "orientation_error_rad": 2.2729457803062473e-14
+          "position_error_m": 7.043356719597849e-15,
+          "orientation_error_rad": 2.280725339800703e-14
         },
         {
           "joint_angles_rad": [
@@ -722,8 +722,8 @@
             -1.300580289548289,
             0.6162373801598933
           ],
-          "position_error_m": 6.399165185440664e-15,
-          "orientation_error_rad": 2.2015222643629015e-14
+          "position_error_m": 6.4072410215762476e-15,
+          "orientation_error_rad": 2.2099946615746827e-14
         },
         {
           "joint_angles_rad": [
@@ -733,8 +733,8 @@
             -0.43095755140277947,
             -0.5343980029820579
           ],
-          "position_error_m": 6.985422781977678e-15,
-          "orientation_error_rad": 2.22221346274713e-14
+          "position_error_m": 6.991430611008597e-15,
+          "orientation_error_rad": 2.2298599533853196e-14
         },
         {
           "joint_angles_rad": [
@@ -744,8 +744,8 @@
             -1.4953566319766083,
             -1.0575603318480464
           ],
-          "position_error_m": 5.334064543190186e-15,
-          "orientation_error_rad": 2.213585569984187e-14
+          "position_error_m": 5.327597606699447e-15,
+          "orientation_error_rad": 2.202102885424824e-14
         },
         {
           "joint_angles_rad": [
@@ -755,8 +755,8 @@
             -0.871938372182338,
             0.18141938132566682
           ],
-          "position_error_m": 5.797337889675928e-15,
-          "orientation_error_rad": 2.1484339518905407e-14
+          "position_error_m": 5.78700527570422e-15,
+          "orientation_error_rad": 2.142602801220638e-14
         },
         {
           "joint_angles_rad": [
@@ -766,8 +766,8 @@
             0.45881397312940875,
             0.34978079257932637
           ],
-          "position_error_m": 8.450861337481403e-15,
-          "orientation_error_rad": 2.2037434363095936e-14
+          "position_error_m": 8.455733378107837e-15,
+          "orientation_error_rad": 2.2086577775475928e-14
         },
         {
           "joint_angles_rad": [
@@ -778,7 +778,7 @@
             1.5457365603070001
           ],
           "position_error_m": 7.532126983265827e-15,
-          "orientation_error_rad": 2.274191751947464e-14
+          "orientation_error_rad": 2.2728245032921906e-14
         },
         {
           "joint_angles_rad": [
@@ -788,8 +788,8 @@
             0.6164279358579612,
             -1.1418325395311644
           ],
-          "position_error_m": 4.984000324710833e-15,
-          "orientation_error_rad": 2.236158227529831e-14
+          "position_error_m": 4.947056658490169e-15,
+          "orientation_error_rad": 2.233609145978401e-14
         },
         {
           "joint_angles_rad": [
@@ -799,8 +799,8 @@
             -0.49718012748899554,
             -0.820132517524091
           ],
-          "position_error_m": 7.485789888507788e-15,
-          "orientation_error_rad": 2.2069894644705925e-14
+          "position_error_m": 7.491348248261564e-15,
+          "orientation_error_rad": 2.205991799719873e-14
         },
         {
           "joint_angles_rad": [
@@ -810,8 +810,8 @@
             -0.7660773012601619,
             -1.3425333924593645
           ],
-          "position_error_m": 5.57852978495547e-15,
-          "orientation_error_rad": 2.1703679123062918e-14
+          "position_error_m": 5.590251304691502e-15,
+          "orientation_error_rad": 2.169268176221322e-14
         },
         {
           "joint_angles_rad": [
@@ -821,8 +821,8 @@
             1.4939309115653727,
             -1.2331466556687831
           ],
-          "position_error_m": 7.688795432376443e-15,
-          "orientation_error_rad": 2.1697667712330825e-14
+          "position_error_m": 7.680587659129702e-15,
+          "orientation_error_rad": 2.181548626888276e-14
         },
         {
           "joint_angles_rad": [
@@ -832,8 +832,8 @@
             0.781489158210765,
             0.4514618248373732
           ],
-          "position_error_m": 6.7036035959303775e-15,
-          "orientation_error_rad": 2.162036330812012e-14
+          "position_error_m": 6.7334019638522095e-15,
+          "orientation_error_rad": 2.1654291265962695e-14
         },
         {
           "joint_angles_rad": [
@@ -843,8 +843,8 @@
             0.062307440626522714,
             -0.2302123165205361
           ],
-          "position_error_m": 6.2626352562219254e-15,
-          "orientation_error_rad": 2.172217384091365e-14
+          "position_error_m": 6.232718295436454e-15,
+          "orientation_error_rad": 2.1683500543854658e-14
         },
         {
           "joint_angles_rad": [
@@ -854,8 +854,8 @@
             -1.0600684738137574,
             1.106005021344207
           ],
-          "position_error_m": 7.617072609121703e-15,
-          "orientation_error_rad": 2.268765351758025e-14
+          "position_error_m": 7.611182230473284e-15,
+          "orientation_error_rad": 2.271199932478106e-14
         },
         {
           "joint_angles_rad": [
@@ -865,8 +865,8 @@
             1.0178816986627996,
             0.5676428330155141
           ],
-          "position_error_m": 5.133449798727568e-15,
-          "orientation_error_rad": 2.2046033577633155e-14
+          "position_error_m": 5.125457088755482e-15,
+          "orientation_error_rad": 2.2076806316062145e-14
         },
         {
           "joint_angles_rad": [
@@ -876,8 +876,8 @@
             1.2973964175540207,
             1.0141285178563435
           ],
-          "position_error_m": 4.925989154303742e-15,
-          "orientation_error_rad": 2.2054966185401195e-14
+          "position_error_m": 4.909893859024803e-15,
+          "orientation_error_rad": 2.2002933873153962e-14
         },
         {
           "joint_angles_rad": [
@@ -887,8 +887,8 @@
             -0.23292949080182868,
             -0.3243635128158082
           ],
-          "position_error_m": 7.031095971218647e-15,
-          "orientation_error_rad": 2.1986879075666522e-14
+          "position_error_m": 6.9966075318297656e-15,
+          "orientation_error_rad": 2.1983675072938785e-14
         },
         {
           "joint_angles_rad": [
@@ -898,8 +898,8 @@
             -1.5554043606598997,
             -0.5563107023128293
           ],
-          "position_error_m": 5.0987840401951315e-15,
-          "orientation_error_rad": 2.2853478972425948e-14
+          "position_error_m": 5.046904203048395e-15,
+          "orientation_error_rad": 2.2835097972000577e-14
         },
         {
           "joint_angles_rad": [
@@ -909,8 +909,8 @@
             -1.0269437964951922,
             0.27136560486375716
           ],
-          "position_error_m": 5.104800456974389e-15,
-          "orientation_error_rad": 2.163170654829103e-14
+          "position_error_m": 5.093620780232683e-15,
+          "orientation_error_rad": 2.1574395937357742e-14
         },
         {
           "joint_angles_rad": [
@@ -920,8 +920,8 @@
             0.2342266210543993,
             1.5184407633332078
           ],
-          "position_error_m": 4.834412586977655e-15,
-          "orientation_error_rad": 2.200801006224632e-14
+          "position_error_m": 4.820134502828574e-15,
+          "orientation_error_rad": 2.1984071697625633e-14
         },
         {
           "joint_angles_rad": [
@@ -931,8 +931,8 @@
             0.41309278463847043,
             -0.4512440858983997
           ],
-          "position_error_m": 5.741266981550476e-15,
-          "orientation_error_rad": 2.1685539978705655e-14
+          "position_error_m": 5.737303064899532e-15,
+          "orientation_error_rad": 2.172435149051384e-14
         },
         {
           "joint_angles_rad": [
@@ -942,8 +942,8 @@
             -1.0364789555880722,
             0.2425245094084738
           ],
-          "position_error_m": 6.479663815324025e-15,
-          "orientation_error_rad": 2.1624554924762266e-14
+          "position_error_m": 6.459599662758993e-15,
+          "orientation_error_rad": 2.1605910626778354e-14
         },
         {
           "joint_angles_rad": [
@@ -953,8 +953,8 @@
             -1.2257618467772236,
             0.39251360730858176
           ],
-          "position_error_m": 6.503590981884482e-15,
-          "orientation_error_rad": 2.161885976184733e-14
+          "position_error_m": 6.493974345980928e-15,
+          "orientation_error_rad": 2.1611708342889017e-14
         },
         {
           "joint_angles_rad": [
@@ -965,7 +965,7 @@
             0.7316331881826885
           ],
           "position_error_m": 7.192768525285242e-15,
-          "orientation_error_rad": 2.1793487267857438e-14
+          "orientation_error_rad": 2.1792741617943638e-14
         },
         {
           "joint_angles_rad": [
@@ -976,7 +976,7 @@
             0.6135596617286718
           ],
           "position_error_m": 6.607780093889552e-15,
-          "orientation_error_rad": 2.1384167569506285e-14
+          "orientation_error_rad": 2.1328743720002254e-14
         },
         {
           "joint_angles_rad": [
@@ -986,8 +986,8 @@
             0.5376860340133272,
             0.09806834334954484
           ],
-          "position_error_m": 5.6129776044674396e-15,
-          "orientation_error_rad": 2.229596941237462e-14
+          "position_error_m": 5.663650854594829e-15,
+          "orientation_error_rad": 2.227002730783977e-14
         },
         {
           "joint_angles_rad": [
@@ -997,8 +997,8 @@
             -0.7594033689009956,
             -1.0802822454931909
           ],
-          "position_error_m": 5.758295362391312e-15,
-          "orientation_error_rad": 2.2312931710395013e-14
+          "position_error_m": 5.749643023911351e-15,
+          "orientation_error_rad": 2.2114932258103798e-14
         },
         {
           "joint_angles_rad": [
@@ -1008,8 +1008,8 @@
             -0.4121093594570542,
             0.23788796548823132
           ],
-          "position_error_m": 6.4014069880556115e-15,
-          "orientation_error_rad": 2.1611302865297234e-14
+          "position_error_m": 6.430629050637225e-15,
+          "orientation_error_rad": 2.1585211542446116e-14
         },
         {
           "joint_angles_rad": [
@@ -1019,8 +1019,8 @@
             -1.053116357625297,
             1.1841696085787663
           ],
-          "position_error_m": 6.442855470333357e-15,
-          "orientation_error_rad": 2.19214407745419e-14
+          "position_error_m": 6.444334978727743e-15,
+          "orientation_error_rad": 2.187112941243248e-14
         },
         {
           "joint_angles_rad": [
@@ -1030,8 +1030,8 @@
             0.42814772495243925,
             0.9074338189674083
           ],
-          "position_error_m": 5.41555664600817e-15,
-          "orientation_error_rad": 2.1684322113898716e-14
+          "position_error_m": 5.393819642230172e-15,
+          "orientation_error_rad": 2.168810093524982e-14
         },
         {
           "joint_angles_rad": [
@@ -1041,8 +1041,8 @@
             0.018763583301760756,
             0.9912051756910794
           ],
-          "position_error_m": 6.4642044397124125e-15,
-          "orientation_error_rad": 2.1711970267966793e-14
+          "position_error_m": 6.468136021214264e-15,
+          "orientation_error_rad": 2.171441131621007e-14
         },
         {
           "joint_angles_rad": [
@@ -1052,8 +1052,8 @@
             -0.9681849833806355,
             -1.3589784618438228
           ],
-          "position_error_m": 6.037782747630786e-15,
-          "orientation_error_rad": 2.269839790812758e-14
+          "position_error_m": 6.053392572941054e-15,
+          "orientation_error_rad": 2.2687581361900747e-14
         },
         {
           "joint_angles_rad": [
@@ -1063,8 +1063,8 @@
             -0.6469281940957882,
             -0.7001953763834798
           ],
-          "position_error_m": 6.009611929251379e-15,
-          "orientation_error_rad": 2.1175031557871725e-14
+          "position_error_m": 6.007736858406096e-15,
+          "orientation_error_rad": 2.1186124902475533e-14
         },
         {
           "joint_angles_rad": [
@@ -1074,8 +1074,8 @@
             -0.4544339497636054,
             0.4317207388237869
           ],
-          "position_error_m": 7.496793305015486e-15,
-          "orientation_error_rad": 2.2026127377916693e-14
+          "position_error_m": 7.508870745051604e-15,
+          "orientation_error_rad": 2.1999686521893324e-14
         },
         {
           "joint_angles_rad": [
@@ -1096,8 +1096,8 @@
             0.3529319819397163,
             0.34808356174597255
           ],
-          "position_error_m": 7.331486517648948e-15,
-          "orientation_error_rad": 2.246347490300756e-14
+          "position_error_m": 7.309004934392404e-15,
+          "orientation_error_rad": 2.245387041047729e-14
         },
         {
           "joint_angles_rad": [
@@ -1107,16 +1107,16 @@
             -0.22611764221011343,
             1.077612507429115
           ],
-          "position_error_m": 7.14410939755463e-15,
-          "orientation_error_rad": 2.1780446936359285e-14
+          "position_error_m": 7.13325043186521e-15,
+          "orientation_error_rad": 2.1838556753440605e-14
         }
       ]
     },
     "right": {
       "samples": 100,
       "seed": 0,
-      "max_position_error_m": 4.4292433450172434e-14,
-      "max_orientation_error_rad": 2.3576371676751615e-14,
+      "max_position_error_m": 4.4294983604471856e-14,
+      "max_orientation_error_rad": 2.375025014194151e-14,
       "passed": true,
       "measurements": [
         {
@@ -1127,8 +1127,8 @@
             -1.51887322843726,
             0.984167482059894
           ],
-          "position_error_m": 4.1071734459963834e-14,
-          "orientation_error_rad": 2.224582391973676e-14
+          "position_error_m": 4.1085251158484044e-14,
+          "orientation_error_rad": 2.2271628834270528e-14
         },
         {
           "joint_angles_rad": [
@@ -1138,8 +1138,8 @@
             0.13705195270068993,
             1.3668203303511586
           ],
-          "position_error_m": 3.899837151363604e-14,
-          "orientation_error_rad": 2.2050058025171754e-14
+          "position_error_m": 3.902466503754184e-14,
+          "orientation_error_rad": 2.2024871234436228e-14
         },
         {
           "joint_angles_rad": [
@@ -1150,7 +1150,7 @@
             0.7214838633611973
           ],
           "position_error_m": 4.2039575044719677e-14,
-          "orientation_error_rad": 2.3182536372156154e-14
+          "orientation_error_rad": 2.3144884486549323e-14
         },
         {
           "joint_angles_rad": [
@@ -1160,8 +1160,8 @@
             -0.6292236532891403,
             -0.24288525791404791
           ],
-          "position_error_m": 4.112645129048832e-14,
-          "orientation_error_rad": 2.3229961815352195e-14
+          "position_error_m": 4.11313119023131e-14,
+          "orientation_error_rad": 2.3251483868864897e-14
         },
         {
           "joint_angles_rad": [
@@ -1171,8 +1171,8 @@
             0.4624094882471339,
             0.3624930185631472
           ],
-          "position_error_m": 4.4292433450172434e-14,
-          "orientation_error_rad": 2.2803883843576758e-14
+          "position_error_m": 4.4294983604471856e-14,
+          "orientation_error_rad": 2.2855849667925852e-14
         },
         {
           "joint_angles_rad": [
@@ -1193,8 +1193,8 @@
             0.695826142409524,
             0.07965295322648802
           ],
-          "position_error_m": 4.0189753021555035e-14,
-          "orientation_error_rad": 2.2925539461236188e-14
+          "position_error_m": 4.016900449640851e-14,
+          "orientation_error_rad": 2.2891242721771836e-14
         },
         {
           "joint_angles_rad": [
@@ -1215,8 +1215,8 @@
             -0.5092169031761629,
             -0.34048895172944693
           ],
-          "position_error_m": 4.158836582224223e-14,
-          "orientation_error_rad": 2.249467081447963e-14
+          "position_error_m": 4.1645999544615633e-14,
+          "orientation_error_rad": 2.2456362238290922e-14
         },
         {
           "joint_angles_rad": [
@@ -1226,8 +1226,8 @@
             -1.306854340607654,
             1.0450324105275537
           ],
-          "position_error_m": 4.088925032566217e-14,
-          "orientation_error_rad": 2.278479613808774e-14
+          "position_error_m": 4.090331936819352e-14,
+          "orientation_error_rad": 2.270222002103935e-14
         },
         {
           "joint_angles_rad": [
@@ -1237,8 +1237,8 @@
             -1.3867994189157067,
             -0.5148534386384533
           ],
-          "position_error_m": 4.16894849572615e-14,
-          "orientation_error_rad": 2.301497351995804e-14
+          "position_error_m": 4.1678009770742503e-14,
+          "orientation_error_rad": 2.2832974445904274e-14
         },
         {
           "joint_angles_rad": [
@@ -1248,8 +1248,8 @@
             -0.8462124574124179,
             -1.4073665895407634
           ],
-          "position_error_m": 4.182745964130491e-14,
-          "orientation_error_rad": 2.2797704944493984e-14
+          "position_error_m": 4.1848229821902934e-14,
+          "orientation_error_rad": 2.277381394219652e-14
         },
         {
           "joint_angles_rad": [
@@ -1259,8 +1259,8 @@
             0.25237163366162974,
             -0.6324147502752874
           ],
-          "position_error_m": 4.1904198597735406e-14,
-          "orientation_error_rad": 2.3121897216773407e-14
+          "position_error_m": 4.1900792800383764e-14,
+          "orientation_error_rad": 2.311779885013505e-14
         },
         {
           "joint_angles_rad": [
@@ -1270,8 +1270,8 @@
             -0.4237689044860098,
             -1.2393731315086611
           ],
-          "position_error_m": 4.188699154646742e-14,
-          "orientation_error_rad": 2.2193057178518727e-14
+          "position_error_m": 4.192757381114027e-14,
+          "orientation_error_rad": 2.2141704925174413e-14
         },
         {
           "joint_angles_rad": [
@@ -1281,8 +1281,8 @@
             1.4281381553705774,
             -0.0003273109534918106
           ],
-          "position_error_m": 3.989484570054529e-14,
-          "orientation_error_rad": 2.2269746243441823e-14
+          "position_error_m": 3.9895504650997946e-14,
+          "orientation_error_rad": 2.2243526793226658e-14
         },
         {
           "joint_angles_rad": [
@@ -1292,8 +1292,8 @@
             1.4103981510600878,
             -0.12552189682174641
           ],
-          "position_error_m": 4.1039697170407365e-14,
-          "orientation_error_rad": 2.3462941889624762e-14
+          "position_error_m": 4.106384180188819e-14,
+          "orientation_error_rad": 2.3455558434744047e-14
         },
         {
           "joint_angles_rad": [
@@ -1303,8 +1303,8 @@
             0.8978222578635089,
             -0.26811655669108436
           ],
-          "position_error_m": 3.9683422953429593e-14,
-          "orientation_error_rad": 2.2444371396525947e-14
+          "position_error_m": 3.969843238543404e-14,
+          "orientation_error_rad": 2.2429274050754825e-14
         },
         {
           "joint_angles_rad": [
@@ -1314,8 +1314,8 @@
             -1.209724810421875,
             0.7194722093679409
           ],
-          "position_error_m": 4.03009012045211e-14,
-          "orientation_error_rad": 2.208813226632749e-14
+          "position_error_m": 4.031348679773648e-14,
+          "orientation_error_rad": 2.209473607880589e-14
         },
         {
           "joint_angles_rad": [
@@ -1325,8 +1325,8 @@
             1.1424090360662302,
             1.511718802816274
           ],
-          "position_error_m": 3.96656533654131e-14,
-          "orientation_error_rad": 2.1990195714894154e-14
+          "position_error_m": 3.9671384762382284e-14,
+          "orientation_error_rad": 2.2067245277345488e-14
         },
         {
           "joint_angles_rad": [
@@ -1336,8 +1336,8 @@
             1.2250186772250409,
             1.012767248318934
           ],
-          "position_error_m": 3.984352516437875e-14,
-          "orientation_error_rad": 2.287560003668746e-14
+          "position_error_m": 3.986947386516099e-14,
+          "orientation_error_rad": 2.2877721562858752e-14
         },
         {
           "joint_angles_rad": [
@@ -1347,8 +1347,8 @@
             1.330559238549459,
             -0.734723418463578
           ],
-          "position_error_m": 4.1495395461866513e-14,
-          "orientation_error_rad": 2.2668428913105395e-14
+          "position_error_m": 4.1511302823527035e-14,
+          "orientation_error_rad": 2.271443527894151e-14
         },
         {
           "joint_angles_rad": [
@@ -1358,8 +1358,8 @@
             -1.4435281741336126,
             0.7288689598619684
           ],
-          "position_error_m": 4.1185697067806095e-14,
-          "orientation_error_rad": 2.2230133398895647e-14
+          "position_error_m": 4.1199365701422816e-14,
+          "orientation_error_rad": 2.2238653364861694e-14
         },
         {
           "joint_angles_rad": [
@@ -1369,8 +1369,8 @@
             -1.520556826805448,
             0.8103769739890789
           ],
-          "position_error_m": 4.233341148726878e-14,
-          "orientation_error_rad": 2.2893816023359243e-14
+          "position_error_m": 4.2360699287000505e-14,
+          "orientation_error_rad": 2.2879503029842858e-14
         },
         {
           "joint_angles_rad": [
@@ -1380,8 +1380,8 @@
             1.0722798581735162,
             -1.361283485184331
           ],
-          "position_error_m": 4.023687419183936e-14,
-          "orientation_error_rad": 2.2541933209606016e-14
+          "position_error_m": 4.023422478792234e-14,
+          "orientation_error_rad": 2.2523750349804372e-14
         },
         {
           "joint_angles_rad": [
@@ -1391,8 +1391,8 @@
             0.1955070983642797,
             -0.7575492226145843
           ],
-          "position_error_m": 4.198424245916027e-14,
-          "orientation_error_rad": 2.222366250733458e-14
+          "position_error_m": 4.199747464369099e-14,
+          "orientation_error_rad": 2.2236238368413136e-14
         },
         {
           "joint_angles_rad": [
@@ -1402,8 +1402,8 @@
             -1.1794961779727322,
             -0.6649785387759062
           ],
-          "position_error_m": 4.06146328895507e-14,
-          "orientation_error_rad": 2.301274198945062e-14
+          "position_error_m": 4.0657356823208625e-14,
+          "orientation_error_rad": 2.290814319388897e-14
         },
         {
           "joint_angles_rad": [
@@ -1414,7 +1414,7 @@
             -0.6646943583983583
           ],
           "position_error_m": 4.076126465550865e-14,
-          "orientation_error_rad": 2.309280786208002e-14
+          "orientation_error_rad": 2.3095651872467556e-14
         },
         {
           "joint_angles_rad": [
@@ -1424,8 +1424,8 @@
             1.4422349497256044,
             -0.41027814270560725
           ],
-          "position_error_m": 4.074472665248111e-14,
-          "orientation_error_rad": 2.253219869069058e-14
+          "position_error_m": 4.0771164486142795e-14,
+          "orientation_error_rad": 2.249782879598493e-14
         },
         {
           "joint_angles_rad": [
@@ -1435,8 +1435,8 @@
             -1.113777727936374,
             -0.29370643925866813
           ],
-          "position_error_m": 4.0860135140622765e-14,
-          "orientation_error_rad": 2.316750395145563e-14
+          "position_error_m": 4.0846508585301446e-14,
+          "orientation_error_rad": 2.322451521337479e-14
         },
         {
           "joint_angles_rad": [
@@ -1446,8 +1446,8 @@
             -0.265828886570989,
             1.0361097772743246
           ],
-          "position_error_m": 4.1004072389887574e-14,
-          "orientation_error_rad": 2.225014947101442e-14
+          "position_error_m": 4.104295153034232e-14,
+          "orientation_error_rad": 2.219483502773726e-14
         },
         {
           "joint_angles_rad": [
@@ -1458,7 +1458,7 @@
             -0.7104740104423399
           ],
           "position_error_m": 4.314948816917505e-14,
-          "orientation_error_rad": 2.3576371676751615e-14
+          "orientation_error_rad": 2.3575714071226586e-14
         },
         {
           "joint_angles_rad": [
@@ -1468,8 +1468,8 @@
             1.1459848130200792,
             -1.3839841849753225
           ],
-          "position_error_m": 3.967607352652205e-14,
-          "orientation_error_rad": 2.2345512587757624e-14
+          "position_error_m": 3.9679762497191576e-14,
+          "orientation_error_rad": 2.2331900328486272e-14
         },
         {
           "joint_angles_rad": [
@@ -1479,8 +1479,8 @@
             1.4968505303066126,
             0.8661094112001466
           ],
-          "position_error_m": 4.113963635587446e-14,
-          "orientation_error_rad": 2.2813595363205343e-14
+          "position_error_m": 4.1138176303930956e-14,
+          "orientation_error_rad": 2.2835447901186916e-14
         },
         {
           "joint_angles_rad": [
@@ -1490,8 +1490,8 @@
             1.1979118126338206,
             0.0336354791615352
           ],
-          "position_error_m": 4.236329525996926e-14,
-          "orientation_error_rad": 2.2966167559430967e-14
+          "position_error_m": 4.2356777179337305e-14,
+          "orientation_error_rad": 2.2956177727468185e-14
         },
         {
           "joint_angles_rad": [
@@ -1501,8 +1501,8 @@
             -0.9967884594392934,
             1.1941134655321486
           ],
-          "position_error_m": 4.0172190360025134e-14,
-          "orientation_error_rad": 2.291977053242648e-14
+          "position_error_m": 4.01758984925601e-14,
+          "orientation_error_rad": 2.2929130524268538e-14
         },
         {
           "joint_angles_rad": [
@@ -1512,8 +1512,8 @@
             1.3374217883029025,
             0.7798956742374532
           ],
-          "position_error_m": 3.940335324518379e-14,
-          "orientation_error_rad": 2.23801660842849e-14
+          "position_error_m": 3.940426479648696e-14,
+          "orientation_error_rad": 2.2483927575687356e-14
         },
         {
           "joint_angles_rad": [
@@ -1523,8 +1523,8 @@
             0.5342650564636973,
             0.6742440180787637
           ],
-          "position_error_m": 3.960080202697108e-14,
-          "orientation_error_rad": 2.20587645246423e-14
+          "position_error_m": 3.9610662479543346e-14,
+          "orientation_error_rad": 2.1851100233847636e-14
         },
         {
           "joint_angles_rad": [
@@ -1534,8 +1534,8 @@
             0.19289620026055498,
             0.24609953484461422
           ],
-          "position_error_m": 4.285655072047371e-14,
-          "orientation_error_rad": 2.338777633794591e-14
+          "position_error_m": 4.287163478579407e-14,
+          "orientation_error_rad": 2.3385964618040232e-14
         },
         {
           "joint_angles_rad": [
@@ -1545,8 +1545,8 @@
             -1.2913967727549038,
             1.5140676241781414
           ],
-          "position_error_m": 4.203417041980757e-14,
-          "orientation_error_rad": 2.2433378950216073e-14
+          "position_error_m": 4.205314346275564e-14,
+          "orientation_error_rad": 2.2453804892448567e-14
         },
         {
           "joint_angles_rad": [
@@ -1556,8 +1556,8 @@
             1.5025160530640802,
             0.2823350207510056
           ],
-          "position_error_m": 4.127732908861971e-14,
-          "orientation_error_rad": 2.2786228825308795e-14
+          "position_error_m": 4.126019304184409e-14,
+          "orientation_error_rad": 2.2628153265603227e-14
         },
         {
           "joint_angles_rad": [
@@ -1567,8 +1567,8 @@
             -0.9578483571419814,
             0.24406371240698088
           ],
-          "position_error_m": 4.282448374467429e-14,
-          "orientation_error_rad": 2.2584854672355288e-14
+          "position_error_m": 4.28509150010415e-14,
+          "orientation_error_rad": 2.258225789060507e-14
         },
         {
           "joint_angles_rad": [
@@ -1579,7 +1579,7 @@
             0.7668548476741552
           ],
           "position_error_m": 3.972621175332512e-14,
-          "orientation_error_rad": 2.2560319370792226e-14
+          "orientation_error_rad": 2.2577859949788878e-14
         },
         {
           "joint_angles_rad": [
@@ -1589,8 +1589,8 @@
             0.709625662224497,
             -1.295065378530191
           ],
-          "position_error_m": 4.220521683110228e-14,
-          "orientation_error_rad": 2.249839485289924e-14
+          "position_error_m": 4.223309764125915e-14,
+          "orientation_error_rad": 2.259666494299304e-14
         },
         {
           "joint_angles_rad": [
@@ -1600,8 +1600,8 @@
             1.2962900354362215,
             0.8354032635522146
           ],
-          "position_error_m": 4.0493028194020974e-14,
-          "orientation_error_rad": 2.2648580527688106e-14
+          "position_error_m": 4.0517489083623596e-14,
+          "orientation_error_rad": 2.2600304467595126e-14
         },
         {
           "joint_angles_rad": [
@@ -1611,8 +1611,8 @@
             -1.3498598852273482,
             1.1587899413665865
           ],
-          "position_error_m": 4.014531054809125e-14,
-          "orientation_error_rad": 2.235118974702697e-14
+          "position_error_m": 4.0153995296054283e-14,
+          "orientation_error_rad": 2.2394941189832873e-14
         },
         {
           "joint_angles_rad": [
@@ -1622,8 +1622,8 @@
             0.5457996916469026,
             -0.5717152374247206
           ],
-          "position_error_m": 4.021820318613867e-14,
-          "orientation_error_rad": 2.2424195561259962e-14
+          "position_error_m": 4.021822234094255e-14,
+          "orientation_error_rad": 2.2369408189209786e-14
         },
         {
           "joint_angles_rad": [
@@ -1633,8 +1633,8 @@
             0.9100117370926353,
             -1.2794278222369506
           ],
-          "position_error_m": 3.993414163549449e-14,
-          "orientation_error_rad": 2.227735244635422e-14
+          "position_error_m": 3.996177616488012e-14,
+          "orientation_error_rad": 2.2244697064785267e-14
         },
         {
           "joint_angles_rad": [
@@ -1644,8 +1644,8 @@
             -0.0350412109547229,
             1.5352816691519582
           ],
-          "position_error_m": 4.1741368305273476e-14,
-          "orientation_error_rad": 2.2211628080420846e-14
+          "position_error_m": 4.1755099498053923e-14,
+          "orientation_error_rad": 2.2196674555845412e-14
         },
         {
           "joint_angles_rad": [
@@ -1655,8 +1655,8 @@
             -0.058871886291056885,
             0.9849963126768944
           ],
-          "position_error_m": 4.0790369113062485e-14,
-          "orientation_error_rad": 2.2750203958366618e-14
+          "position_error_m": 4.079492749659133e-14,
+          "orientation_error_rad": 2.2522911033170018e-14
         },
         {
           "joint_angles_rad": [
@@ -1666,8 +1666,8 @@
             -1.365743266100437,
             1.0523964805949513
           ],
-          "position_error_m": 4.060738000574814e-14,
-          "orientation_error_rad": 2.3335032404275405e-14
+          "position_error_m": 4.060337925037294e-14,
+          "orientation_error_rad": 2.375025014194151e-14
         },
         {
           "joint_angles_rad": [
@@ -1677,8 +1677,8 @@
             0.8833860155823752,
             -0.04544270174524212
           ],
-          "position_error_m": 4.217501498647863e-14,
-          "orientation_error_rad": 2.2694908501574253e-14
+          "position_error_m": 4.2195251225764686e-14,
+          "orientation_error_rad": 2.2749742250508224e-14
         },
         {
           "joint_angles_rad": [
@@ -1688,8 +1688,8 @@
             0.6547668355909182,
             0.9084060415836084
           ],
-          "position_error_m": 4.042475958447114e-14,
-          "orientation_error_rad": 2.2400203675888002e-14
+          "position_error_m": 4.045481548886482e-14,
+          "orientation_error_rad": 2.264349059011948e-14
         },
         {
           "joint_angles_rad": [
@@ -1699,8 +1699,8 @@
             -0.8629061491534722,
             -0.43257233121539884
           ],
-          "position_error_m": 4.1338134306139227e-14,
-          "orientation_error_rad": 2.26376965766872e-14
+          "position_error_m": 4.1364411844744646e-14,
+          "orientation_error_rad": 2.264229448013482e-14
         },
         {
           "joint_angles_rad": [
@@ -1710,8 +1710,8 @@
             -0.2923321059119286,
             -1.5698516809639795
           ],
-          "position_error_m": 4.130951237210564e-14,
-          "orientation_error_rad": 2.324685920717025e-14
+          "position_error_m": 4.1324552788415156e-14,
+          "orientation_error_rad": 2.342367869874228e-14
         },
         {
           "joint_angles_rad": [
@@ -1721,8 +1721,8 @@
             0.6402118756347166,
             1.008775103545592
           ],
-          "position_error_m": 3.95649524045745e-14,
-          "orientation_error_rad": 2.223798473711389e-14
+          "position_error_m": 3.959912641169154e-14,
+          "orientation_error_rad": 2.2309824807844157e-14
         },
         {
           "joint_angles_rad": [
@@ -1732,8 +1732,8 @@
             1.5069865226639125,
             1.4890659242002902
           ],
-          "position_error_m": 3.926360040315259e-14,
-          "orientation_error_rad": 2.1749979267949177e-14
+          "position_error_m": 3.925111732001709e-14,
+          "orientation_error_rad": 2.1713031980094095e-14
         },
         {
           "joint_angles_rad": [
@@ -1754,8 +1754,8 @@
             0.22206280397677003,
             -1.2759730821938138
           ],
-          "position_error_m": 4.1024207854332137e-14,
-          "orientation_error_rad": 2.2879954688073658e-14
+          "position_error_m": 4.102153183465711e-14,
+          "orientation_error_rad": 2.292724397378048e-14
         },
         {
           "joint_angles_rad": [
@@ -1765,8 +1765,8 @@
             -0.22449944208083839,
             -0.23958588890801424
           ],
-          "position_error_m": 4.298051314265897e-14,
-          "orientation_error_rad": 2.252076356557731e-14
+          "position_error_m": 4.2955731770107415e-14,
+          "orientation_error_rad": 2.252015637981726e-14
         },
         {
           "joint_angles_rad": [
@@ -1777,7 +1777,7 @@
             1.0171891368960564
           ],
           "position_error_m": 4.182419897878042e-14,
-          "orientation_error_rad": 2.2646325915783152e-14
+          "orientation_error_rad": 2.270545198284857e-14
         },
         {
           "joint_angles_rad": [
@@ -1787,8 +1787,8 @@
             0.664405452979385,
             0.21685111666152657
           ],
-          "position_error_m": 3.9413848250023116e-14,
-          "orientation_error_rad": 2.2447918065657566e-14
+          "position_error_m": 3.937522469928232e-14,
+          "orientation_error_rad": 2.2195585608325615e-14
         },
         {
           "joint_angles_rad": [
@@ -1798,8 +1798,8 @@
             1.56140388547505,
             -0.4694959067209825
           ],
-          "position_error_m": 3.940736892261201e-14,
-          "orientation_error_rad": 2.2426915762077726e-14
+          "position_error_m": 3.939968788735929e-14,
+          "orientation_error_rad": 2.239049234860356e-14
         },
         {
           "joint_angles_rad": [
@@ -1809,8 +1809,8 @@
             -0.19091794122474903,
             0.2776543025062841
           ],
-          "position_error_m": 4.303745726264321e-14,
-          "orientation_error_rad": 2.272300766481877e-14
+          "position_error_m": 4.3046327633673975e-14,
+          "orientation_error_rad": 2.2836811722199635e-14
         },
         {
           "joint_angles_rad": [
@@ -1820,8 +1820,8 @@
             -0.9719535993844243,
             1.1402410491693908
           ],
-          "position_error_m": 4.191447808368035e-14,
-          "orientation_error_rad": 2.2632324438608328e-14
+          "position_error_m": 4.194521361337779e-14,
+          "orientation_error_rad": 2.2624890044664158e-14
         },
         {
           "joint_angles_rad": [
@@ -1831,8 +1831,8 @@
             -1.300580289548289,
             0.6162373801598933
           ],
-          "position_error_m": 4.10852699090522e-14,
-          "orientation_error_rad": 2.2554057990984983e-14
+          "position_error_m": 4.111050979051177e-14,
+          "orientation_error_rad": 2.2525661959741217e-14
         },
         {
           "joint_angles_rad": [
@@ -1842,8 +1842,8 @@
             -0.43095755140277947,
             -0.5343980029820579
           ],
-          "position_error_m": 4.2963945603844937e-14,
-          "orientation_error_rad": 2.2495979531766037e-14
+          "position_error_m": 4.2979475232971455e-14,
+          "orientation_error_rad": 2.2548915922286036e-14
         },
         {
           "joint_angles_rad": [
@@ -1853,8 +1853,8 @@
             -1.4953566319766083,
             -1.0575603318480464
           ],
-          "position_error_m": 4.114868752161277e-14,
-          "orientation_error_rad": 2.2908028908434824e-14
+          "position_error_m": 4.116694119248712e-14,
+          "orientation_error_rad": 2.2715908171801723e-14
         },
         {
           "joint_angles_rad": [
@@ -1864,8 +1864,8 @@
             -0.871938372182338,
             0.18141938132566682
           ],
-          "position_error_m": 3.894733341093396e-14,
-          "orientation_error_rad": 2.292103198605301e-14
+          "position_error_m": 3.8964775323248205e-14,
+          "orientation_error_rad": 2.2868384743883327e-14
         },
         {
           "joint_angles_rad": [
@@ -1876,7 +1876,7 @@
             0.34978079257932637
           ],
           "position_error_m": 4.275854525728834e-14,
-          "orientation_error_rad": 2.2700836266316082e-14
+          "orientation_error_rad": 2.270614024288666e-14
         },
         {
           "joint_angles_rad": [
@@ -1886,8 +1886,8 @@
             -0.3324220784961933,
             1.5457365603070001
           ],
-          "position_error_m": 4.374976953537584e-14,
-          "orientation_error_rad": 2.22196731429744e-14
+          "position_error_m": 4.375559374080111e-14,
+          "orientation_error_rad": 2.215733007867838e-14
         },
         {
           "joint_angles_rad": [
@@ -1897,8 +1897,8 @@
             0.6164279358579612,
             -1.1418325395311644
           ],
-          "position_error_m": 3.972742616078017e-14,
-          "orientation_error_rad": 2.1975743198443064e-14
+          "position_error_m": 3.9731486035963035e-14,
+          "orientation_error_rad": 2.1917262823948552e-14
         },
         {
           "joint_angles_rad": [
@@ -1908,8 +1908,8 @@
             -0.49718012748899554,
             -0.820132517524091
           ],
-          "position_error_m": 4.0858697359880254e-14,
-          "orientation_error_rad": 2.3010933174279945e-14
+          "position_error_m": 4.089676285471959e-14,
+          "orientation_error_rad": 2.300434114650833e-14
         },
         {
           "joint_angles_rad": [
@@ -1930,8 +1930,8 @@
             1.4939309115653727,
             -1.2331466556687831
           ],
-          "position_error_m": 4.203050194024669e-14,
-          "orientation_error_rad": 2.2848354191362842e-14
+          "position_error_m": 4.2026758672831484e-14,
+          "orientation_error_rad": 2.2819195894913094e-14
         },
         {
           "joint_angles_rad": [
@@ -1941,8 +1941,8 @@
             0.781489158210765,
             0.4514618248373732
           ],
-          "position_error_m": 4.10589239510872e-14,
-          "orientation_error_rad": 2.2742534927500692e-14
+          "position_error_m": 4.106787976834114e-14,
+          "orientation_error_rad": 2.2736591183021083e-14
         },
         {
           "joint_angles_rad": [
@@ -1952,8 +1952,8 @@
             0.062307440626522714,
             -0.2302123165205361
           ],
-          "position_error_m": 4.077210287880936e-14,
-          "orientation_error_rad": 2.2257740400655626e-14
+          "position_error_m": 4.077159921690772e-14,
+          "orientation_error_rad": 2.22404755859258e-14
         },
         {
           "joint_angles_rad": [
@@ -1963,8 +1963,8 @@
             -1.0600684738137574,
             1.106005021344207
           ],
-          "position_error_m": 4.286745153220042e-14,
-          "orientation_error_rad": 2.2133824040048274e-14
+          "position_error_m": 4.287146744664127e-14,
+          "orientation_error_rad": 2.2127597385635366e-14
         },
         {
           "joint_angles_rad": [
@@ -1974,8 +1974,8 @@
             1.0178816986627996,
             0.5676428330155141
           ],
-          "position_error_m": 3.9592727872688414e-14,
-          "orientation_error_rad": 2.229644078675627e-14
+          "position_error_m": 3.957524213577197e-14,
+          "orientation_error_rad": 2.2293684066986955e-14
         },
         {
           "joint_angles_rad": [
@@ -1986,7 +1986,7 @@
             1.0141285178563435
           ],
           "position_error_m": 3.925061683462924e-14,
-          "orientation_error_rad": 2.2119333420280962e-14
+          "orientation_error_rad": 2.211952170831385e-14
         },
         {
           "joint_angles_rad": [
@@ -1996,8 +1996,8 @@
             -0.23292949080182868,
             -0.3243635128158082
           ],
-          "position_error_m": 4.2043211096230825e-14,
-          "orientation_error_rad": 2.314631230680149e-14
+          "position_error_m": 4.204001870594527e-14,
+          "orientation_error_rad": 2.3137228505098228e-14
         },
         {
           "joint_angles_rad": [
@@ -2007,8 +2007,8 @@
             -1.5554043606598997,
             -0.5563107023128293
           ],
-          "position_error_m": 4.041025465537366e-14,
-          "orientation_error_rad": 2.2908197840525324e-14
+          "position_error_m": 4.043567773326915e-14,
+          "orientation_error_rad": 2.2879086349462008e-14
         },
         {
           "joint_angles_rad": [
@@ -2018,8 +2018,8 @@
             -1.0269437964951922,
             0.27136560486375716
           ],
-          "position_error_m": 4.117016035011631e-14,
-          "orientation_error_rad": 2.2593267178101414e-14
+          "position_error_m": 4.1157237754166756e-14,
+          "orientation_error_rad": 2.2608840067012464e-14
         },
         {
           "joint_angles_rad": [
@@ -2029,8 +2029,8 @@
             0.2342266210543993,
             1.5184407633332078
           ],
-          "position_error_m": 3.893291618495685e-14,
-          "orientation_error_rad": 2.2740816570300047e-14
+          "position_error_m": 3.896880345317453e-14,
+          "orientation_error_rad": 2.2733599799009166e-14
         },
         {
           "joint_angles_rad": [
@@ -2040,8 +2040,8 @@
             0.41309278463847043,
             -0.4512440858983997
           ],
-          "position_error_m": 3.925141846685051e-14,
-          "orientation_error_rad": 2.2510337580863632e-14
+          "position_error_m": 3.924938951440407e-14,
+          "orientation_error_rad": 2.242936141254409e-14
         },
         {
           "joint_angles_rad": [
@@ -2051,8 +2051,8 @@
             -1.0364789555880722,
             0.2425245094084738
           ],
-          "position_error_m": 4.2073253500418837e-14,
-          "orientation_error_rad": 2.2625356910544808e-14
+          "position_error_m": 4.208741181121855e-14,
+          "orientation_error_rad": 2.2652843204354493e-14
         },
         {
           "joint_angles_rad": [
@@ -2063,7 +2063,7 @@
             0.39251360730858176
           ],
           "position_error_m": 4.060302350318816e-14,
-          "orientation_error_rad": 2.2723990044691818e-14
+          "orientation_error_rad": 2.2716131670774627e-14
         },
         {
           "joint_angles_rad": [
@@ -2073,8 +2073,8 @@
             0.2685420386574684,
             0.7316331881826885
           ],
-          "position_error_m": 4.121578217122061e-14,
-          "orientation_error_rad": 2.309490995648751e-14
+          "position_error_m": 4.122918858261208e-14,
+          "orientation_error_rad": 2.3095148143561953e-14
         },
         {
           "joint_angles_rad": [
@@ -2084,8 +2084,8 @@
             -0.8508951237754107,
             0.6135596617286718
           ],
-          "position_error_m": 4.116239125429315e-14,
-          "orientation_error_rad": 2.258828218314356e-14
+          "position_error_m": 4.119153256526407e-14,
+          "orientation_error_rad": 2.2493576263530156e-14
         },
         {
           "joint_angles_rad": [
@@ -2095,8 +2095,8 @@
             0.5376860340133272,
             0.09806834334954484
           ],
-          "position_error_m": 4.1391688071591235e-14,
-          "orientation_error_rad": 2.3073119193304262e-14
+          "position_error_m": 4.1416769119137424e-14,
+          "orientation_error_rad": 2.310939626574108e-14
         },
         {
           "joint_angles_rad": [
@@ -2106,8 +2106,8 @@
             -0.7594033689009956,
             -1.0802822454931909
           ],
-          "position_error_m": 4.0176617547807885e-14,
-          "orientation_error_rad": 2.2535909333629256e-14
+          "position_error_m": 4.017456341252e-14,
+          "orientation_error_rad": 2.2453041247531962e-14
         },
         {
           "joint_angles_rad": [
@@ -2118,7 +2118,7 @@
             0.23788796548823132
           ],
           "position_error_m": 3.9352426835654616e-14,
-          "orientation_error_rad": 2.2842518343062956e-14
+          "orientation_error_rad": 2.288267523394383e-14
         },
         {
           "joint_angles_rad": [
@@ -2128,8 +2128,8 @@
             -1.053116357625297,
             1.1841696085787663
           ],
-          "position_error_m": 3.9430617352289476e-14,
-          "orientation_error_rad": 2.2770402194372093e-14
+          "position_error_m": 3.9431474546657776e-14,
+          "orientation_error_rad": 2.2863563955226655e-14
         },
         {
           "joint_angles_rad": [
@@ -2150,8 +2150,8 @@
             0.018763583301760756,
             0.9912051756910794
           ],
-          "position_error_m": 4.083951896925366e-14,
-          "orientation_error_rad": 2.3094078562712445e-14
+          "position_error_m": 4.085245485158162e-14,
+          "orientation_error_rad": 2.3036062866948723e-14
         },
         {
           "joint_angles_rad": [
@@ -2161,8 +2161,8 @@
             -0.9681849833806355,
             -1.3589784618438228
           ],
-          "position_error_m": 4.329560439866972e-14,
-          "orientation_error_rad": 2.2278155020590776e-14
+          "position_error_m": 4.3311650848898805e-14,
+          "orientation_error_rad": 2.2298387926359844e-14
         },
         {
           "joint_angles_rad": [
@@ -2173,7 +2173,7 @@
             -0.7001953763834798
           ],
           "position_error_m": 3.913320607248245e-14,
-          "orientation_error_rad": 2.2433213266021035e-14
+          "orientation_error_rad": 2.24512595509727e-14
         },
         {
           "joint_angles_rad": [
@@ -2183,8 +2183,8 @@
             -0.4544339497636054,
             0.4317207388237869
           ],
-          "position_error_m": 4.154253368002082e-14,
-          "orientation_error_rad": 2.290199441772612e-14
+          "position_error_m": 4.15689321963929e-14,
+          "orientation_error_rad": 2.2853826776726837e-14
         },
         {
           "joint_angles_rad": [
@@ -2194,8 +2194,8 @@
             0.38925206949932245,
             0.28872110858990574
           ],
-          "position_error_m": 3.995762461246678e-14,
-          "orientation_error_rad": 2.250751915119831e-14
+          "position_error_m": 3.9971486739522423e-14,
+          "orientation_error_rad": 2.25342249478324e-14
         },
         {
           "joint_angles_rad": [
@@ -2216,8 +2216,8 @@
             -0.22611764221011343,
             1.077612507429115
           ],
-          "position_error_m": 4.135479709119674e-14,
-          "orientation_error_rad": 2.2741479792700116e-14
+          "position_error_m": 4.1394910106354934e-14,
+          "orientation_error_rad": 2.2745793971327062e-14
         }
       ]
     },
@@ -2235,8 +2235,8 @@
             -2.56368747556491,
             -0.5062910761456725
           ],
-          "position_error_m": 5.70878387837498e-15,
-          "orientation_error_rad": 9.465313330944072e-14
+          "position_error_m": 5.693709170870735e-15,
+          "orientation_error_rad": 9.431297728972715e-14
         },
         {
           "joint_angles_rad": [
@@ -2285,7 +2285,7 @@
             0.9529465026214532,
             0.15413649608245883
           ],
-          "position_error_m": 1.9136264540195478e-15,
+          "position_error_m": 1.9216610223017024e-15,
           "orientation_error_rad": 6.437057903716628e-14
         },
         {
@@ -2355,8 +2355,8 @@
             1.6034594376257973,
             -0.27293168106470495
           ],
-          "position_error_m": 1.5251083154810557e-16,
-          "orientation_error_rad": 5.889873631249851e-14
+          "position_error_m": 1.5144096203564992e-16,
+          "orientation_error_rad": 5.884844470240906e-14
         },
         {
           "joint_angles_rad": [
@@ -2445,7 +2445,7 @@
             1.1792442921784962,
             0.45245184579237996
           ],
-          "position_error_m": 2.071384773129921e-15,
+          "position_error_m": 2.080337791388977e-15,
           "orientation_error_rad": 6.119711206626209e-14
         },
         {
@@ -2485,8 +2485,8 @@
             1.686019214867327,
             0.44351974618323387
           ],
-          "position_error_m": 5.662563649811877e-16,
-          "orientation_error_rad": 5.941665330503988e-14
+          "position_error_m": 5.687803545077696e-16,
+          "orientation_error_rad": 5.939295043283577e-14
         },
         {
           "joint_angles_rad": [
@@ -2515,8 +2515,8 @@
             1.4406701759805833,
             0.01336090375652399
           ],
-          "position_error_m": 1.1235023341395123e-15,
-          "orientation_error_rad": 5.884378231998907e-14
+          "position_error_m": 1.0965881260948974e-15,
+          "orientation_error_rad": 5.883168997898447e-14
         },
         {
           "joint_angles_rad": [
@@ -2546,7 +2546,7 @@
             -0.2870688632694207
           ],
           "position_error_m": 2.3333804100689366e-15,
-          "orientation_error_rad": 6.425118409790212e-14
+          "orientation_error_rad": 6.428099033017371e-14
         },
         {
           "joint_angles_rad": [
@@ -2565,8 +2565,8 @@
             -1.1816788593748608,
             -0.09121473664475593
           ],
-          "position_error_m": 6.343652024030197e-15,
-          "orientation_error_rad": 1.0125888669359348e-13
+          "position_error_m": 6.343811471090578e-15,
+          "orientation_error_rad": 1.0125828186020905e-13
         },
         {
           "joint_angles_rad": [
@@ -2615,7 +2615,7 @@
             -1.2630649074530502,
             0.21221675213992885
           ],
-          "position_error_m": 6.428629856462991e-15,
+          "position_error_m": 6.420510619392538e-15,
           "orientation_error_rad": 1.0210668346796269e-13
         },
         {
@@ -2625,8 +2625,8 @@
             2.0373063342579187,
             -0.4613280616583603
           ],
-          "position_error_m": 2.5604524381851537e-15,
-          "orientation_error_rad": 6.231222951530564e-14
+          "position_error_m": 2.5636472247045987e-15,
+          "orientation_error_rad": 6.235959765253264e-14
         },
         {
           "joint_angles_rad": [
@@ -2645,8 +2645,8 @@
             -1.2854738911951964,
             0.3802585886171429
           ],
-          "position_error_m": 6.1989901661131294e-15,
-          "orientation_error_rad": 1.0201040272490928e-13
+          "position_error_m": 6.190471558662947e-15,
+          "orientation_error_rad": 1.0198251266145327e-13
         },
         {
           "joint_angles_rad": [
@@ -2655,8 +2655,8 @@
             -0.8696166893179158,
             0.518276235038908
           ],
-          "position_error_m": 5.9950115828244306e-15,
-          "orientation_error_rad": 9.84246377891904e-14
+          "position_error_m": 6.006068635252795e-15,
+          "orientation_error_rad": 9.850758494323998e-14
         },
         {
           "joint_angles_rad": [
@@ -2736,7 +2736,7 @@
             -0.31928278571391294
           ],
           "position_error_m": 2.3256891030543447e-15,
-          "orientation_error_rad": 6.41826501506262e-14
+          "orientation_error_rad": 6.409898256111871e-14
         },
         {
           "joint_angles_rad": [
@@ -2746,7 +2746,7 @@
             -0.4479227664987591
           ],
           "position_error_m": 3.1905502745793093e-15,
-          "orientation_error_rad": 7.20880565590982e-14
+          "orientation_error_rad": 7.210435469743927e-14
         },
         {
           "joint_angles_rad": [
@@ -2825,8 +2825,8 @@
             -0.06229548614172975,
             0.5117605563840665
           ],
-          "position_error_m": 4.891546176653381e-15,
-          "orientation_error_rad": 8.488546844375198e-14
+          "position_error_m": 4.8838292076835664e-15,
+          "orientation_error_rad": 8.484594823273475e-14
         },
         {
           "joint_angles_rad": [
@@ -2875,8 +2875,8 @@
             1.1640299299394106,
             0.30280201386128336
           ],
-          "position_error_m": 1.1845862545811903e-15,
-          "orientation_error_rad": 6.124320001547882e-14
+          "position_error_m": 1.1629273597309805e-15,
+          "orientation_error_rad": 6.11476201470976e-14
         },
         {
           "joint_angles_rad": [
@@ -2905,8 +2905,8 @@
             1.3648794570167584,
             0.36848359361686367
           ],
-          "position_error_m": 6.221565855159899e-16,
-          "orientation_error_rad": 5.966702076080325e-14
+          "position_error_m": 6.185985971181273e-16,
+          "orientation_error_rad": 5.982488779992856e-14
         },
         {
           "joint_angles_rad": [
@@ -2915,8 +2915,8 @@
             1.7933779618588281,
             0.5045694398085868
           ],
-          "position_error_m": 1.820948247587706e-15,
-          "orientation_error_rad": 6.000005009907376e-14
+          "position_error_m": 1.8185537350857646e-15,
+          "orientation_error_rad": 6.013584577895975e-14
         },
         {
           "joint_angles_rad": [
@@ -2936,7 +2936,7 @@
             -0.02497872782310967
           ],
           "position_error_m": 2.395074757011515e-15,
-          "orientation_error_rad": 6.685473145813264e-14
+          "orientation_error_rad": 6.686210005749581e-14
         },
         {
           "joint_angles_rad": [
@@ -2976,7 +2976,7 @@
             0.3390630456320992
           ],
           "position_error_m": 2.4373920464842848e-15,
-          "orientation_error_rad": 6.305188667677679e-14
+          "orientation_error_rad": 6.30243625348746e-14
         },
         {
           "joint_angles_rad": [
@@ -2986,7 +2986,7 @@
             0.22146848432654254
           ],
           "position_error_m": 5.7291495526620455e-15,
-          "orientation_error_rad": 9.530373621475634e-14
+          "orientation_error_rad": 9.529341222701428e-14
         },
         {
           "joint_angles_rad": [
@@ -3005,8 +3005,8 @@
             -1.8373628928348433,
             -0.11343788474467248
           ],
-          "position_error_m": 6.4677926761047575e-15,
-          "orientation_error_rad": 1.0267160456371682e-13
+          "position_error_m": 6.42487950041334e-15,
+          "orientation_error_rad": 1.0262930746504622e-13
         },
         {
           "joint_angles_rad": [
@@ -3065,8 +3065,8 @@
             -1.8801072566187507,
             0.40151515894404743
           ],
-          "position_error_m": 5.6929744742323925e-15,
-          "orientation_error_rad": 1.0208190102530817e-13
+          "position_error_m": 5.68987290376231e-15,
+          "orientation_error_rad": 1.021097081351945e-13
         },
         {
           "joint_angles_rad": [
@@ -3126,7 +3126,7 @@
             -0.2733775058412831
           ],
           "position_error_m": 5.669497775808877e-15,
-          "orientation_error_rad": 9.90366628114831e-14
+          "orientation_error_rad": 9.907947118577289e-14
         },
         {
           "joint_angles_rad": [
@@ -3196,7 +3196,7 @@
             -0.034784216678376834
           ],
           "position_error_m": 5.546498364505338e-15,
-          "orientation_error_rad": 9.494838940702607e-14
+          "orientation_error_rad": 9.499726220219823e-14
         },
         {
           "joint_angles_rad": [
@@ -3206,7 +3206,7 @@
             0.269754513880085
           ],
           "position_error_m": 1.4715415615532493e-15,
-          "orientation_error_rad": 6.078080784018517e-14
+          "orientation_error_rad": 6.071159912587338e-14
         },
         {
           "joint_angles_rad": [
@@ -3216,7 +3216,7 @@
             -0.336084767650626
           ],
           "position_error_m": 7.536949292403083e-16,
-          "orientation_error_rad": 5.960842702968088e-14
+          "orientation_error_rad": 5.94990083750319e-14
         },
         {
           "joint_angles_rad": [

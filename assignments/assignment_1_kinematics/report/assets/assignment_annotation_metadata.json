@@ -1,0 +1,784 @@
+{
+  "method": "Native TeX/TikZ overlays on the original vector PDF crops",
+  "interpretation": "Source placements show parameter association, not a calibrated projection. Exact signed axes and distances are expressed in B.",
+  "input_sha256": {
+    "annotations/left_overlay.tex": "598746904d56c8c7a83881c0b26ab7af542798ec3bb29ce33d8bba263cade1e1",
+    "annotations/right_overlay.tex": "96352f30dd16507323855de4dafb110d883600fc4bb64c04227e2335e608709e",
+    "annotations/head_overlay.tex": "94b9bc5c5c4a7e3a06b916cfbb2a16df3d983f2799370bae4e2d7531504aa1f9",
+    "assets/assignment_left_original.pdf": "02a0757353c463bee0fd69d8c6bb2d04a8861b0042dd5a7f3b323ded47e70ae3",
+    "assets/assignment_right_original.pdf": "b5fa6cae7f5c69c0e424e1f25a023dc5d2edfd20af07f21001c9b2ca0905a8b7",
+    "assets/assignment_head_original.pdf": "ff7aaee6338826f7fbd4061fb8eec5012a82653b7cb686c5b03b86f93e306dab",
+    "annotations/annotation_pages.tex": "dbb997f647a1b5d9f45766eb12dd80954567e0c7b1c8e30bfc40cd7e7bce767c",
+    "annotated_figures.tex": "7ed23f5244db0a66b5786028e88fb6b3b5e6283694a5e9c5d47715d8bf936cdb"
+  },
+  "output_sha256": {
+    "assignment_left_annotated.pdf": "0e323ee5d04b5e441c90ba2437ef291e8a903ee64f7038bde0f36b9cd7bfe370",
+    "assignment_right_annotated.pdf": "decce75c5779edbaa43726575f1496096da4b3aa9aa7d11e63bf8ea865163a1c",
+    "assignment_head_annotated.pdf": "41938d1415974033013190da122f9c1e29b5c92cdd0ba3d67f0d62b809f7cc7c"
+  },
+  "geometry_checks": {
+    "left": {
+      "max_joint_axis_error": 2.1921253833127085e-14,
+      "max_joint_line_distance_m": 4.622730246965967e-15,
+      "site_position_error_m": 7.072897981783183e-15,
+      "site_rotation_matrix_error": 3.1208558862845817e-14,
+      "max_frame_orthonormal_error": 3.7441205901341115e-32,
+      "max_frame_determinant_error": 0.0,
+      "max_frame_right_hand_error": 2.465190328815662e-32,
+      "frame_axes_in_base": [
+        {
+          "frame": 0,
+          "origin_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x": [
+            -0.477091863,
+            0.878853432,
+            0.0
+          ],
+          "y": [
+            -0.878853432,
+            -0.477091863,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 1,
+          "origin_mm": [
+            -19.0,
+            35.0,
+            -0.0741
+          ],
+          "x": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 2,
+          "origin_mm": [
+            -35.06,
+            35.0,
+            -0.0741
+          ],
+          "x": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "y": [
+            -0.0,
+            -1.0,
+            0.0
+          ],
+          "z": [
+            1.0,
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "frame": 3,
+          "origin_mm": [
+            -35.06,
+            109.15,
+            -0.0741
+          ],
+          "x": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            -0.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 4,
+          "origin_mm": [
+            -35.06,
+            109.15,
+            -78.7241
+          ],
+          "x": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            -0.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 5,
+          "origin_mm": [
+            -35.06,
+            89.4,
+            -157.3741
+          ],
+          "x": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 6,
+          "origin_mm": [
+            -34.56,
+            89.4,
+            -193.5991
+          ],
+          "x": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "z": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "right": {
+      "max_joint_axis_error": 2.1444285463628394e-14,
+      "max_joint_line_distance_m": 4.054548910348014e-14,
+      "site_position_error_m": 4.1072044531205106e-14,
+      "site_rotation_matrix_error": 3.2172912572543314e-14,
+      "max_frame_orthonormal_error": 3.7441205901341115e-32,
+      "max_frame_determinant_error": 0.0,
+      "max_frame_right_hand_error": 2.465190328815662e-32,
+      "frame_axes_in_base": [
+        {
+          "frame": 0,
+          "origin_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x": [
+            -0.477091863,
+            -0.878853432,
+            0.0
+          ],
+          "y": [
+            0.878853432,
+            -0.477091863,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 1,
+          "origin_mm": [
+            -19.0,
+            -35.0,
+            -0.0741
+          ],
+          "x": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 2,
+          "origin_mm": [
+            -35.06,
+            -35.0,
+            -0.0741
+          ],
+          "x": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "y": [
+            -0.0,
+            -1.0,
+            0.0
+          ],
+          "z": [
+            1.0,
+            -0.0,
+            0.0
+          ]
+        },
+        {
+          "frame": 3,
+          "origin_mm": [
+            -35.06,
+            -109.15,
+            -0.0741
+          ],
+          "x": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            -0.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 4,
+          "origin_mm": [
+            -35.06,
+            -109.15,
+            -78.7241
+          ],
+          "x": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            -0.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 5,
+          "origin_mm": [
+            -35.06,
+            -91.8,
+            -157.3741
+          ],
+          "x": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            -0.0,
+            -1.0
+          ],
+          "z": [
+            0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "frame": 6,
+          "origin_mm": [
+            -34.56,
+            -91.8,
+            -193.5991
+          ],
+          "x": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "z": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "head": {
+      "max_joint_axis_error": 2.19618106358015e-14,
+      "max_joint_line_distance_m": 2.345376862165922e-15,
+      "site_position_error_m": 4.5832133918212116e-15,
+      "site_rotation_matrix_error": 1.182680872648071e-13,
+      "max_frame_orthonormal_error": 0.0,
+      "max_frame_determinant_error": 0.0,
+      "max_frame_right_hand_error": 0.0,
+      "frame_axes_in_base": [
+        {
+          "frame": 0,
+          "origin_mm": [
+            1.0,
+            19.15,
+            90.0009
+          ],
+          "x": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 1,
+          "origin_mm": [
+            1.0,
+            19.15,
+            90.0009
+          ],
+          "x": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "frame": 2,
+          "origin_mm": [
+            1.0,
+            0.1,
+            156.0009
+          ],
+          "x": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "z": [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "frame": 3,
+          "origin_mm": [
+            1.0,
+            0.1,
+            193.8509
+          ],
+          "x": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "frame": 4,
+          "origin_mm": [
+            6.0,
+            0.1,
+            193.8509
+          ],
+          "x": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y": [
+            -0.0,
+            0.0,
+            -1.0
+          ],
+          "z": [
+            -1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "frame": 5,
+          "origin_mm": [
+            6.0,
+            0.1,
+            236.3009
+          ],
+          "x": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    }
+  },
+  "construction_mm": {
+    "left": [
+      {
+        "row": 1,
+        "a_previous_mm": 39.824615503479755,
+        "d_i_mm": -0.0741,
+        "P_i_mm": [
+          -19.0,
+          35.0,
+          0.0
+        ],
+        "O_i_mm": [
+          -19.0,
+          35.0,
+          -0.0741
+        ]
+      },
+      {
+        "row": 2,
+        "a_previous_mm": 0.0,
+        "d_i_mm": -16.06,
+        "P_i_mm": [
+          -19.0,
+          35.0,
+          -0.0741
+        ],
+        "O_i_mm": [
+          -35.06,
+          35.0,
+          -0.0741
+        ]
+      },
+      {
+        "row": 3,
+        "a_previous_mm": 0.0,
+        "d_i_mm": 74.15,
+        "P_i_mm": [
+          -35.06,
+          35.0,
+          -0.0741
+        ],
+        "O_i_mm": [
+          -35.06,
+          109.15,
+          -0.0741
+        ]
+      },
+      {
+        "row": 4,
+        "a_previous_mm": 78.65,
+        "d_i_mm": 0.0,
+        "P_i_mm": [
+          -35.06,
+          109.15,
+          -78.7241
+        ],
+        "O_i_mm": [
+          -35.06,
+          109.15,
+          -78.7241
+        ]
+      },
+      {
+        "row": 5,
+        "a_previous_mm": 78.65,
+        "d_i_mm": -19.75,
+        "P_i_mm": [
+          -35.06,
+          109.15,
+          -157.3741
+        ],
+        "O_i_mm": [
+          -35.06,
+          89.4,
+          -157.3741
+        ]
+      },
+      {
+        "row": 6,
+        "a_previous_mm": 0.5,
+        "d_i_mm": -36.225,
+        "P_i_mm": [
+          -34.56,
+          89.4,
+          -157.3741
+        ],
+        "O_i_mm": [
+          -34.56,
+          89.4,
+          -193.5991
+        ]
+      }
+    ],
+    "right": [
+      {
+        "row": 1,
+        "a_previous_mm": 39.824615503479755,
+        "d_i_mm": -0.0741,
+        "P_i_mm": [
+          -19.0,
+          -35.0,
+          0.0
+        ],
+        "O_i_mm": [
+          -19.0,
+          -35.0,
+          -0.0741
+        ]
+      },
+      {
+        "row": 2,
+        "a_previous_mm": 0.0,
+        "d_i_mm": -16.06,
+        "P_i_mm": [
+          -19.0,
+          -35.0,
+          -0.0741
+        ],
+        "O_i_mm": [
+          -35.06,
+          -35.0,
+          -0.0741
+        ]
+      },
+      {
+        "row": 3,
+        "a_previous_mm": 0.0,
+        "d_i_mm": -74.15,
+        "P_i_mm": [
+          -35.06,
+          -35.0,
+          -0.0741
+        ],
+        "O_i_mm": [
+          -35.06,
+          -109.15,
+          -0.0741
+        ]
+      },
+      {
+        "row": 4,
+        "a_previous_mm": 78.65,
+        "d_i_mm": 0.0,
+        "P_i_mm": [
+          -35.06,
+          -109.15,
+          -78.7241
+        ],
+        "O_i_mm": [
+          -35.06,
+          -109.15,
+          -78.7241
+        ]
+      },
+      {
+        "row": 5,
+        "a_previous_mm": 78.65,
+        "d_i_mm": 17.35,
+        "P_i_mm": [
+          -35.06,
+          -109.15,
+          -157.3741
+        ],
+        "O_i_mm": [
+          -35.06,
+          -91.8,
+          -157.3741
+        ]
+      },
+      {
+        "row": 6,
+        "a_previous_mm": 0.5,
+        "d_i_mm": -36.225,
+        "P_i_mm": [
+          -34.56,
+          -91.8,
+          -157.3741
+        ],
+        "O_i_mm": [
+          -34.56,
+          -91.8,
+          -193.5991
+        ]
+      }
+    ],
+    "head": [
+      {
+        "row": 1,
+        "a_previous_mm": 0.0,
+        "d_i_mm": 0.0,
+        "P_i_mm": [
+          1.0,
+          19.15,
+          90.0009
+        ],
+        "O_i_mm": [
+          1.0,
+          19.15,
+          90.0009
+        ]
+      },
+      {
+        "row": 2,
+        "a_previous_mm": 66.0,
+        "d_i_mm": 19.05,
+        "P_i_mm": [
+          1.0,
+          19.15,
+          156.0009
+        ],
+        "O_i_mm": [
+          1.0,
+          0.1,
+          156.0009
+        ]
+      },
+      {
+        "row": 3,
+        "a_previous_mm": 0.0,
+        "d_i_mm": 37.85,
+        "P_i_mm": [
+          1.0,
+          0.1,
+          156.0009
+        ],
+        "O_i_mm": [
+          1.0,
+          0.1,
+          193.8509
+        ]
+      },
+      {
+        "row": 4,
+        "a_previous_mm": 0.0,
+        "d_i_mm": -5.0,
+        "P_i_mm": [
+          1.0,
+          0.1,
+          193.8509
+        ],
+        "O_i_mm": [
+          6.0,
+          0.1,
+          193.8509
+        ]
+      },
+      {
+        "row": 5,
+        "a_previous_mm": 0.0,
+        "d_i_mm": 42.45,
+        "P_i_mm": [
+          6.0,
+          0.1,
+          193.8509
+        ],
+        "O_i_mm": [
+          6.0,
+          0.1,
+          236.3009
+        ]
+      }
+    ]
+  },
+  "source_sha256_lf": {
+    "assignments/assignment_1_kinematics/forward_kinematics.py": "16264e9e7ad86c490fda2e4d7db93d41f10d4aad1c2191cb1107d4692a234742",
+    "assignments/assignment_1_kinematics/inverse_kinematics.py": "20aa424c8da9c6a249caa1e9cea600cc374f5cbc096457b523ec176e7b50297b",
+    "playground/open_duck_mini_v2/xmls/open_duck_mini_v2.xml": "968b18de4e3f55b31252155f52779fa490989f5da92bc9b308e0bb4e81d6bb5c",
+    "playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml": "f087afa8bbe13f92e934d4a03571f2134abe7d5bb963fce22eec04822e9ae6d0"
+  },
+  "standalone_pdf_sha256": "3cdde1117ffd7fc3be58c27174a98c32deafef825c782ae006587c5edf590756"
+}

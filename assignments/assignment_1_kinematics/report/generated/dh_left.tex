@@ -1,9 +1,18 @@
-\begin{table}[t]
+\begin{figure}[H]
 \centering
-\footnotesize
+\includegraphics[width=\linewidth,height=125mm,keepaspectratio]{dh_left_annotated_panel.pdf}
+\caption{\small Left leg: annotated assignment Fig.~2 \cite{assignment}. $O_i$: D-H origins; $P_i$: intermediate points. Orange: $a_{i-1}$; purple: $d_i$. Boxes give positive XYZ directions in $B$.}
+\label{fig:dh-left}
+\end{figure}
+\begin{table}[H]
+\centering
+\small
 \setlength{\tabcolsep}{4pt}
-\caption{Modified D--H parameters for the left leg. Lengths $a,d$ are in metres; angles $\alpha,\theta,q$ are in radians. The starred final row is the fixed site transform.}
+\caption{\small Left leg: D--H parameters (m, rad) and zero-pose axes in frame $B$.}
 \label{tab:dh-left}
+\medskip
+\begin{minipage}[t]{0.54\linewidth}
+\centering
 \begin{tabular}{ccccc}
 \toprule
 $i$ & $\alpha_{i-1}$ & $a_{i-1}$ & $d_i$ & $\theta_i$ \\
@@ -16,4 +25,26 @@ $5$ & $0$ & $0.07865$ & $-0.01975$ & $-q_{5}-\pi/2$ \\
 $6^{*}$ & $\pi/2$ & $0.0005$ & $-0.036225$ & $0$ \\
 \bottomrule
 \end{tabular}
+\par\medskip
+{\footnotesize\raggedright $^*$ Fixed foot site, not a sixth joint. Roll-axis height: $45.9409-46.015=-0.0741\,\mathrm{mm}$.\par}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.43\linewidth}
+\centering
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{cccc}
+\toprule
+$i$ & $+x_i$ & $+y_i$ & $+z_i$ \\
+\midrule
+$0$ & $-sX+cY$ & $-cX-sY$ & $+Z$ \\
+$1$ & $+Y$ & $-X$ & $+Z$ \\
+$2$ & $+Z$ & $-Y$ & $+X$ \\
+$3$ & $-Z$ & $-X$ & $+Y$ \\
+$4$ & $-Z$ & $-X$ & $+Y$ \\
+$5$ & $+X$ & $-Z$ & $+Y$ \\
+$6^{*}$ & $+X$ & $+Y$ & $+Z$ \\
+\bottomrule
+\end{tabular}
+\par\medskip
+{\footnotesize\raggedright $X,Y,Z$ are base-frame unit axes. $s=\sin\beta$, $c=\cos\beta$.\par}
+\end{minipage}
 \end{table}

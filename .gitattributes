@@ -1,2 +1,8 @@
 # Keep generated reports binary, including PDF streams that resemble text.
 *.pdf binary
+# Keep executable/model sources stable across Windows and Unix checkouts.
+*.py text eol=lf
+*.xml text eol=lf
+*.ps1 text eol=crlf
+# Preserve TeX diagnostics verbatim, including engine-generated whitespace.
+output/latex/*.log -whitespace

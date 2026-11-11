@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "method": "Native graphicx PDF clipping; original annotated guide PDFs are unchanged.",
+  "crop_coordinates": "millimetres from the upper-left corner of the source page",
+  "panels": [
+    {
+      "chain": "left",
+      "source_pdf": "assets/assignment_left_annotated.pdf",
+      "source_pdf_sha256": "0e323ee5d04b5e441c90ba2437ef291e8a903ee64f7038bde0f36b9cd7bfe370",
+      "source_tex": "annotations/panel_left.tex",
+      "source_tex_sha256": "7092f16f0d025cf71859906d553edad4e378f582988207d8fb03cff54dae7f78",
+      "output_pdf": "assets/dh_left_annotated_panel.pdf",
+      "output_pdf_sha256": "67765c8f0840cf32862ee05b6353fd6be38131054724042f167e2f172eb6e7a0",
+      "output_png": "assets/dh_left_annotated_panel.png",
+      "output_png_sha256": "f41503bee75bbbbc06be39b3e644f1134775704dc4b8f27206e737cf53ddde94",
+      "crop_bounds_mm": {
+        "left": 13.5,
+        "top": 24.5,
+        "right": 135.5,
+        "bottom": 158.0
+      },
+      "output_page_size_mm": {
+        "width": 122.0,
+        "height": 133.5
+      },
+      "recommended_display_height_mm": 125.0,
+      "rasterized": false
+    },
+    {
+      "chain": "right",
+      "source_pdf": "assets/assignment_right_annotated.pdf",
+      "source_pdf_sha256": "decce75c5779edbaa43726575f1496096da4b3aa9aa7d11e63bf8ea865163a1c",
+      "source_tex": "annotations/panel_right.tex",
+      "source_tex_sha256": "b3e6dd19f12431e4e12aaa89290cf3dd959c37e6161199b491a5d1300db41114",
+      "output_pdf": "assets/dh_right_annotated_panel.pdf",
+      "output_pdf_sha256": "1f50d983135c5bd0171648f18487718a93e5c637cedbaa4147e1f78850ad10c9",
+      "output_png": "assets/dh_right_annotated_panel.png",
+      "output_png_sha256": "6fc2928544330f2bac831294a84744626b734b4d99462e4ae756ca270fab79b2",
+      "crop_bounds_mm": {
+        "left": 9.5,
+        "top": 32.2,
+        "right": 135.0,
+        "bottom": 178.0
+      },
+      "output_page_size_mm": {
+        "width": 125.5,
+        "height": 145.8
+      },
+      "recommended_display_height_mm": 130.0,
+      "rasterized": false
+    },
+    {
+      "chain": "head",
+      "source_pdf": "assets/assignment_head_annotated.pdf",
+      "source_pdf_sha256": "41938d1415974033013190da122f9c1e29b5c92cdd0ba3d67f0d62b809f7cc7c",
+      "source_tex": "annotations/panel_head.tex",
+      "source_tex_sha256": "ab5ce9f2888cc1c1e12c35e3a084b85e338a44f98a6cbfa845de0384011a717a",
+      "output_pdf": "assets/dh_head_annotated_panel.pdf",
+      "output_pdf_sha256": "97908c388c6e1b95ef75287c1a2f6c95833c48878e791f0b0d8ffcdc91fb3871",
+      "output_png": "assets/dh_head_annotated_panel.png",
+      "output_png_sha256": "f0fcdc14156566c156fa8362332ac12748eea0f6e689c58821b569b96dba5b06",
+      "crop_bounds_mm": {
+        "left": 4.5,
+        "top": 41.5,
+        "right": 122.5,
+        "bottom": 166.5
+      },
+      "output_page_size_mm": {
+        "width": 118.0,
+        "height": 125.0
+      },
+      "recommended_display_height_mm": 125.0,
+      "rasterized": false
+    }
+  ]
+}

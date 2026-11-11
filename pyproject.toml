@@ -1,10 +1,21 @@
 [project]
 name = "Open_Duck_Playground"
 version = "0.1.0"
-description = "Add your description here"
+description = "ROSE5710 Assignment 1: Open Duck Mini kinematics"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
+    "numpy==1.26.4",
+    "scipy==1.14.1",
+    "mujoco==3.2.4",
+    "etils[epath]==1.13.0",
+]
+
+[project.optional-dependencies]
+report = ["matplotlib==3.10.7"]
+# Original upstream training stack; not needed by Assignment 1.
+# Its CUDA dependencies require a compatible Linux training environment.
+training = [
     "framesviewer>=1.0.2",
     "jax[cuda12]>=0.5.0",
     "jaxlib>=0.5.0",

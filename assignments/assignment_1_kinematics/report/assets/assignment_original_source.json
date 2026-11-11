@@ -1,0 +1,86 @@
+{
+  "source": "Assignment 1.pdf",
+  "source_sha256": "4695838fcbb9b4a44766b67bd5e0596a8d4610a03c7d5eee7c4f3e5a33548fc4",
+  "source_page_size_pt": {
+    "width": 595.276,
+    "height": 841.89
+  },
+  "coordinate_system": "PDF points (1/72 inch), origin at upper-left; x increases right, y increases down",
+  "method": "Lossless source-PDF inclusion with pdfLaTeX graphicx page/trim/clip and standalone; no drawing is reconstructed or rasterized.",
+  "retained_content": "Original chain, joint and dimension labels, rotation arrows, base/site coordinate axes, and Foot site or Head site label.",
+  "excluded_content": "Task instructions, dimension tables, figure captions, blank D-H tables, and page numbers.",
+  "figures": [
+    {
+      "chain": "left",
+      "output": "assignment_left_original.pdf",
+      "output_sha256": "02a0757353c463bee0fd69d8c6bb2d04a8861b0042dd5a7f3b323ded47e70ae3",
+      "source_page_1_based": 3,
+      "source_figure": 2,
+      "crop_bounds_pt": {
+        "left": 50.0,
+        "top": 114.0,
+        "right": 305.0,
+        "bottom": 493.0
+      },
+      "graphicx_trim_pt": {
+        "left": 50.0,
+        "bottom": 348.89,
+        "right": 290.276,
+        "top": 114.0
+      },
+      "output_page_size_pt": {
+        "width": 254.999,
+        "height": 378.999
+      },
+      "rasterized": false
+    },
+    {
+      "chain": "right",
+      "output": "assignment_right_original.pdf",
+      "output_sha256": "b5fa6cae7f5c69c0e424e1f25a023dc5d2edfd20af07f21001c9b2ca0905a8b7",
+      "source_page_1_based": 4,
+      "source_figure": 3,
+      "crop_bounds_pt": {
+        "left": 190.0,
+        "top": 115.0,
+        "right": 406.0,
+        "bottom": 434.0
+      },
+      "graphicx_trim_pt": {
+        "left": 190.0,
+        "bottom": 407.89,
+        "right": 189.276,
+        "top": 115.0
+      },
+      "output_page_size_pt": {
+        "width": 215.999,
+        "height": 318.999
+      },
+      "rasterized": false
+    },
+    {
+      "chain": "head",
+      "output": "assignment_head_original.pdf",
+      "output_sha256": "ff7aaee6338826f7fbd4061fb8eec5012a82653b7cb686c5b03b86f93e306dab",
+      "source_page_1_based": 5,
+      "source_figure": 4,
+      "crop_bounds_pt": {
+        "left": 48.0,
+        "top": 114.0,
+        "right": 326.0,
+        "bottom": 404.0
+      },
+      "graphicx_trim_pt": {
+        "left": 48.0,
+        "bottom": 437.89,
+        "right": 269.276,
+        "top": 114.0
+      },
+      "output_page_size_pt": {
+        "width": 277.999,
+        "height": 289.999
+      },
+      "rasterized": false
+    }
+  ]
+}

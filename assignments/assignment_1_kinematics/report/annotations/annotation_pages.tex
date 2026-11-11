@@ -1,0 +1,19 @@
+% Large landscape annotation sheets; background drawings remain vectors.
+\clearpage
+\setlength{\paperwidth}{420mm}
+\setlength{\paperheight}{297mm}
+\ifdefined\pdfpagewidth
+  \pdfpagewidth=\paperwidth
+  \pdfpageheight=\paperheight
+\else
+  \special{papersize=420mm,297mm}
+\fi
+\newgeometry{layoutwidth=420mm,layoutheight=297mm,left=6mm,right=6mm,top=6mm,bottom=6mm}
+\pagestyle{empty}
+\centering
+\noindent\includegraphics[width=\linewidth,height=282mm,keepaspectratio]{assets/assignment_left_annotated.pdf}
+\clearpage
+\noindent\includegraphics[width=\linewidth,height=282mm,keepaspectratio]{assets/assignment_right_annotated.pdf}
+\clearpage
+\noindent\includegraphics[width=\linewidth,height=282mm,keepaspectratio]{assets/assignment_head_annotated.pdf}
+\clearpage

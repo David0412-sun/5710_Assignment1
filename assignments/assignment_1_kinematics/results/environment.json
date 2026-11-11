@@ -1,9 +1,14 @@
 {
-  "python": "3.11.18",
+  "python": "3.11.15",
   "numpy": "1.26.4",
   "scipy": "1.14.1",
   "mujoco": "3.2.4",
-  "platform": "Linux",
+  "etils": "1.13.0",
+  "platform": "Windows",
+  "platform_details": "Windows-10-10.0.26200-SP0",
+  "machine": "AMD64",
+  "started_utc": "2026-11-11T13:55:33.763392+00:00",
+  "finished_utc": "2026-11-11T13:58:25.166504+00:00",
   "fk_seed": 0,
   "fk_samples_per_chain": 100,
   "ik": {
@@ -17,9 +22,13 @@
     "samples_per_cycle": 101,
     "headless": true
   },
+  "source_hash_scheme": "sha256-lf-v1",
   "source_sha256": {
     "assignments/assignment_1_kinematics/forward_kinematics.py": "16264e9e7ad86c490fda2e4d7db93d41f10d4aad1c2191cb1107d4692a234742",
     "assignments/assignment_1_kinematics/inverse_kinematics.py": "20aa424c8da9c6a249caa1e9cea600cc374f5cbc096457b523ec176e7b50297b",
+    "assignments/assignment_1_kinematics/verify_assignment.py": "ce00d0f7d81d643fae2039c7019bf296b7f1ed792f01f82f725ac939ba677a4a",
+    "playground/open_duck_mini_v2/constants.py": "8fafc240bfb8e70c93b722d89148cffb03688882fd4e6250735eccdf53363374",
+    "playground/open_duck_mini_v2/mujoco_infer_base.py": "dee06d784647193729736efa7e44d2ca5680b4b2a830c8ecd6c07f5319e80426",
     "playground/open_duck_mini_v2/xmls/open_duck_mini_v2.xml": "968b18de4e3f55b31252155f52779fa490989f5da92bc9b308e0bb4e81d6bb5c",
     "playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml": "f087afa8bbe13f92e934d4a03571f2134abe7d5bb963fce22eec04822e9ae6d0"
   }

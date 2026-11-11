@@ -6,18 +6,44 @@ This assignment implements modified D-H forward kinematics and bounded, fixed-st
 
 ## 环境 / Setup
 
-在本目录执行以下命令，使用 Python 3.11。作业所需的轻量 MuJoCo 环境不依赖 JAX 或训练环境。
+本机 Windows 使用项目独立的 Python 3.11 环境 `.venv\Scripts\python.exe`。作业所需的轻量 MuJoCo 环境不依赖 JAX、CUDA 或训练环境，`pyproject.toml` 的默认依赖也已改为作业依赖。
 
-当前工作区的 `.venv/bin/python` 已准备好，可直接运行下面的验证命令；新环境可按以下步骤安装。
+在 PowerShell 中进入本项目目录。首次配置或重建环境：
 
-Run these commands from this directory using Python 3.11. The kinematics environment does not require JAX or the training stack.
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\setup_windows.ps1 -Report
+```
+
+配置脚本复用 Python 3.11 的 Windows `.venv`；环境不存在时优先使用 `py -3.11`，否则通过 `uv` 下载并创建。已有不兼容的 `.venv` 会明确报错，需要先重命名再重新配置。通过 `uv` 下载的解释器及其缓存保存在项目 `.tmp` 内；依赖安装到 `.venv`，pip 使用默认下载缓存。无需激活虚拟环境或更改系统执行策略。`-Report` 同时安装报告绘图依赖。本机通过 `uv` 配置，不要手动移动或删除 `.tmp/python`，因为虚拟环境依赖其中的解释器。
+
+常用入口（这些命令只对当前 PowerShell 子进程使用 `Bypass`）：
+
+```powershell
+# 12 项测试：6 项运动学 + 6 项报告构建
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 test
+# FK + 完整 IK + 测试；成功后更新 results 和本机 environment.json
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 verify
+# 查看模型或播放 IK 轨迹（关闭窗口退出）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 view
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 ik
+# 使用已记录的测量结果生成报告，需要 TeX 引擎
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 report
+```
+
+若使用 VS Code / PyCharm，将解释器选为本项目 `.venv\Scripts\python.exe`。完整验证需进行大量有限差分计算；控制台每完成一个周期显示进度。
+
+Linux/macOS 新环境仍可按以下方式配置（下文 Windows 命令中的 `.venv\Scripts\python.exe` 相应替换为 `.venv/bin/python`）：
 
 ```bash
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -r assignments/assignment_1_kinematics/requirements.txt
 ```
 
-Windows 对应解释器路径为 `.venv\Scripts\python.exe`。
+上游强化学习训练依赖保存在 `pyproject.toml` 的可选 `training` 组，作业不使用该组，其 CUDA 环境不属于本次 Windows 配置。
+
+## 课程核对
+
+核对依据为本机 ROSE5710 的 LS3、LS4、LS5 课件，以及 Git 历史 `7d70126` 的原始 TODO 模板。逐项结论和准确页码见 [COURSE_REVIEW.md](COURSE_REVIEW.md)。报告已区分课程术语中的“解析建模”和“数值 FK”，并补上课件及模板引用。
 
 ## D-H 约定 / Convention
 
@@ -31,21 +57,20 @@ The code stores rows as **`[alpha, a, theta_offset, d]`**, whereas the assignmen
 
 FK checks 100 seeded random configurations per chain:
 
-```bash
-.venv/bin/python assignments/assignment_1_kinematics/forward_kinematics.py
-.venv/bin/python assignments/assignment_1_kinematics/forward_kinematics.py --output-json assignments/assignment_1_kinematics/results/fk_results.json
+```powershell
+.\.venv\Scripts\python.exe assignments/assignment_1_kinematics/forward_kinematics.py
 ```
 
 逆运动学：默认完整运行 5 个周期，每周期 101 个相位，跟踪左右脚和头部的原始目标轨迹。保留作业指定的中心差分 `h=1e-6`、固定步长 `alpha=0.1`、最多 5000 次迭代及 `cost < 1e-8` 停止条件。位置误差要求小于 `1e-5 m`，姿态误差小于 `1e-4 rad`。
 
 IK runs the supplied trajectories for five cycles with 101 phases each. The graphical version opens the MuJoCo viewer; headless mode removes rendering and its delay while preserving the algorithm, targets and tolerances:
 
-```bash
+```powershell
 # Graphical viewer / 图形界面
-.venv/bin/python assignments/assignment_1_kinematics/inverse_kinematics.py
+.\.venv\Scripts\python.exe assignments/assignment_1_kinematics/inverse_kinematics.py
 
 # Full numerical comparison / 完整数值验证
-.venv/bin/python assignments/assignment_1_kinematics/inverse_kinematics.py --headless --output-json assignments/assignment_1_kinematics/results/ik_results.json
+.\.venv\Scripts\python.exe assignments/assignment_1_kinematics/inverse_kinematics.py --headless
 ```
 
 macOS 图形查看器请先激活环境，然后用 `mjpython` 运行：
@@ -61,22 +86,25 @@ Use `--cycles`, `--samples` and `--parts` for smaller diagnostic runs. Keep the 
 
 ## 测试与报告 / Tests and report
 
-报告现采用真正的 LaTeX 编译流程，使用标准 `IEEEtran` A4 双栏论文格式，包含摘要、关键词、编号公式、三线表、交叉引用和 IEEE 参考文献。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
+报告包含与三张 D-H 表并排的坐标系图，以及真实 MuJoCo 模型的 FK 零位图、IK 初始/求解后对比图。D-H 图按当前参数计算，机器人插图取原始轨迹前半周期的实际求解状态；图像生成和复现方式见 [报告说明](assignments/assignment_1_kinematics/report/README.md)。
 
-The report is compiled from LaTeX using the standard IEEEtran conference class,
-with numbered equations, cross-references, booktabs tables, a vector figure and
-a BibTeX bibliography. The build retains compilation logs and checks the final
-log for errors, unresolved references, missing glyphs and overfull boxes.
+报告采用普通课程作业格式：A4 单栏、11 pt 正文、简洁标题和页码，按任务说明、正运动学、逆运动学、验证结果与总结组织内容。保留 D-H 参数表、必要公式、实测误差图和普通编号参考资料。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
 
-```bash
-.venv/bin/python -m unittest assignments.assignment_1_kinematics.test_kinematics -v
+The report uses a standard single-column A4 layout with 11 pt text, page
+numbers, and sections for the task, FK, IK, results, and conclusion. It retains
+the D-H tables, essential equations, measured error plot, and numbered
+references. The LaTeX build checks for errors, unresolved references, missing
+glyphs, and overfull boxes.
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s assignments/assignment_1_kinematics -p 'test_*.py' -v
 
 # Optional report-generation dependencies / 可选报告依赖
-.venv/bin/python -m pip install -r assignments/assignment_1_kinematics/requirements-report.txt
-.venv/bin/python assignments/assignment_1_kinematics/build_report.py
+powershell -NoProfile -ExecutionPolicy Bypass -File .\setup_windows.ps1 -Report
+.\.venv\Scripts\python.exe assignments/assignment_1_kinematics/build_report.py
 ```
 
-编译需要 Tectonic，或带 `IEEEtran` 宏包的 TeX Live/MiKTeX。构建脚本会检测当前工作区可用的编译器；Tectonic 首次运行可能需要下载宏包和字体。也可使用 `--engine tectonic`、`--engine latexmk` 或 `--engine pdflatex` 指定引擎。完整源码编译说明见 [LaTeX 源码说明](assignments/assignment_1_kinematics/report/README.md)。报告编译沿用经过核对的实测 JSON，不会重新运行 FK/IK 仿真。
+编译需要 Tectonic 或 TeX Live/MiKTeX。构建脚本会检测当前工作区可用的编译器；首次运行可能需要下载报告使用的常规宏包和字体。也可使用 `--engine tectonic`、`--engine latexmk` 或 `--engine pdflatex` 指定引擎。完整源码编译说明见 [LaTeX 源码说明](assignments/assignment_1_kinematics/report/README.md)。报告编译沿用经过核对的实测 JSON，不会重新运行 FK/IK 仿真。
 
 交付文件 / Deliverables:
 
@@ -89,5 +117,7 @@ log for errors, unresolved references, missing glyphs and overfull boxes.
 - `assignments/assignment_1_kinematics/results/ik_results.json`
 
 JSON 文件记录实测误差和通过状态，报告生成脚本使用这些数据。代码和报告准备完成后，请自行核对并通过课程要求的渠道提交。
+
+更新正式测量结果请运行 `run_assignment.ps1 verify`，它会同时记录真实运行环境、算法参数和源码指纹。单独运行 FK/IK 的 `--output-json` 适合导出到临时路径做诊断；不要只覆盖正式结果而保留旧的 `environment.json`。源码指纹采用 LF 规范化，避免 Windows CRLF 换行造成误报。
 
 The JSON files contain measured errors and pass/fail status and supply the report data. Review the completed code and report, then submit them through the course's required channel; this project does not submit to the university automatically.

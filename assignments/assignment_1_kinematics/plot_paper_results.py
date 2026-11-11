@@ -1,4 +1,4 @@
-"""Plot measured IK errors as an IEEE double-column-width vector figure.
+"""Plot measured IK errors as a vector figure for the coursework report.
 
 The plot uses every recorded sample without smoothing or interpolation. The
 ordinate is error divided by its required tolerance, so one marks the passing
@@ -37,7 +37,7 @@ def _read_measurements(path):
         raise ValueError("A completed IK comparison is required")
     cycles, samples = report["cycles_completed"], report["samples_per_cycle"]
     if cycles != 5 or samples != 101:
-        raise ValueError("The paper figure requires five cycles of 101 phases")
+        raise ValueError("The report figure requires five cycles of 101 phases")
 
     records = report["measurements"]
     if len(records) != cycles * samples * len(CHAIN_STYLES):
