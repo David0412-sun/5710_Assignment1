@@ -1,0 +1,11 @@
+# Local output when compiling the source project directly.
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.xdv
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+assignment_1_report.pdf

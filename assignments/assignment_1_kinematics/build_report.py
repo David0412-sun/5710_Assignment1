@@ -1,302 +1,447 @@
-"""Build the submission PDF from completed DH tables and measured JSON results.
+"""Build the IEEE LaTeX report from the existing, verified FK/IK measurements.
 
-Run from the project root after FK and the full headless IK comparison.
-Requires requirements-report.txt. No simulation results are generated or altered here.
+This script never runs a simulation or changes the measured JSON files. Use
+--prepare-only to regenerate tables and the vector figure without a TeX engine.
+All paths are relative to this script, so it can run from any directory.
 """
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
 import json
+import math
+import os
 from pathlib import Path
-import platform
+import re
+import shutil
+import subprocess
 import sys
 from zipfile import ZIP_DEFLATED, ZipFile
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-import mujoco
-import numpy as np
-import scipy
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (
-    Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle,
-)
-
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-from assignments.assignment_1_kinematics.forward_kinematics import parameters
-
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
-OUTPUT = ROOT / "output" / "pdf"
-NAVY = colors.HexColor("#183C55")
-TEAL = colors.HexColor("#127D84")
-GRAY = colors.HexColor("#52616D")
-LIGHT = colors.HexColor("#EDF3F5")
+REPORT = HERE / "report"
+GENERATED = REPORT / "generated"
+ASSETS = REPORT / "assets"
+SOURCE = REPORT / "assignment_1_report.tex"
+BUILD = ROOT / ".tmp" / "latex"
+OUTPUT = ROOT / "output"
+LOG_OUTPUT = OUTPUT / "latex"
+CHAINS = ("left", "right", "head")
+CHAIN_LABELS = {"left": "Left leg", "right": "Right leg", "head": "Head"}
+RESULT_FILES = ("fk_results.json", "ik_results.json", "environment.json")
+REQUIRED_SOURCES = (
+    "assignments/assignment_1_kinematics/forward_kinematics.py",
+    "assignments/assignment_1_kinematics/inverse_kinematics.py",
+    "playground/open_duck_mini_v2/xmls/open_duck_mini_v2.xml",
+    "playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml",
+)
+sys.path.insert(0, str(ROOT))
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def read_json(path):
+    def invalid_constant(value):
+        raise ValueError(f"Non-finite JSON constant {value} in {path}")
+    return json.loads(Path(path).read_text(encoding="utf-8"),
+                      parse_constant=invalid_constant)
+
+
+def finite_number(value, context):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"{context} must be a number")
+    if not math.isfinite(value):
+        raise ValueError(f"{context} must be finite")
+    return float(value)
+
+
+def verify_source_hashes(environment):
+    recorded = environment.get("source_sha256", {})
+    if not isinstance(recorded, dict) or not set(REQUIRED_SOURCES) <= recorded.keys():
+        raise ValueError("environment.json must record the FK, IK and model source hashes")
+    for name, expected in recorded.items():
+        path = (ROOT / name).resolve()
+        if not path.is_relative_to(ROOT) or not path.is_file():
+            raise ValueError(f"Recorded source is missing or outside the project: {name}")
+        if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
+            raise ValueError(f"Invalid recorded SHA256 for {name}")
+        if sha256(path) != expected:
+            raise ValueError(f"Source changed since the measurements were recorded: {name}")
+
+
+def validate_errors(rows, summary, position_limit, orientation_limit, context):
+    if summary.get("passed") is not True:
+        raise ValueError(f"{context} is not recorded as passing")
+    for key, summary_key, limit in (
+            ("position_error_m", "max_position_error_m", position_limit),
+            ("orientation_error_rad", "max_orientation_error_rad", orientation_limit)):
+        values = [finite_number(row[key], f"{context}: {key}") for row in rows]
+        if not values or any(value < 0 or value >= limit for value in values):
+            raise ValueError(f"{context}: every {key} must be nonnegative and below {limit}")
+        recorded = finite_number(summary[summary_key], f"{context}: {summary_key}")
+        if recorded != max(values):
+            raise ValueError(f"{context}: {summary_key} disagrees with the measurements")
 
 
 def load_results():
-    fk = json.loads((RESULTS / "fk_results.json").read_text())
-    ik = json.loads((RESULTS / "ik_results.json").read_text())
-    if not (fk["passed"] and ik["passed"] and ik["completed"]):
-        raise ValueError("Both FK and a complete IK comparison must pass first")
-    if (ik["cycles_completed"], ik["samples_per_cycle"]) != (5, 101):
-        raise ValueError("The report requires the supplied full 5 x 101 comparison")
-    if len(ik["measurements"]) != 5 * 101 * 3:
-        raise ValueError("Expected 1,515 measured chain poses")
-    for chain in ("left", "right", "head"):
-        if fk["chains"][chain]["samples"] != 100:
-            raise ValueError("FK requires 100 configurations per chain")
-    return fk, ik
+    """Validate the complete recorded experiment and its source provenance."""
+    fk, ik, environment = [read_json(RESULTS / name) for name in RESULT_FILES]
+    verify_source_hashes(environment)
+    if fk.get("passed") is not True or ik.get("passed") is not True:
+        raise ValueError("Both recorded FK and IK comparisons must pass")
+    if set(fk.get("chains", {})) != set(CHAINS) or set(ik.get("chains", {})) != set(CHAINS):
+        raise ValueError("Both comparisons must contain exactly left, right and head")
+    for result, p_limit, r_limit in ((fk, 1e-6, 1e-5), (ik, 1e-5, 1e-4)):
+        if (result.get("position_tolerance_m"), result.get("orientation_tolerance_rad")) != (
+                p_limit, r_limit):
+            raise ValueError("Recorded tolerances differ from the assignment limits")
+    if environment.get("fk_seed") != 0 or environment.get("fk_samples_per_chain") != 100:
+        raise ValueError("FK environment must specify seed 0 and 100 poses per chain")
+    for chain in CHAINS:
+        summary = fk["chains"][chain]
+        rows = summary.get("measurements", [])
+        if summary.get("samples") != 100 or summary.get("seed") != 0 or len(rows) != 100:
+            raise ValueError(f"FK {chain} requires exactly 100 measurements with seed 0")
+        for row in rows:
+            q = row.get("joint_angles_rad", [])
+            if len(q) != (4 if chain == "head" else 5):
+                raise ValueError(f"FK {chain} has an incorrect joint-vector length")
+            for value in q:
+                finite_number(value, f"FK {chain} joint angle")
+        validate_errors(rows, summary, 1e-6, 1e-5, f"FK {chain}")
+    if sum(len(fk["chains"][chain]["measurements"]) for chain in CHAINS) != 300:
+        raise ValueError("FK must contain exactly 300 measured configurations")
+    if (ik.get("completed") is not True or ik.get("headless") is not True or
+            (ik.get("cycles_requested"), ik.get("cycles_completed"),
+             ik.get("samples_per_cycle")) != (5, 5, 101)):
+        raise ValueError("IK requires the completed headless 5-cycle, 101-phase comparison")
+    recorded_ik = environment.get("ik", {})
+    if (recorded_ik.get("cycles"), recorded_ik.get("samples_per_cycle"),
+            recorded_ik.get("headless")) != (5, 101, True):
+        raise ValueError("IK environment metadata disagrees with the complete comparison")
+    rows = ik.get("measurements", [])
+    if len(rows) != 1515 or {row.get("chain") for row in rows} != set(CHAINS):
+        raise ValueError("IK must contain exactly 1,515 measured chain poses")
+    for chain in CHAINS:
+        chain_rows = [row for row in rows if row["chain"] == chain]
+        if len(chain_rows) != 505:
+            raise ValueError(f"IK {chain} requires exactly 505 measurements")
+        for index, row in enumerate(chain_rows):
+            cycle, phase_index = divmod(index, 101)
+            phase = finite_number(row["phase"], f"IK {chain} phase")
+            if row.get("cycle") != cycle + 1 or not math.isclose(
+                    phase, phase_index / 100, rel_tol=0, abs_tol=1e-12):
+                raise ValueError(f"IK {chain} has an incomplete or reordered cycle/phase sequence")
+        validate_errors(chain_rows, ik["chains"][chain], 1e-5, 1e-4, f"IK {chain}")
+    return fk, ik, environment
 
 
-def register_fonts():
-    font_dir = Path(matplotlib.get_data_path()) / "fonts" / "ttf"
-    for name, filename in (("Report", "DejaVuSans.ttf"),
-                           ("ReportBold", "DejaVuSans-Bold.ttf"),
-                           ("ReportMono", "DejaVuSansMono.ttf")):
-        pdfmetrics.registerFont(TTFont(name, str(font_dir / filename)))
-    pdfmetrics.registerFontFamily("Report", normal="Report", bold="ReportBold")
+def scientific(value):
+    """Return a complete math-mode scientific-notation string."""
+    if value == 0:
+        return "$0$"
+    mantissa, exponent = f"{value:.6e}".split("e")
+    return rf"${mantissa}\times 10^{{{int(exponent)}}}$"
 
 
-def styles():
-    return {
-        "title": ParagraphStyle("title", fontName="ReportBold", fontSize=21,
-                                leading=26, textColor=NAVY, spaceAfter=8),
-        "subtitle": ParagraphStyle("subtitle", fontName="Report", fontSize=9,
-                                   leading=13, textColor=GRAY, spaceAfter=14),
-        "heading": ParagraphStyle("heading", fontName="ReportBold", fontSize=12,
-                                  leading=16, textColor=TEAL, spaceBefore=12,
-                                  spaceAfter=6),
-        "body": ParagraphStyle("body", fontName="Report", fontSize=9,
-                               leading=13, spaceAfter=7, textColor=NAVY),
-        "small": ParagraphStyle("small", fontName="Report", fontSize=8,
-                                leading=11, spaceAfter=6, textColor=GRAY),
-        "code": ParagraphStyle("code", fontName="ReportMono", fontSize=8,
-                               leading=12, spaceAfter=7, textColor=NAVY),
-        "cell": ParagraphStyle("cell", fontName="Report", fontSize=8.6,
-                               leading=11, textColor=NAVY, alignment=TA_CENTER),
-    }
+def angle(value):
+    beta = math.atan2(19, 35)
+    for actual, label in ((0, "0"), (math.pi / 2, r"\pi/2"),
+                          (-math.pi / 2, r"-\pi/2"), (math.pi, r"\pi"),
+                          (-beta, r"-\beta"), (math.pi + beta, r"\pi+\beta")):
+        if math.isclose(value, actual, rel_tol=0, abs_tol=1e-14):
+            return label
+    return f"{value:.10f}".rstrip("0").rstrip(".")
 
 
-def number(value):
-    if np.isclose(value, 0, atol=1e-15):
+def distance(value):
+    if math.isclose(value, 0, rel_tol=0, abs_tol=1e-15):
         return "0"
-    if np.isclose(value, np.hypot(.019, .035), atol=1e-15):
+    if math.isclose(value, math.hypot(.019, .035), rel_tol=0, abs_tol=1e-15):
         return "r"
     return f"{value:.7f}".rstrip("0").rstrip(".")
 
 
-def angle(value):
-    beta = np.arctan2(19, 35)
-    for actual, label in ((0, "0"), (np.pi / 2, "pi/2"),
-                          (-np.pi / 2, "-pi/2"), (np.pi, "pi"),
-                          (-beta, "-beta"), (np.pi + beta, "pi + beta")):
-        if np.isclose(value, actual, atol=1e-14):
-            return label
-    return f"{value:.10f}"
-
-
-def table(rows, widths, sty):
-    cells = [[Paragraph(str(cell), sty["cell"]) for cell in row] for row in rows]
-    result = Table(cells, colWidths=widths, repeatRows=1, hAlign="LEFT")
-    result.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), LIGHT),
-        ("LINEBELOW", (0, 0), (-1, 0), .8, TEAL),
-        ("LINEBELOW", (0, -1), (-1, -1), .6, TEAL),
-        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F8FAFB")]),
-        ("TOPPADDING", (0, 0), (-1, -1), 5),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
-        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-    ]))
-    return result
-
-
-def dh_table(chain, sty):
+def dh_table(chain, parameters):
     dh, signs, _ = parameters(chain)
-    rows = [["i", "alpha_(i-1) [rad]", "a_(i-1) [m]", "d_i [m]", "theta_i [rad]"]]
-    for i, (alpha, a, offset, d) in enumerate(dh):
+    lines = [
+        r"\begin{table}[t]", r"\centering", r"\footnotesize",
+        r"\setlength{\tabcolsep}{4pt}",
+        rf"\caption{{Modified D--H parameters for the {CHAIN_LABELS[chain].lower()}. "
+        r"Lengths $a,d$ are in metres; angles $\alpha,\theta,q$ are in radians. "
+        r"The starred final row is the fixed site transform.}",
+        rf"\label{{tab:dh-{chain}}}", r"\begin{tabular}{ccccc}", r"\toprule",
+        r"$i$ & $\alpha_{i-1}$ & $a_{i-1}$ & $d_i$ & $\theta_i$ \\",
+        r"\midrule",
+    ]
+    for index, (alpha, a, offset, d) in enumerate(dh):
         theta = angle(offset)
-        if i < len(signs):
-            term = ("-" if signs[i] < 0 else "") + f"q{i + 1}"
+        if index < len(signs):
+            term = ("-" if signs[index] < 0 else "") + rf"q_{{{index + 1}}}"
             theta = term if theta == "0" else (
-                term + " - " + theta[1:] if theta.startswith("-") else term + " + " + theta)
-        rows.append([str(i + 1) if i < len(signs) else f"{i + 1} fixed",
-                     angle(alpha), number(a), number(d), theta])
-    return table(rows, [48, 112, 102, 95, 142], sty)
+                term + "-" + theta[1:] if theta.startswith("-") else term + "+" + theta)
+            row_number = str(index + 1)
+        else:
+            row_number = rf"{index + 1}^{{*}}"
+        cells = (row_number, angle(alpha), distance(a), distance(d), theta)
+        lines.append(" & ".join(f"${cell}$" for cell in cells) + r" \\")
+    lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
+    return "\n".join(lines)
 
 
-def trajectory_plot(ik):
-    plt.rcParams.update({"font.size": 9, "axes.spines.top": False,
-                         "axes.spines.right": False, "figure.dpi": 160})
-    fig, axes = plt.subplots(2, 1, figsize=(7.8, 4.4), sharex=True, constrained_layout=True)
-    for part, color in zip(("left", "right", "head"), ("#127D84", "#DF7E32", "#555AA7")):
-        samples = [m for m in ik["measurements"] if m["chain"] == part]
-        x = np.arange(1, len(samples) + 1)
-        for ax, key in zip(axes, ("position_error_m", "orientation_error_rad")):
-            values = np.array([m[key] for m in samples])
-            ax.semilogy(x, np.maximum(values, 1e-16), label=part, color=color, linewidth=1)
-    for ax, tolerance in zip(axes, (1e-5, 1e-4)):
-        ax.axhline(tolerance, color="#A83C3C", linestyle="--", linewidth=1,
-                   label="required limit")
-        for boundary in (101, 202, 303, 404):
-            ax.axvline(boundary + .5, color="#DDE4E7", linewidth=.7)
-        ax.grid(axis="y", alpha=.18)
-        ax.set_xlim(1, 505)
-    axes[0].set_ylabel("Position error [m]")
-    axes[1].set_ylabel("Orientation error [rad]")
-    axes[1].set_xlabel("Target index per chain (5 cycles x 101 phases)")
-    axes[0].legend(loc="lower right", ncol=4, fontsize=7, frameon=False)
-    path = RESULTS / "ik_error_plot.png"
-    fig.savefig(path)
-    plt.close(fig)
+def result_table(label, result):
+    samples = "300 random configurations" if label == "FK" else "1,515 trajectory poses"
+    lines = [
+        r"\begin{table}[t]", r"\centering", r"\footnotesize",
+        r"\setlength{\tabcolsep}{3.5pt}",
+        rf"\caption{{Measured {label} errors over {samples}. "
+        r"Maxima are computed independently for each chain.}",
+        rf"\label{{tab:{label.lower()}}}", r"\begin{tabular}{lccc}", r"\toprule",
+        r"Chain & \shortstack{Max. position\\(m)} & "
+        r"\shortstack{Max. orientation\\(rad)} & Result \\", r"\midrule",
+    ]
+    for chain in CHAINS:
+        summary = result["chains"][chain]
+        lines.append(" & ".join((CHAIN_LABELS[chain],
+                                 scientific(summary["max_position_error_m"]),
+                                 scientific(summary["max_orientation_error_rad"]), "PASS")) + r" \\")
+    lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
+    return "\n".join(lines)
+
+
+def prepare_sources(fk, ik):
+    # Importing definitions does not call either experiment's command-line entry point.
+    os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".tmp" / "matplotlib"))
+    from assignments.assignment_1_kinematics.forward_kinematics import parameters
+    from assignments.assignment_1_kinematics.plot_paper_results import generate_plot
+
+    GENERATED.mkdir(parents=True, exist_ok=True)
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    lines = ["% Generated from validated recorded measurements; do not edit."]
+    for label, result in (("FK", fk), ("IK", ik)):
+        for suffix, key in (("Position", "max_position_error_m"),
+                            ("Orientation", "max_orientation_error_rad")):
+            maximum = max(result["chains"][chain][key] for chain in CHAINS)
+            lines.append(rf"\newcommand{{\{label}Max{suffix}}}{{{scientific(maximum)}}}")
+    (GENERATED / "data.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    for chain in CHAINS:
+        (GENERATED / f"dh_{chain}.tex").write_text(dh_table(chain, parameters), encoding="utf-8")
+    for label, result in (("FK", fk), ("IK", ik)):
+        (GENERATED / f"{label.lower()}_results.tex").write_text(result_table(label, result), encoding="utf-8")
+    pdf, _ = generate_plot(RESULTS / "ik_results.json", ROOT / ".tmp" / "report-plots")
+    shutil.copy2(pdf, ASSETS / "ik_error_plot.pdf")
+
+
+def executable_path(candidate):
+    if not candidate:
+        return None
+    found = shutil.which(str(candidate))
+    if found:
+        return str(Path(found).resolve())
+    path = Path(candidate).expanduser()
+    return str(path.resolve()) if path.is_file() and os.access(path, os.X_OK) else None
+
+
+def find_engine(requested, explicit_tectonic=None):
+    if explicit_tectonic and requested not in ("auto", "tectonic"):
+        raise ValueError("--tectonic is only valid with --engine auto or --engine tectonic")
+    if explicit_tectonic:
+        tectonic = executable_path(explicit_tectonic)
+        if not tectonic:
+            raise ValueError(f"Explicit Tectonic executable unavailable: {explicit_tectonic}")
+    else:
+        candidates = [os.environ.get("CODEX_TECTONIC_PATH"), "tectonic"]
+        candidates.extend(str(path) for path in sorted(
+            (Path.home() / ".local" / "opt" / "chatgpt").glob(
+                "*/resources/tectonic/tectonic"), reverse=True))
+        tectonic = next((path for item in candidates if (path := executable_path(item))), None)
+    choices = {"tectonic": tectonic, "latexmk": executable_path("latexmk"),
+               "pdflatex": executable_path("pdflatex")}
+    for name in (("tectonic", "latexmk", "pdflatex") if requested == "auto" else (requested,)):
+        if choices[name]:
+            return name, choices[name]
+    raise RuntimeError("No usable TeX engine found. Install Tectonic/TeX Live, pass --tectonic, "
+                       "set CODEX_TECTONIC_PATH, or use --prepare-only.")
+
+
+LOG_FAILURES = (
+    ("overfull box", r"Overfull\s+\\[hv]box"),
+    ("undefined reference or citation", r"(?:Reference|Citation)[^\n]*undefined"),
+    ("undefined reference or citation", r"(?:undefined references|undefined citations)"),
+    ("missing glyph", r"Missing (?:character|glyph)\s*:"),
+    ("unavailable font shape", r"Font shape[^\n]*undefined|Some font shapes were not available"),
+    ("LaTeX error", r"(?:LaTeX|Package\s+\S+)\s+Error\s*:|^!"),
+)
+
+
+def check_latex_log(path):
+    if not path.is_file():
+        raise RuntimeError("The TeX engine did not produce its required final .log file")
+    content = path.read_text(encoding="utf-8", errors="replace")
+    failures = sorted({label for label, pattern in LOG_FAILURES
+                       if re.search(pattern, content, re.IGNORECASE | re.MULTILINE)})
+    if failures:
+        raise RuntimeError("Final LaTeX log failed validation: " + ", ".join(failures))
+    return content
+
+
+def source_files():
+    allowed = {".tex", ".bib", ".pdf", ".png", ".jpg", ".jpeg", ".svg", ".md", ".txt",
+               ".cls", ".bst", ".sty"}
+    return sorted(path for path in REPORT.rglob("*")
+                  if path.is_file() and path.suffix.lower() in allowed
+                  and not any(part.startswith(".") or part == "__pycache__"
+                              for part in path.relative_to(REPORT).parts))
+
+
+def write_source_archive():
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    path = OUTPUT / "assignment_1_latex_source.zip"
+    with ZipFile(path, "w", compression=ZIP_DEFLATED) as archive:
+        for source in source_files():
+            archive.write(source, source.relative_to(REPORT).as_posix())
     return path
 
 
-def footer(canvas, doc):
-    canvas.saveState()
-    canvas.setStrokeColor(colors.HexColor("#DCE5E9"))
-    canvas.line(48, 40, A4[0] - 48, 40)
-    canvas.setFont("Report", 7.5)
-    canvas.setFillColor(GRAY)
-    canvas.drawString(48, 27, "ROSE5710  |  Assignment 1: Kinematics")
-    canvas.drawRightString(A4[0] - 48, 27, str(doc.page))
-    canvas.restoreState()
+def package_submission(pdf_path, source_archive):
+    path = OUTPUT / "assignment_1_submission.zip"
+    with ZipFile(path, "w", compression=ZIP_DEFLATED) as archive:
+        for source in (HERE / "forward_kinematics.py", HERE / "inverse_kinematics.py",
+                       pdf_path, *(RESULTS / name for name in RESULT_FILES), source_archive):
+            archive.write(source, source.name)
+        for source in source_files():
+            archive.write(source, "latex/" + source.relative_to(REPORT).as_posix())
+        archive.write(LOG_OUTPUT / "compile_manifest.json", "latex/compile_manifest.json")
+        archive.writestr("README.txt", (
+            "ROSE5710 Assignment 1: Kinematics\n\n"
+            "Contains both completed Python files, the IEEE LaTeX report PDF,\n"
+            "original measured FK/IK JSON and recorded environment, and the\n"
+            "complete LaTeX sources (also supplied as a separate ZIP).\n\n"
+            "The Python files run inside Open_Duck_Playground under\n"
+            "assignments/assignment_1_kinematics/. The runnable project,\n"
+            "dependencies and tests are available at:\n"
+            "https://github.com/David0412-sun/5710_Assignment1\n\n"
+            "Follow the repository README for the Python 3.11 environment and\n"
+            "LaTeX rebuild commands. No simulations run during report building.\n"
+        ))
+    return path
+
+
+def compile_report(engine, executable, environment, input_hashes):
+    if not SOURCE.is_file() or not (REPORT / "references.bib").is_file():
+        raise FileNotFoundError("The main report .tex and references.bib must exist before compilation")
+    BUILD.mkdir(parents=True, exist_ok=True)
+    LOG_OUTPUT.mkdir(parents=True, exist_ok=True)
+    stem = SOURCE.stem
+    for suffix in (".pdf", ".log", ".aux", ".bbl", ".blg", ".toc", ".out", ".fls",
+                   ".fdb_latexmk", ".synctex.gz", ".xdv", ".bcf", ".run.xml"):
+        (BUILD / (stem + suffix)).unlink(missing_ok=True)
+    env = os.environ.copy()
+    env.setdefault("XDG_CACHE_HOME", "/tmp/5710-tex-cache")
+    env.setdefault("XDG_CONFIG_HOME", "/tmp/5710-tex-config")
+    env["PATH"] = str(Path(executable).parent) + os.pathsep + env.get("PATH", "")
+    env["BIBINPUTS"] = str(REPORT) + os.pathsep + env.get("BIBINPUTS", "")
+    version = subprocess.run([executable, "--version"], env=env, text=True,
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                             check=True).stdout.strip().splitlines()[0]
+    manifest = {
+        "status": "compiling", "started_utc": datetime.now(timezone.utc).isoformat(),
+        "engine": engine, "engine_version": version, "executable": executable,
+        "source": str(SOURCE.relative_to(ROOT)),
+        "result_sha256": input_hashes, "recorded_source_sha256": environment["source_sha256"],
+        "latex_source_sha256": {str(path.relative_to(REPORT)): sha256(path) for path in source_files()},
+        "cache_directory": env["XDG_CACHE_HOME"], "commands": [],
+        "log_checks": sorted({label for label, _ in LOG_FAILURES}),
+    }
+    transcript = []
+    (LOG_OUTPUT / "compile.stdout.log").write_text("", encoding="utf-8")
+
+    def run(command):
+        process = subprocess.run(command, cwd=REPORT, env=env, text=True,
+                                 encoding="utf-8", errors="replace", stdout=subprocess.PIPE,
+                                 stderr=subprocess.STDOUT, check=False)
+        manifest["commands"].append({"argv": command, "cwd": str(REPORT),
+                                     "returncode": process.returncode})
+        transcript.append("$ " + " ".join(command) + "\n" + process.stdout)
+        (LOG_OUTPUT / "compile.stdout.log").write_text("\n\n".join(transcript), encoding="utf-8")
+        if process.returncode:
+            raise RuntimeError(f"TeX command failed ({process.returncode}); see "
+                               f"{LOG_OUTPUT / 'compile.stdout.log'}")
+
+    log = BUILD / f"{stem}.log"
+    try:
+        if engine == "tectonic":
+            run([executable, "--keep-logs", "--keep-intermediates", "--outdir", str(BUILD), SOURCE.name])
+        elif engine == "latexmk":
+            run([executable, "-norc", "-pdf", "-halt-on-error", "-interaction=nonstopmode",
+                 f"-outdir={BUILD}", SOURCE.name])
+        else:
+            bibtex = shutil.which("bibtex", path=env["PATH"])
+            if not bibtex:
+                raise RuntimeError("pdflatex also requires BibTeX on PATH")
+            command = [executable, "-halt-on-error", "-interaction=nonstopmode",
+                       f"-output-directory={BUILD}", SOURCE.name]
+            run(command)
+            run([bibtex, str(BUILD / stem)])
+            run(command)
+            run(command)
+            for _ in range(2):
+                if not re.search(r"Rerun to get|Label\(s\) may have changed", log.read_text(
+                        encoding="utf-8", errors="replace"), re.IGNORECASE):
+                    break
+                run(command)
+        check_latex_log(log)
+        verify_source_hashes(environment)
+        if any(sha256(RESULTS / name) != digest for name, digest in input_hashes.items()):
+            raise ValueError("A measured JSON file changed during the report build")
+        current_source_hashes = {str(path.relative_to(REPORT)): sha256(path) for path in source_files()}
+        if current_source_hashes != manifest["latex_source_sha256"]:
+            raise ValueError("A LaTeX source or figure changed during compilation; rebuild the report")
+        built_pdf = BUILD / f"{stem}.pdf"
+        if not built_pdf.is_file() or built_pdf.stat().st_size == 0:
+            raise RuntimeError("The TeX engine did not produce a nonempty PDF")
+        pdf = OUTPUT / "pdf" / "assignment_1_report.pdf"
+        pdf.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(built_pdf, pdf)
+        manifest.update(status="passed", pdf=str(pdf.relative_to(ROOT)), pdf_sha256=sha256(pdf))
+    except Exception as error:
+        manifest.update(status="failed", error=str(error))
+        raise
+    finally:
+        manifest["finished_utc"] = datetime.now(timezone.utc).isoformat()
+        for suffix in (".log", ".blg"):
+            path = BUILD / f"{stem}{suffix}"
+            if path.is_file():
+                shutil.copy2(path, LOG_OUTPUT / path.name)
+        (LOG_OUTPUT / "compile_manifest.json").write_text(
+            json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    return pdf
 
 
 def main():
-    fk, ik = load_results()
-    register_fonts()
-    sty = styles()
-    OUTPUT.mkdir(parents=True, exist_ok=True)
-    story = []
-
-    def p(text, style="body"):
-        story.append(Paragraph(text, sty[style]))
-
-    p("Assignment 1: Kinematics", "title")
-    p("ROSE5710: Fundamental Robotics and Systems  |  6 November 2026", "subtitle")
-    p("Modified D-H convention and leg chains", "heading")
-    p("The transforms describe each site relative to the robot base. All translations below "
-      "are in metres and all joint angles are in radians. The final row in each table is fixed.")
-    p("A_i = Rx(alpha_(i-1)) Tx(a_(i-1)) Rz(theta_i) Tz(d_i)<br/>"
-      "theta_i = s_i q_i + theta0_i;  T_B,site = T_B,0 A_1 ... A_n", "code")
-    p("Define r = sqrt(0.019² + 0.035²) = 0.03982461550348 m and "
-      "beta = atan2(19, 35) = 0.49734271634682 rad. Code stores each row as "
-      "[alpha, a, theta0, d]; these tables follow the question's [alpha, a, d, theta] order.", "small")
-    p("Left leg (5 joints + foot site)", "heading")
-    p("T_B,0 = Rz(pi/2 + beta); signs s = [1, -1, -1, -1, -1].", "code")
-    story.append(dh_table("left", sty))
-    p("Right leg (5 joints + foot site)", "heading")
-    p("T_B,0 = Rz(-pi/2 - beta); signs s = [1, -1, 1, -1, -1].", "code")
-    story.append(dh_table("right", sty))
-    story.append(Spacer(1, 10))
-    p("Frame assignment: in the zero pose, the leg D-H joint axes z1...z5 are "
-      "[+Z, +X, +Y, +Y, +Y]. Each x axis follows the common normal; virtual origins "
-      "are selected at the yaw/roll and roll/pitch axis intersections. The final fixed row "
-      "aligns the foot-site axes with the base axes at zero joint angles.", "small")
-    p("Geometry: the roll-axis height is 45.9409 - 46.015 = -0.0741 mm. Shifting "
-      "origins along the parallel pitch axes combines the small CAD offsets into the "
-      "specified final lateral distances: left 19.75 mm and right 17.35 mm. "
-      "The two legs therefore require different final lateral offsets.", "small")
-
-    story.append(PageBreak())
-    p("Head chain and inverse kinematics", "title")
-    p("Head and neck (4 joints + head site)", "heading")
-    p("T_B,0 has identity rotation and p = [0.001, 0.01915, 0.0900009] m; "
-      "signs s = [1, 1, 1, 1].", "code")
-    story.append(dh_table("head", sty))
-    story.append(Spacer(1, 10))
-    p("In the zero pose the head D-H joint axes are [-Y, -Y, +Z, -X], matching the "
-      "MuJoCo positive directions. The neck-to-head-pitch separation is 66 mm. "
-      "The 92.021 mm base-to-neck distance is already included in T_B,0 and must "
-      "not be added again. The effective vertical separation from the head-pitch axis "
-      "to the roll axis is 37.85 mm; the net roll-axis offset is 5 mm.")
-    p("Zero-pose cross-check", "heading")
-    story.append(table([
-        ["Site", "Base-frame position [m]", "Rotation"],
-        ["left foot", "[-0.03456, 0.08940, -0.1935991]", "I"],
-        ["right foot", "[-0.03456, -0.09180, -0.1935991]", "I"],
-        ["head", "[0.00600, 0.00010, 0.2363009]", "I"],
-    ], [92, 315, 92], sty))
-    p("Numerical IK method", "heading")
-    p("For a target pose (p_t, R_t) and its FK prediction (p(q), R(q)), the position "
-      "residual is target minus prediction. The orientation residual is the axis-angle "
-      "rotation vector, rather than an Euler-angle difference.")
-    p("e_p = p_t - p(q);  e_R = rotvec(R_t R(q)^T)<br/>"
-      "E(q) = ||10 e_p||² + ||e_R||²<br/>"
-      "g_i = [E(q + h e_i) - E(q - h e_i)] / (2h)<br/>"
-      "q_next = clip(q - alpha g, q_min, q_max)", "code")
-    p("Use h = 1e-6 rad, fixed alpha = 0.1, at most 5,000 iterations per target, "
-      "and stop at E &lt; 1e-8. Joint limits are read from MuJoCo. Each solve starts "
-      "from the current joint angles, and only the selected chain is updated. "
-      "The stopping rule bounds position error below 1e-5 m and orientation error below 1e-4 rad.")
-    p("Supplied trajectories", "heading")
-    p("Both feet move forward and upward by up to 20 mm at fixed orientation; "
-      "the left uses sin²(pi phase) and the right uses cos²(pi phase). The head follows "
-      "a neck-centred arc of 0.1 sin²(pi phase) rad, updating both position and orientation. "
-      "The base stays fixed and every target is checked against MuJoCo site poses.")
-
-    story.append(PageBreak())
-    p("Measured verification results", "title")
-    p(f"Python {platform.python_version()}  |  NumPy {np.__version__}  |  "
-      f"SciPy {scipy.__version__}  |  MuJoCo {mujoco.__version__}", "subtitle")
-    p("FK: 100 joint-limit-uniform configurations per chain with seed 0 (300 total). "
-      "IK: all three supplied trajectories, 5 complete cycles and 101 phases per cycle "
-      "(1,515 measured chain poses). Headless execution changes only rendering and delay.")
-    rows = [["Check", "Chain", "Max position [m]", "Max rotation [rad]", "Result"]]
-    for label, result in (("FK", fk), ("IK", ik)):
-        for part in ("left", "right", "head"):
-            item = result["chains"][part]
-            rows.append([label, part, f"{item['max_position_error_m']:.6e}",
-                         f"{item['max_orientation_error_rad']:.6e}", "PASS"])
-    story.append(table(rows, [48, 68, 150, 155, 78], sty))
-    story.append(Spacer(1, 8))
-    p("Required maxima: FK &lt; 1e-6 m and &lt; 1e-5 rad; "
-      "IK &lt; 1e-5 m and &lt; 1e-4 rad. Every measured value passes. "
-      "Six independent regression tests also cover base-frame invariance, pose-error "
-      "weighting, reachable IK, joint limits, and preservation of other chains.", "small")
-    plot = trajectory_plot(ik)
-    story.append(Image(str(plot), width=499, height=281.5))
-    p("All 505 target indices per chain are shown. Dashed lines mark the required maxima; "
-      "vertical lines separate cycles. Values below 1e-16 are floored only for the log plot. "
-      "JSON files retain the original measured values.", "small")
-    p("Reproduce from the project root", "heading")
-    p("python assignments/assignment_1_kinematics/forward_kinematics.py<br/>"
-      "python assignments/assignment_1_kinematics/inverse_kinematics.py --headless<br/>"
-      "python -m unittest assignments.assignment_1_kinematics.test_kinematics", "code")
-    p("Use the Python 3.11 environment and requirements.txt listed in README.md. "
-      "The results directory contains the per-configuration FK data and all IK phase errors. "
-      "Add --output-json to either script to regenerate its results; build_report.py "
-      "rebuilds this PDF from those files.", "small")
-
-    path = OUTPUT / "assignment_1_report.pdf"
-    SimpleDocTemplate(str(path), pagesize=A4, leftMargin=48, rightMargin=48,
-                      topMargin=43, bottomMargin=52,
-                      title="ROSE5710 Assignment 1: Kinematics",
-                      author="", subject="Modified D-H derivation and FK/IK verification").build(
-                          story, onFirstPage=footer, onLaterPages=footer)
-    print(path)
-    package = OUTPUT.parent / "assignment_1_submission.zip"
-    with ZipFile(package, "w", compression=ZIP_DEFLATED) as archive:
-        for source in (HERE / "forward_kinematics.py", HERE / "inverse_kinematics.py",
-                       path, RESULTS / "fk_results.json", RESULTS / "ik_results.json",
-                       RESULTS / "environment.json"):
-            archive.write(source, source.name)
-        archive.writestr("README.txt", (
-            "ROSE5710 Assignment 1: Kinematics\n\n"
-            "Submission: both completed Python files, the PDF containing the three\n"
-            "modified D-H tables and signs, and measured FK/IK comparison results.\n\n"
-            "The two scripts run within the original Open_Duck_Playground project.\n"
-            "Place them in assignments/assignment_1_kinematics/. The full runnable\n"
-            "project, dependencies, tests and report builder are available at:\n"
-            "https://github.com/David0412-sun/5710_Assignment1\n\n"
-            "Use Python 3.11 and follow the project README.\n"
-        ))
-    print(package)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--engine", choices=("auto", "tectonic", "latexmk", "pdflatex"), default="auto")
+    parser.add_argument("--tectonic", help="Explicit Tectonic executable (also supports CODEX_TECTONIC_PATH)")
+    parser.add_argument("--prepare-only", action="store_true", help="Prepare validated tables and figure without compiling")
+    args = parser.parse_args()
+    fk, ik, environment = load_results()
+    input_hashes = {name: sha256(RESULTS / name) for name in RESULT_FILES}
+    prepare_sources(fk, ik)
+    if args.prepare_only:
+        print(GENERATED)
+        print(ASSETS / "ik_error_plot.pdf")
+        return
+    engine, executable = find_engine(args.engine, args.tectonic)
+    pdf = compile_report(engine, executable, environment, input_hashes)
+    source_archive = write_source_archive()
+    package = package_submission(pdf, source_archive)
+    for path in (pdf, source_archive, package, LOG_OUTPUT / "compile_manifest.json"):
+        print(path)
 
 
 if __name__ == "__main__":

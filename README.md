@@ -61,6 +61,13 @@ Use `--cycles`, `--samples` and `--parts` for smaller diagnostic runs. Keep the 
 
 ## 测试与报告 / Tests and report
 
+报告现采用真正的 LaTeX 编译流程，使用标准 `IEEEtran` A4 双栏论文格式，包含摘要、关键词、编号公式、三线表、交叉引用和 IEEE 参考文献。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
+
+The report is compiled from LaTeX using the standard IEEEtran conference class,
+with numbered equations, cross-references, booktabs tables, a vector figure and
+a BibTeX bibliography. The build retains compilation logs and checks the final
+log for errors, unresolved references, missing glyphs and overfull boxes.
+
 ```bash
 .venv/bin/python -m unittest assignments.assignment_1_kinematics.test_kinematics -v
 
@@ -69,11 +76,14 @@ Use `--cycles`, `--samples` and `--parts` for smaller diagnostic runs. Keep the 
 .venv/bin/python assignments/assignment_1_kinematics/build_report.py
 ```
 
+编译需要 Tectonic，或带 `IEEEtran` 宏包的 TeX Live/MiKTeX。构建脚本会检测当前工作区可用的编译器；Tectonic 首次运行可能需要下载宏包和字体。也可使用 `--engine tectonic`、`--engine latexmk` 或 `--engine pdflatex` 指定引擎。完整源码编译说明见 [LaTeX 源码说明](assignments/assignment_1_kinematics/report/README.md)。报告编译沿用经过核对的实测 JSON，不会重新运行 FK/IK 仿真。
+
 交付文件 / Deliverables:
 
 - `assignments/assignment_1_kinematics/forward_kinematics.py`
 - `assignments/assignment_1_kinematics/inverse_kinematics.py`
 - `output/pdf/assignment_1_report.pdf`：三张 D-H 表、关节 signs、方法与实测比较结果 / D-H tables, signs, method and measured results.
+- `output/assignment_1_latex_source.zip`：可在本地或 Overleaf 编译的完整 LaTeX 源码 / Portable LaTeX source, bibliography, generated tables and vector figure.
 - `output/assignment_1_submission.zip`：按题目要求整理的提交包 / Submission package with both completed scripts, the report, and measured results.
 - `assignments/assignment_1_kinematics/results/fk_results.json`
 - `assignments/assignment_1_kinematics/results/ik_results.json`

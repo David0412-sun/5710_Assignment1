@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "started_utc": "2026-11-11T09:28:58.259386+00:00",
+  "engine": "tectonic",
+  "engine_version": "Tectonic 0.17.0",
+  "executable": "/home/steve/.local/opt/chatgpt/26.1023.51421/resources/tectonic/tectonic",
+  "source": "assignments/assignment_1_kinematics/report/assignment_1_report.tex",
+  "result_sha256": {
+    "fk_results.json": "5372ad3f32e83d8444047dc67de190bfd9d12e6e840b63ed7bbeee25d8a8f9ae",
+    "ik_results.json": "973d9efa58628b2bff83e7885609a4554f12404bd0af0cbaa29081a5385de8fd",
+    "environment.json": "a05f5d0feffd9200a0ccf1df1ffae19f23571a784326933852ede978fe015196"
+  },
+  "recorded_source_sha256": {
+    "assignments/assignment_1_kinematics/forward_kinematics.py": "16264e9e7ad86c490fda2e4d7db93d41f10d4aad1c2191cb1107d4692a234742",
+    "assignments/assignment_1_kinematics/inverse_kinematics.py": "20aa424c8da9c6a249caa1e9cea600cc374f5cbc096457b523ec176e7b50297b",
+    "playground/open_duck_mini_v2/xmls/open_duck_mini_v2.xml": "968b18de4e3f55b31252155f52779fa490989f5da92bc9b308e0bb4e81d6bb5c",
+    "playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml": "f087afa8bbe13f92e934d4a03571f2134abe7d5bb963fce22eec04822e9ae6d0"
+  },
+  "latex_source_sha256": {
+    "README.md": "878e07864b6734c50106ac1cc9120550be775c998f794f5cfa75aaca458fd9ab",
+    "assets/ik_error_plot.pdf": "9a909e6a5c836f8df9bdb6274552fff246a19c42fefabf6ee1ebabc724f36dfe",
+    "assignment_1_report.tex": "d807212e2d6b1af62fa4e3361fd4fd68762d970e25950291f8c5c048691e6120",
+    "generated/data.tex": "eec85b5eef32f448f2da5b35be7ce5bd2328a6e610b6c4ebb8e1608339ad825c",
+    "generated/dh_head.tex": "96c0de960c1de27643c5dd49d30a8f806ef1dcb431b796db9031d0cf063249d5",
+    "generated/dh_left.tex": "496134e68bcbce3d6dac015713e165822720f83ddf30c9e3567de9841512953e",
+    "generated/dh_right.tex": "502656cfd9a517736f6fa1841e3c1568a09e43b15b0e273d237539ee8a62c5e9",
+    "generated/fk_results.tex": "fc468f87f565ad3a0c97f76c48ee21709ce9cd1301ca1937b88b4e7f2798e69c",
+    "generated/ik_results.tex": "49bcd806b465e1ada798e2f9ef9075b9f4e5e83a55f4ec15ace1ac90854409fa",
+    "references.bib": "fccf7741c88a3a802bfcab325f83fcce0520c73ab1f5afa0ebe89ca087ac431e"
+  },
+  "cache_directory": "/tmp/5710-tex-cache",
+  "commands": [
+    {
+      "argv": [
+        "/home/steve/.local/opt/chatgpt/26.1023.51421/resources/tectonic/tectonic",
+        "--keep-logs",
+        "--keep-intermediates",
+        "--outdir",
+        "/media/steve/45f88f22-d078-4670-b930-26e47355b5ff/code/5710_Assignment1/Open_Duck_Playground/.tmp/latex",
+        "assignment_1_report.tex"
+      ],
+      "cwd": "/media/steve/45f88f22-d078-4670-b930-26e47355b5ff/code/5710_Assignment1/Open_Duck_Playground/assignments/assignment_1_kinematics/report",
+      "returncode": 0
+    }
+  ],
+  "log_checks": [
+    "LaTeX error",
+    "missing glyph",
+    "overfull box",
+    "unavailable font shape",
+    "undefined reference or citation"
+  ],
+  "pdf": "output/pdf/assignment_1_report.pdf",
+  "pdf_sha256": "abd88ba425c2945b593341e2a85187571a99edcb8a144586f3ab6850cb6fec0c",
+  "finished_utc": "2026-11-11T09:28:59.030964+00:00"
+}
