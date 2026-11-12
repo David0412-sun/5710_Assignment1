@@ -3,8 +3,8 @@
   "interpretation": "Source placements show parameter association, not a calibrated projection. Exact signed axes and distances are expressed in B.",
   "input_sha256": {
     "annotations/left_overlay.tex": "598746904d56c8c7a83881c0b26ab7af542798ec3bb29ce33d8bba263cade1e1",
-    "annotations/right_overlay.tex": "96352f30dd16507323855de4dafb110d883600fc4bb64c04227e2335e608709e",
-    "annotations/head_overlay.tex": "94b9bc5c5c4a7e3a06b916cfbb2a16df3d983f2799370bae4e2d7531504aa1f9",
+    "annotations/right_overlay.tex": "93163ea58da680c405148e33859007b24a7869e85524cad7ae42a4713cd47252",
+    "annotations/head_overlay.tex": "866ef8a23788e472342fe5c5fe0261fefd6f7889bce53794101e6a62c1556a26",
     "assets/assignment_left_original.pdf": "02a0757353c463bee0fd69d8c6bb2d04a8861b0042dd5a7f3b323ded47e70ae3",
     "assets/assignment_right_original.pdf": "b5fa6cae7f5c69c0e424e1f25a023dc5d2edfd20af07f21001c9b2ca0905a8b7",
     "assets/assignment_head_original.pdf": "ff7aaee6338826f7fbd4061fb8eec5012a82653b7cb686c5b03b86f93e306dab",

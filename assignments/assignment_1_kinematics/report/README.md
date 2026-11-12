@@ -3,13 +3,14 @@
 This is a course assignment report in a single-column A4 layout with 11 pt
 text, a simple title, and page numbers. Its sections cover the task, forward
 kinematics, inverse kinematics, verification results, and conclusion.
-The D-H tables, necessary equations, and measured error plot are retained.
-References use a simple numbered bibliography.
+The D-H tables, necessary equations, and measured error plot are retained,
+with numbered cross-references to figures, tables, and equations. The report
+has no bibliography.
 
 ## Editable files
 
-- `assignment_1_report.tex`: the report text, layout, equations, and references.
-- `references.bib`: source details for the numbered BibTeX bibliography.
+- `assignment_1_report.tex`: the report text, layout, equations, and
+  figure/table/equation cross-references.
 - `generated/`: D-H tables, result tables and numerical macros prepared from
   the completed implementation and recorded measurements.
 - `assets/ik_error_plot.pdf`: embedded-font vector figure, regenerated from
@@ -151,8 +152,8 @@ paths are relative and do not depend on this computer's absolute paths.
 
 ## Build checks and outputs
 
-The repository builder rejects LaTeX errors, unresolved references or
-citations, missing glyphs and overfull boxes in the final compile log.
+The repository builder rejects LaTeX errors, unresolved figure/table/equation
+cross-references, missing glyphs and overfull boxes in the final compile log.
 Visual inspection should still be used to confirm the page layout.
 
 - `output/pdf/assignment_1_report.pdf`: the compiled course report.

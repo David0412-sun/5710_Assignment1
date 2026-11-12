@@ -211,7 +211,7 @@ def dh_table(chain, parameters):
     lines = [
         r"\begin{figure}[H]", r"\centering",
         rf"\includegraphics[width=\linewidth,height={figure_height}mm,keepaspectratio]{{dh_{chain}_annotated_panel.pdf}}",
-        rf"\caption{{\small {CHAIN_LABELS[chain]}: annotated assignment Fig.~{figure_number} \cite{{assignment}}. "
+        rf"\caption{{\small {CHAIN_LABELS[chain]}: annotated assignment Fig.~{figure_number}. "
         r"$O_i$: D-H origins; $P_i$: intermediate points. Orange: $a_{i-1}$; purple: $d_i$. "
         r"Boxes give positive XYZ directions in $B$.}",
         rf"\label{{fig:dh-{chain}}}", r"\end{figure}",
@@ -371,7 +371,7 @@ def find_engine(requested, explicit_tectonic=None):
     choices = {"tectonic": tectonic, "latexmk": executable_path("latexmk"),
                "pdflatex": executable_path("pdflatex")}
     # MiKTeX often installs latexmk without the separate Perl runtime it needs.
-    # Its native pdfLaTeX/BibTeX commands work on Windows without that dependency.
+    # Its native pdfLaTeX command works on Windows without that dependency.
     automatic_order = (("tectonic", "pdflatex", "latexmk") if sys.platform == "win32"
                        else ("tectonic", "latexmk", "pdflatex"))
     for name in (automatic_order if requested == "auto" else (requested,)):
@@ -446,8 +446,8 @@ def package_submission(pdf_path, source_archive):
 
 
 def compile_report(engine, executable, environment, input_hashes):
-    if not SOURCE.is_file() or not (REPORT / "references.bib").is_file():
-        raise FileNotFoundError("The main report .tex and references.bib must exist before compilation")
+    if not SOURCE.is_file():
+        raise FileNotFoundError("The main report .tex must exist before compilation")
     BUILD.mkdir(parents=True, exist_ok=True)
     LOG_OUTPUT.mkdir(parents=True, exist_ok=True)
     stem = SOURCE.stem
@@ -458,7 +458,6 @@ def compile_report(engine, executable, environment, input_hashes):
     env.setdefault("XDG_CACHE_HOME", str(ROOT / ".tmp" / "tex-cache"))
     env.setdefault("XDG_CONFIG_HOME", str(ROOT / ".tmp" / "tex-config"))
     env["PATH"] = str(Path(executable).parent) + os.pathsep + env.get("PATH", "")
-    env["BIBINPUTS"] = str(REPORT) + os.pathsep + env.get("BIBINPUTS", "")
     version_output = subprocess.run([executable, "--version"], env=env, text=True,
                              encoding="utf-8", errors="replace",
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -498,13 +497,8 @@ def compile_report(engine, executable, environment, input_hashes):
             run([executable, "-norc", "-pdf", "-halt-on-error", "-interaction=nonstopmode",
                  f"-outdir={BUILD}", SOURCE.name])
         else:
-            bibtex = shutil.which("bibtex", path=env["PATH"])
-            if not bibtex:
-                raise RuntimeError("pdflatex also requires BibTeX on PATH")
             command = [executable, "-halt-on-error", "-interaction=nonstopmode",
                        f"-output-directory={BUILD}", SOURCE.name]
-            run(command)
-            run([bibtex, str(BUILD / stem)])
             run(command)
             run(command)
             for _ in range(2):
@@ -535,6 +529,8 @@ def compile_report(engine, executable, environment, input_hashes):
             path = BUILD / f"{stem}{suffix}"
             if path.is_file():
                 shutil.copy2(path, LOG_OUTPUT / path.name)
+            elif suffix == ".blg":
+                (LOG_OUTPUT / path.name).unlink(missing_ok=True)
         (LOG_OUTPUT / "compile_manifest.json").write_text(
             json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return pdf

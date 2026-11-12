@@ -43,7 +43,7 @@ python3.11 -m venv .venv
 
 ## 课程核对
 
-核对依据为本机 ROSE5710 的 LS3、LS4、LS5 课件，以及 Git 历史 `7d70126` 的原始 TODO 模板。逐项结论和准确页码见 [COURSE_REVIEW.md](COURSE_REVIEW.md)。报告已区分课程术语中的“解析建模”和“数值 FK”，并补上课件及模板引用。
+核对依据为本机 ROSE5710 的 LS3、LS4、LS5 课件，以及 Git 历史 `7d70126` 的原始 TODO 模板。逐项结论和准确页码见 [COURSE_REVIEW.md](COURSE_REVIEW.md)。报告已区分课程术语中的“解析建模”和“数值 FK”，课程核对记录保留在上述独立文档中。
 
 ## D-H 约定 / Convention
 
@@ -88,13 +88,14 @@ Use `--cycles`, `--samples` and `--parts` for smaller diagnostic runs. Keep the 
 
 报告包含与三张 D-H 表并排的坐标系图，以及真实 MuJoCo 模型的 FK 零位图、IK 初始/求解后对比图。D-H 图按当前参数计算，机器人插图取原始轨迹前半周期的实际求解状态；图像生成和复现方式见 [报告说明](assignments/assignment_1_kinematics/report/README.md)。
 
-报告采用普通课程作业格式：A4 单栏、11 pt 正文、简洁标题和页码，按任务说明、正运动学、逆运动学、验证结果与总结组织内容。保留 D-H 参数表、必要公式、实测误差图和普通编号参考资料。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
+报告采用普通课程作业格式：A4 单栏、11 pt 正文、简洁标题和页码，按任务说明、正运动学、逆运动学、验证结果与总结组织内容。保留 D-H 参数表、必要公式、实测误差图，以及图表和公式的编号引用；报告不设参考文献部分。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
 
 The report uses a standard single-column A4 layout with 11 pt text, page
 numbers, and sections for the task, FK, IK, results, and conclusion. It retains
 the D-H tables, essential equations, measured error plot, and numbered
-references. The LaTeX build checks for errors, unresolved references, missing
-glyphs, and overfull boxes.
+cross-references to figures, tables, and equations. The report has no
+bibliography. The LaTeX build checks for errors, unresolved cross-references,
+missing glyphs, and overfull boxes.
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s assignments/assignment_1_kinematics -p 'test_*.py' -v
@@ -111,7 +112,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\setup_windows.ps1 -Report
 - `assignments/assignment_1_kinematics/forward_kinematics.py`
 - `assignments/assignment_1_kinematics/inverse_kinematics.py`
 - `output/pdf/assignment_1_report.pdf`：三张 D-H 表、关节 signs、方法与实测比较结果 / D-H tables, signs, method and measured results.
-- `output/assignment_1_latex_source.zip`：可在本地或 Overleaf 编译的完整 LaTeX 源码 / Portable LaTeX source, bibliography, generated tables and vector figure.
+- `output/assignment_1_latex_source.zip`：可在本地或 Overleaf 编译的完整 LaTeX 源码 / Portable LaTeX source, generated tables and vector figure.
 - `output/assignment_1_submission.zip`：按题目要求整理的提交包 / Submission package with both completed scripts, the report, and measured results.
 - `assignments/assignment_1_kinematics/results/fk_results.json`
 - `assignments/assignment_1_kinematics/results/ik_results.json`

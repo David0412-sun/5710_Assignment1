@@ -39,11 +39,11 @@ First Term 2026--2027
 \begin{minipage}[c]{0.55\linewidth}
 The task is to calculate the position and orientation of the robot's left
 foot, right foot and head using forward kinematics (FK), and to find joint
-angles for target poses using inverse kinematics (IK) \cite{assignment}.
+angles for target poses using inverse kinematics (IK).
 Each leg has five joints; the head--neck chain has four.
 
 For FK, joint angles are the input and site poses are the output.
-The image shows the supplied MuJoCo model \cite{open_duck} with every
+The image shows the supplied MuJoCo model with every
 joint angle set to zero, matching the D-H diagrams and zero-pose check.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.41\linewidth}
@@ -60,7 +60,7 @@ All poses are expressed in the base frame; distances are in metres and
 angles in radians. The transform ${}^{i-1}\mathbf{T}_i$ maps coordinates
 from frame $i$ to frame $i-1$.
 
-For each D-H row, the transform is \cite{ls4}
+For each D-H row, the transform is
 \begin{equation}
 \mathbf{A}_i=\mathbf{R}_x(\alpha_{i-1})\mathbf{T}_x(a_{i-1})
              \mathbf{R}_z(\theta_i)\mathbf{T}_z(d_i).
@@ -84,7 +84,7 @@ the code multiplies the rows in order:
 \]
 The final row places the site and has no joint variable. Code rows use
 $[\alpha,a,\theta^0,d]$; the tables use $[\alpha,a,d,\theta]$.
-The model is derived analytically and evaluated numerically (LS4, pp.~55--57).
+The model is derived analytically and evaluated numerically.
 
 \clearpage
 \subsection{Left leg}
@@ -137,8 +137,8 @@ here. Dots $O_i$ mark selected D-H origins on their axes, not cylinder
 centres. The final origin is the site $S$, a measurement frame rather
 than an extra joint.
 
-D-H origins can slide along a joint axis when choosing common normals
-\cite{ls4}. They need not coincide with the centres of the original
+D-H origins can slide along a joint axis when choosing common normals.
+They need not coincide with the centres of the original
 joint cylinders. For example, the head-pitch origin is shifted along
 its axis by $19.05\,\mathrm{mm}$; this does not introduce a new joint
 or change the mechanism. The coloured boxes specify all three positive
@@ -203,15 +203,14 @@ is the rotation vector of $\Rot_t\Rot(\q)^{\mathsf T}$, calculated using
 \texttt{Rotation.as\_rotvec()}. Its length is the smallest relative
 rotation angle; Euler angles are not subtracted.
 
-Following the assignment and supplied template \cite{assignment,template}, the cost is
+Following the assignment and supplied template, the cost is
 \begin{equation}
 E(\q)=\lVert 10\mathbf{e}_p\rVert^2+\lVert\mathbf{e}_R\rVert^2.
 \label{eq:cost}
 \end{equation}
 The position scale is $10\ \mathrm{m}^{-1}$. Each trial cost uses the FK
-model without changing MuJoCo's state. This follows the error-minimization
-approach in LS5 \cite{ls5}; the particular numerical settings come from
-the assignment template, not the SLSQP example in the lecture.
+model without changing MuJoCo's state. The numerical settings follow
+the assignment template.
 
 \subsection{Solution steps}
 The solver starts from the selected chain's current joint angles and
@@ -356,10 +355,4 @@ within the specified position and orientation limits. The main details
 to handle carefully are the joint signs, the final fixed site row and
 the conversion from world coordinates to base coordinates.
 
-\begingroup
-\small
-\setlength{\parskip}{0pt}
-\bibliographystyle{unsrt}
-\bibliography{references}
-\endgroup
 \end{document}
