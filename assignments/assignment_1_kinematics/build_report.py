@@ -210,7 +210,7 @@ def dh_table(chain, parameters):
     figure_height = {"left": 125, "right": 128, "head": 118}[chain]
     lines = [
         r"\begin{figure}[H]", r"\centering",
-        rf"\includegraphics[width=\linewidth,height={figure_height}mm,keepaspectratio]{{dh_{chain}_annotated_panel.pdf}}",
+        rf"\includegraphics[width=\linewidth,height={figure_height}mm,keepaspectratio]{{dh_{chain}_handdrawn_arrows.pdf}}",
         rf"\caption{{\small {CHAIN_LABELS[chain]}: annotated assignment Fig.~{figure_number}. "
         r"$O_i$: D-H origins; $P_i$: intermediate points. Orange: $a_{i-1}$; purple: $d_i$. "
         r"Boxes give positive XYZ directions in $B$.}",
@@ -312,16 +312,12 @@ def prepare_sources(fk, ik):
     os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".tmp" / "matplotlib"))
     from assignments.assignment_1_kinematics.forward_kinematics import parameters
     from assignments.assignment_1_kinematics.plot_paper_results import generate_plot
-    from assignments.assignment_1_kinematics.draw_dh_diagrams import generate_diagrams
-    from assignments.assignment_1_kinematics.compile_dh_annotations import verify_annotations
-    from assignments.assignment_1_kinematics.prepare_report_dh_panels import verify_panels
+    from assignments.assignment_1_kinematics.add_handdrawn_dh_arrows import verify_arrow_figures
 
     GENERATED.mkdir(parents=True, exist_ok=True)
     ASSETS.mkdir(parents=True, exist_ok=True)
     verify_assignment_figures()
-    verify_annotations()
-    verify_panels()
-    generate_diagrams(ASSETS)
+    verify_arrow_figures()
     illustration_files = ("fk_robot.png", "ik_start.png", "ik_solved.png",
                           "illustration_metadata.json")
     if any(not (ASSETS / name).is_file() for name in illustration_files):

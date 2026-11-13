@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "method": "Native TikZ arrow overlays over unchanged handwritten PDF figures.",
+  "figures": [
+    {
+      "chain": "left",
+      "page_size_pt": [
+        255.0,
+        385.0
+      ],
+      "rasterized": false,
+      "source_pdf": "assets/dh_left_handdrawn.pdf",
+      "source_pdf_sha256": "e3b8e18602ba4ef12eae3c528c65547d2bdc503302cc65173b5397ed5544f7ee",
+      "overlay_tex": "annotations/handdrawn_left_arrows.tex",
+      "overlay_tex_sha256": "13bbdbd373bae04803cf40831d3b739f2bb6173ff1fce180098b4a069742753f",
+      "output_pdf": "assets/dh_left_handdrawn_arrows.pdf",
+      "output_pdf_sha256": "d96ebf903aa2be5bb4b395f290b6ef0137420bcee9316f4fcc1ff082c5e1d917",
+      "output_png": "assets/dh_left_handdrawn_arrows.png",
+      "output_png_sha256": "6fe746cba6d2ca389752c32da7ff4e72c9f23b848886ce7b30c751c44628b9ab"
+    },
+    {
+      "chain": "right",
+      "page_size_pt": [
+        216.0,
+        328.0
+      ],
+      "rasterized": false,
+      "source_pdf": "assets/dh_right_handdrawn.pdf",
+      "source_pdf_sha256": "30e626a3cf55c5c7dcf7d3e07cde0e70aa301ce1e670042b72dd2eba609d415e",
+      "overlay_tex": "annotations/handdrawn_right_arrows.tex",
+      "overlay_tex_sha256": "7681292aaac17d3a08f0d4af9c9a3db4c4ed8c6fdeea4e4d917588ef972ae26a",
+      "output_pdf": "assets/dh_right_handdrawn_arrows.pdf",
+      "output_pdf_sha256": "470cb45f13d4ac155ddfd34bc1723de416fcd38359a6f5c47dd38099d0688563",
+      "output_png": "assets/dh_right_handdrawn_arrows.png",
+      "output_png_sha256": "f378e9884d24c80bbb0eb3a07eedbe0eb82ce8a355b2e9227faf782fa9a48606"
+    },
+    {
+      "chain": "head",
+      "page_size_pt": [
+        278.0,
+        292.0
+      ],
+      "rasterized": false,
+      "source_pdf": "assets/dh_head_handdrawn.pdf",
+      "source_pdf_sha256": "6b9a01c89f92ab5242c36bad4e286e869ec40aca2cc281dd085bbfa8f99b3636",
+      "overlay_tex": "annotations/handdrawn_head_arrows.tex",
+      "overlay_tex_sha256": "67da6a27e611b417110b9c0bf1e2f50e418fc9ce305b4dbf47ecd24a0d9c361c",
+      "output_pdf": "assets/dh_head_handdrawn_arrows.pdf",
+      "output_pdf_sha256": "993907e37b96068a69144faba8bbc6270f23c9b8a1035b96139cf5e68399e54f",
+      "output_png": "assets/dh_head_handdrawn_arrows.png",
+      "output_png_sha256": "e5ee9b34a5ee1a4ee6a1f74bcc8ee4ad50c7f8eafa252af3b8c7c8896c809989"
+    }
+  ]
+}
