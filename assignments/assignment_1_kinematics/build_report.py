@@ -206,14 +206,11 @@ def dh_table(chain, parameters):
     from assignments.assignment_1_kinematics.draw_dh_diagrams import frames
 
     dh, signs, _ = parameters(chain)
-    figure_number = {"left": 2, "right": 3, "head": 4}[chain]
-    figure_height = {"left": 125, "right": 128, "head": 118}[chain]
+    figure_height = {"left": 90, "right": 128, "head": 118}[chain]
     lines = [
         r"\begin{figure}[H]", r"\centering",
         rf"\includegraphics[width=\linewidth,height={figure_height}mm,keepaspectratio]{{dh_{chain}_handdrawn_arrows.pdf}}",
-        rf"\caption{{\small {CHAIN_LABELS[chain]}: annotated assignment Fig.~{figure_number}. "
-        r"$O_i$: D-H origins; $P_i$: intermediate points. Orange: $a_{i-1}$; purple: $d_i$. "
-        r"Boxes give positive XYZ directions in $B$.}",
+        rf"\caption{{\small {CHAIN_LABELS[chain]}: D-H origins $O_i$ and intermediate points $P_i$.}}",
         rf"\label{{fig:dh-{chain}}}", r"\end{figure}",
         r"\begin{table}[H]", r"\centering", r"\small",
         r"\setlength{\tabcolsep}{4pt}",
@@ -236,12 +233,9 @@ def dh_table(chain, parameters):
         cells = (row_number, angle(alpha), distance(a), distance(d), theta)
         lines.append(" & ".join(f"${cell}$" for cell in cells) + r" \\")
     notes = {
-        "left": (r"$^*$ Fixed foot site, not a sixth joint. "
-                 r"Roll-axis height: $45.9409-46.015=-0.0741\,\mathrm{mm}$."),
-        "right": (r"$^*$ Fixed foot site. The combined lateral pitch-axis offset is "
-                  r"$17.35\,\mathrm{mm}$ on the right ($19.75\,\mathrm{mm}$ on the left)."),
-        "head": (r"The $92.021\,\mathrm{mm}$ base-to-neck offset is already in "
-                 r"$\mathbf{T}_{0,H}$; do not add it again. $^*$ Fixed head site."),
+        "left": r"$^*$ Fixed foot site.",
+        "right": r"$^*$ Fixed foot site.",
+        "head": r"$^*$ Fixed head site.",
     }
     lines.extend([
         r"\bottomrule", r"\end{tabular}", r"\par\medskip",
@@ -292,8 +286,7 @@ def result_table(label, result):
     lines = [
         r"\begin{table}[H]", r"\centering", r"\small",
         r"\setlength{\tabcolsep}{10pt}",
-        rf"\caption{{Measured {label} errors over {samples}. "
-        r"Maxima are computed independently for each chain.}",
+        rf"\caption{{Measured {label} maximum errors over {samples}.}}",
         rf"\label{{tab:{label.lower()}}}", r"\medskip", r"\begin{tabular}{lccc}", r"\toprule",
         r"Chain & \shortstack{Max. position\\(m)} & "
         r"\shortstack{Max. orientation\\(rad)} & Result \\", r"\midrule",
@@ -318,14 +311,6 @@ def prepare_sources(fk, ik):
     ASSETS.mkdir(parents=True, exist_ok=True)
     verify_assignment_figures()
     verify_arrow_figures()
-    illustration_files = ("fk_robot.png", "ik_start.png", "ik_solved.png",
-                          "illustration_metadata.json")
-    if any(not (ASSETS / name).is_file() for name in illustration_files):
-        raise FileNotFoundError("Robot illustrations are missing; run "
-                                "assignments/assignment_1_kinematics/render_robot_figures.py first")
-    illustration = read_json(ASSETS / "illustration_metadata.json")
-    verify_source_hashes({"source_hash_scheme": "sha256-lf-v1",
-                          "source_sha256": illustration["source_sha256_lf"]})
     lines = ["% Generated from validated recorded measurements; do not edit."]
     for label, result in (("FK", fk), ("IK", ik)):
         for suffix, key in (("Position", "max_position_error_m"),
@@ -416,27 +401,19 @@ def write_source_archive():
     return path
 
 
-def package_submission(pdf_path, source_archive):
-    path = OUTPUT / "assignment_1_submission.zip"
+def package_submission(pdf_path):
+    path = OUTPUT / "assignment_1_submission_group_11.zip"
     with ZipFile(path, "w", compression=ZIP_DEFLATED) as archive:
         for source in (HERE / "forward_kinematics.py", HERE / "inverse_kinematics.py",
-                       pdf_path, OUTPUT / "pdf" / "assignment_1_annotated_figures.pdf",
-                       *(RESULTS / name for name in RESULT_FILES), source_archive):
+                       pdf_path, *(RESULTS / name for name in ("fk_results.json", "ik_results.json"))):
             archive.write(source, source.name)
-        for source in source_files():
-            archive.write(source, "latex/" + source.relative_to(REPORT).as_posix())
-        archive.write(LOG_OUTPUT / "compile_manifest.json", "latex/compile_manifest.json")
         archive.writestr("README.txt", (
             "ROSE5710 Assignment 1: Kinematics\n\n"
             "Contains both completed Python files, the coursework report PDF,\n"
-            "original measured FK/IK JSON and recorded environment, and the\n"
-            "complete LaTeX sources (also supplied as a separate ZIP).\n\n"
+            "and original measured FK/IK JSON.\n\n"
             "The Python files run inside Open_Duck_Playground under\n"
-            "assignments/assignment_1_kinematics/. The runnable project,\n"
-            "dependencies and tests are available at:\n"
-            "https://github.com/David0412-sun/5710_Assignment1\n\n"
-            "Follow the repository README for the Python 3.11 environment and\n"
-            "LaTeX rebuild commands. No simulations run during report building.\n"
+            "assignments/assignment_1_kinematics/.\n\n"
+            "Use Python 3.11 with the project dependencies installed.\n"
         ))
     return path
 
@@ -512,7 +489,7 @@ def compile_report(engine, executable, environment, input_hashes):
         built_pdf = BUILD / f"{stem}.pdf"
         if not built_pdf.is_file() or built_pdf.stat().st_size == 0:
             raise RuntimeError("The TeX engine did not produce a nonempty PDF")
-        pdf = OUTPUT / "pdf" / "assignment_1_report.pdf"
+        pdf = OUTPUT / "pdf" / "assignment_1_report_group_11.pdf"
         pdf.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(built_pdf, pdf)
         manifest.update(status="passed", pdf=str(pdf.relative_to(ROOT)), pdf_sha256=sha256(pdf))
@@ -548,7 +525,7 @@ def main():
     engine, executable = find_engine(args.engine, args.tectonic)
     pdf = compile_report(engine, executable, environment, input_hashes)
     source_archive = write_source_archive()
-    package = package_submission(pdf, source_archive)
+    package = package_submission(pdf)
     for path in (pdf, source_archive, package, LOG_OUTPUT / "compile_manifest.json"):
         print(path)
 

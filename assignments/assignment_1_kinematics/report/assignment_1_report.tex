@@ -13,7 +13,8 @@
 \graphicspath{{assets/}}
 \input{generated/data.tex}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{5pt}
+\setlength{\parskip}{3pt}
+\setlength{\intextsep}{6pt}
 \renewcommand{\arraystretch}{1.15}
 \raggedbottom
 
@@ -25,86 +26,34 @@
 \newcommand{\clip}{\operatorname{clip}}
 
 \begin{document}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
 \begin{center}
 {\LARGE\bfseries Assignment 1: Kinematics}\par
-\medskip
-{\large Open Duck Mini Robot}\par
-ROSE5710: Fundamental Robotics and Systems\\
-First Term 2026--2027
+ROSE5710 \quad {\large\bfseries Group 11}\par
+\begin{tabular}{ll}
+Sun Hejia (1155262875) & Long Yifan (1155262899)\\
+Liang Zhuolun (1155262896) & Wang Kaiyuan (1155269457)
+\end{tabular}
 \end{center}
 
-\section{Task overview}
-\begin{figure}[H]
-\centering
-\begin{minipage}[c]{0.55\linewidth}
-The task is to calculate the position and orientation of the robot's left
-foot, right foot and head using forward kinematics (FK), and to find joint
-angles for target poses using inverse kinematics (IK).
-Each leg has five joints; the head--neck chain has four.
+\section{D-H parameters}
+Modified D-H convention; lengths in m and angles in rad.
+$r=\sqrt{0.019^2+0.035^2}=0.0398246155$,\quad
+$\beta=\operatorname{atan2}(19,35)=0.4973427163$.
 
-For FK, joint angles are the input and site poses are the output.
-The image shows the supplied MuJoCo model with every
-joint angle set to zero, matching the D-H diagrams and zero-pose check.
-\end{minipage}\hfill
-\begin{minipage}[c]{0.41\linewidth}
-\centering
-\includegraphics[width=\linewidth,height=72mm,keepaspectratio]{fk_robot.png}
-\end{minipage}
-\caption{FK example: zero joint angles and the resulting robot pose.}
-\label{fig:fk-robot}
-\end{figure}
-
-\section{Forward kinematics}
-\subsection{Coordinate convention and calculation}
-All poses are expressed in the base frame; distances are in metres and
-angles in radians. The transform ${}^{i-1}\mathbf{T}_i$ maps coordinates
-from frame $i$ to frame $i-1$.
-
-For each D-H row, the transform is
-\begin{equation}
-\mathbf{A}_i=\mathbf{R}_x(\alpha_{i-1})\mathbf{T}_x(a_{i-1})
-             \mathbf{R}_z(\theta_i)\mathbf{T}_z(d_i).
-\label{eq:mdh}
-\end{equation}
-Writing $c_\theta=\cos\theta_i$, $s_\theta=\sin\theta_i$,
-$c_\alpha=\cos\alpha_{i-1}$ and $s_\alpha=\sin\alpha_{i-1}$ gives
-\[
-\mathbf{A}_i=\begin{bmatrix}
-c_\theta&-s_\theta&0&a_{i-1}\\
-c_\alpha s_\theta&c_\alpha c_\theta&-s_\alpha&-d_i s_\alpha\\
-s_\alpha s_\theta&s_\alpha c_\theta&c_\alpha&d_i c_\alpha\\
-0&0&0&1
-\end{bmatrix}.
-\]
-Joint signs and zero-angle offsets are included through
-$\theta_i=s_iq_i+\theta_i^0$. Starting from the base-to-frame-zero transform,
-the code multiplies the rows in order:
-\[
-{}^B\mathbf{T}_S(\q)={}^B\mathbf{T}_0\prod_{i=1}^{n+1}\mathbf{A}_i.
-\]
-The final row places the site and has no joint variable. Code rows use
-$[\alpha,a,\theta^0,d]$; the tables use $[\alpha,a,d,\theta]$.
-The model is derived analytically and evaluated numerically.
-
-\clearpage
 \subsection{Left leg}
-The hip-yaw offset defines the shared leg constants
-\[
-r=\sqrt{0.019^2+0.035^2}=0.0398246155\ \mathrm{m},\qquad
-\beta=\operatorname{atan2}(19,35)=0.4973427163\ \mathrm{rad}.
-\]
-The initial transform has zero translation. The joint order is hip yaw,
-hip roll, hip pitch, knee and ankle:
-\[
-{}^B\mathbf{T}_{0,L}=\mathbf{R}_z(\pi/2+\beta),\qquad
-\mathbf{s}_L=[1,-1,-1,-1,-1]^{\mathsf T}.
-\]
+Joint order: hip yaw, hip roll, hip pitch, knee, ankle.
+
+${}^B\mathbf{T}_{0,L}=\mathbf{R}_z(\pi/2+\beta)$,\quad
+$\mathbf{s}_L=[1,-1,-1,-1,-1]^{\mathsf T}$.
 \input{generated/dh_left.tex}
 
 \clearpage
 \subsection{Right leg}
-The joint order and constants $r,\beta$ are the same as for the left leg.
-The base offset is mirrored, and the hip-pitch sign changes:
+Joint order: hip yaw, hip roll, hip pitch, knee, ankle.
 \[
 {}^B\mathbf{T}_{0,R}=\mathbf{R}_z(-\pi/2-\beta),\qquad
 \mathbf{s}_R=[1,-1,1,-1,-1]^{\mathsf T}.
@@ -113,246 +62,37 @@ The base offset is mirrored, and the hip-pitch sign changes:
 
 \clearpage
 \subsection{Head and neck}
-The initial transform includes the base-to-neck offset:
+Joint order: neck pitch, head pitch, head yaw, head roll.
 \[
 {}^B\mathbf{T}_{0,H}=\begin{bmatrix}
 \Identity_3&\pos_c\\\mathbf{0}^{\mathsf T}&1
 \end{bmatrix},\qquad
-\pos_c=\begin{bmatrix}0.001\\0.01915\\0.0900009\end{bmatrix}\mathrm{m}.
+\pos_c=\begin{bmatrix}0.001\\0.01915\\0.0900009\end{bmatrix}\mathrm{m},\qquad
+\mathbf{s}_H=[1,1,1,1]^{\mathsf T}.
 \]
-Joint order is neck pitch, head pitch, head yaw and head roll. The
-zero-pose axes are $-Y,-Y,+Z,-X$, matching MuJoCo, so
-$\mathbf{s}_H=[1,1,1,1]^{\mathsf T}$.
-
 \input{generated/dh_head.tex}
 
 \clearpage
-\subsection{Reading the annotated figures}
-The original assignment drawings from Figs.~2--4 are annotated with the
-D-H origins, intermediate points and translation components used by the
-tables. The original dimension labels and base/site axes are retained.
-
-The original labels $L_i$ identify the successive joints, denoted $J_i$
-here. Dots $O_i$ mark selected D-H origins on their axes, not cylinder
-centres. The final origin is the site $S$, a measurement frame rather
-than an extra joint.
-
-D-H origins can slide along a joint axis when choosing common normals.
-They need not coincide with the centres of the original
-joint cylinders. For example, the head-pitch origin is shifted along
-its axis by $19.05\,\mathrm{mm}$; this does not introduce a new joint
-or change the mechanism. The coloured boxes specify all three positive
-axis directions at each origin, expressed in the base frame.
-Every displayed frame is right-handed: $x_i\times y_i=z_i$.
-
-Blue/red/green denote positive $x/y/z$. The modified D-H joint axis
-is $z_i$; the physical positive axis is $s_i z_i$. For example, the
-left hip-pitch axis is $-Y_B$ even though the selected $z_3$ is $+Y_B$.
-Arrow lengths are illustrative; the tables give the exact axis directions.
-
-For each leg, $O_B=O_0$ denotes coincident origins, not equal frame
-orientations. For the head, $O_0=O_1$ while their axes differ, and
-the initial fixed transform connects $B$ to $O_0$. Joints $J_3$ (head yaw) and
-$J_4$ (head roll) are distinct even though their selected D-H origins
-are only $5\,\mathrm{mm}$ apart.
-
-Each row follows $O_{i-1}\xrightarrow{a_{i-1}}P_i
-\xrightarrow{d_i}O_i$. Orange and purple identify these two components.
-The handout perspective is schematic; the accompanying tables give
-the exact signed lengths and axis directions in $B$.
-
-\subsection{Zero-pose check}
-Using the dimension labels in the assignment handout (converted to metres),
-the zero-angle positions are
-\[
-\pos_L(\mathbf{0})=\begin{bmatrix}
--d_{1x}+d_5+d_{9x}\\d_{1y}+d_6-d_{9y}\\-d_4-d_7-d_8-d_{9z}
-\end{bmatrix},\qquad
-\pos_R(\mathbf{0})=\begin{bmatrix}
--d_{1x}+d_5+d_{9x}\\-d_{1y}-d_6+d_{9y}\\-d_4-d_7-d_8-d_{9z}
-\end{bmatrix}.
-\]
-For the head dimensions,
-$\pos_H(\mathbf{0})=\pos_c+[d_5,-d_3,d_2+d_4+d_6]^{\mathsf T}$.
-The resulting positions match the XML model. All three site rotations
-are the identity matrix at zero pose.
-
-\begin{table}[H]
-\centering
-\caption{Zero-pose site positions in the base frame.}
-\label{tab:zero}
-\medskip
-\begin{tabular}{lrrr}
-\toprule
-Site & $x$ (m) & $y$ (m) & $z$ (m)\\
-\midrule
-Left foot & $-0.03456$ & $0.08940$ & $-0.1935991$\\
-Right foot & $-0.03456$ & $-0.09180$ & $-0.1935991$\\
-Head & $0.00600$ & $0.00010$ & $0.2363009$\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\clearpage
-\section{Inverse kinematics}
-\subsection{Error function}
-For a target pose $(\pos_t,\Rot_t)$ and the FK pose
-$(\pos(\q),\Rot(\q))$, the position error is
-$\mathbf{e}_p=\pos_t-\pos(\q)$. The orientation error $\mathbf{e}_R$
-is the rotation vector of $\Rot_t\Rot(\q)^{\mathsf T}$, calculated using
-\texttt{Rotation.as\_rotvec()}. Its length is the smallest relative
-rotation angle; Euler angles are not subtracted.
-
-Following the assignment and supplied template, the cost is
-\begin{equation}
-E(\q)=\lVert 10\mathbf{e}_p\rVert^2+\lVert\mathbf{e}_R\rVert^2.
-\label{eq:cost}
-\end{equation}
-The position scale is $10\ \mathrm{m}^{-1}$. Each trial cost uses the FK
-model without changing MuJoCo's state. The numerical settings follow
-the assignment template.
-
-\subsection{Solution steps}
-The solver starts from the selected chain's current joint angles and
-reads its joint limits from the model. Each iteration estimates the gradient
-with a central difference, using $h=10^{-6}\ \mathrm{rad}$:
-\[
-g_i=\frac{E(\q+h\mathbf{u}_i)-E(\q-h\mathbf{u}_i)}{2h}.
-\]
-Here $\mathbf{u}_i$ selects joint $i$. The solver then takes a fixed step
-and clips each joint to its allowed range:
-\begin{equation}
-\q_{\mathrm{new}}=\clip(\q-0.1\mathbf{g},\q_{\min},\q_{\max}).
-\end{equation}
-It stops when $E<10^{-8}$, or after 5,000 iterations. Since both cost
-terms are nonnegative, the cost threshold implies FK-model errors below
-$10^{-5}\ \mathrm{m}$ and $10^{-4}\ \mathrm{rad}$. Convergence is not
-guaranteed for every possible target, so the final joint angles are written
-to MuJoCo and the actual site pose is checked independently.
-
-\subsection{Test trajectories}
-The supplied trajectories and starting angles are retained. For phase
-$\phi\in[0,1]$, the feet move forward and upward while keeping their
-starting orientations:
-\[
-\Delta\pos_L=0.020\sin^2(\pi\phi)(\mathbf{e}_x+\mathbf{e}_z),\qquad
-\Delta\pos_R=0.020\cos^2(\pi\phi)(\mathbf{e}_x+\mathbf{e}_z).
-\]
-The head follows a reachable arc about the neck anchor. With
-$\gamma=0.1\sin^2(\pi\phi)$,
-\[
-\pos_{t,H}=\pos_c+\Rot_y(-\gamma)(\pos_{H,0}-\pos_c),\qquad
-\Rot_{t,H}=\Rot_y(-\gamma)\Rot_{H,0}.
-\]
-The initial joint angles are
-\[
-\begin{aligned}
-\q_{L,0}&=[0,0,-0.4,0.8,-0.4]^{\mathsf T},&
-\q_{R,0}&=[0,0,0.4,0.8,-0.4]^{\mathsf T},\\
-\q_{H,0}&=[0.2,-0.4,0,0]^{\mathsf T}.&&
-\end{aligned}
-\]
-The base is held at $0.19\ \mathrm{m}$. Each new target starts from the
-previous solution, including at cycle boundaries. The test runs five
-cycles of 101 phases for each of the three chains.
-
-\clearpage
-\subsection{Robot pose before and after IK}
-The pictures below use the same model, starting joint angles and solver
-as the trajectory test. Both views show the target at $\phi=0.5$.
-The solved pose is obtained by following the first 51 phases
-($0,0.01,\ldots,0.5$), starting each target from the previous solution.
-
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\linewidth}
-\centering
-\includegraphics[width=\linewidth,height=105mm,keepaspectratio]{ik_start.png}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-\centering
-\includegraphics[width=\linewidth,height=105mm,keepaspectratio]{ik_solved.png}
-\end{minipage}
-\caption{IK on the actual robot model: the joint angles change to bring
-the site positions to the target markers.}
-\label{fig:ik-robot}
-\end{figure}
-
-At this phase, the left foot moves $20\ \mathrm{mm}$ forward and
-$20\ \mathrm{mm}$ upward from its starting pose. The right-foot target
-returns to its starting pose, and the head target follows a
-$0.1\ \mathrm{rad}$ arc about the neck. The base remains fixed.
-
-The visible markers show position only. The IK objective also matches
-orientation: the feet retain their initial orientation, while the head
-rotates with its target arc. Small remaining errors are checked numerically;
-the images are not used to judge the error tolerance.
-Coloured circles mark the actual sites; orange diamonds mark the
-mid-cycle target positions. Dashed orange lines trace the first half-cycle.
-
-\clearpage
-\section{Results and checks}
-\subsection{Comparison method}
-MuJoCo world-frame poses are converted to the base frame using
-${}^B\mathbf{T}_S=({}^W\mathbf{T}_B)^{-1}{}^W\mathbf{T}_S$.
-Position error is the distance between the two site origins. Orientation
-error is the angle of the relative rotation. Both errors are checked.
-
-FK uses 100 random joint configurations per chain, sampled within joint
-limits with seed zero. IK checks all 1,515 chain poses along the test
-trajectories. Environment details are saved with the results in
-\path{environment.json}. This report uses the saved measurements
-without rerunning the simulation.
-
-\subsection{Maximum errors}
-The FK limits are $10^{-6}\ \mathrm{m}$ for position and
-$10^{-5}\ \mathrm{rad}$ for orientation. The IK limits are
-$10^{-5}\ \mathrm{m}$ and $10^{-4}\ \mathrm{rad}$. Every measured error
-is finite and strictly below its limit.
-
+\section{MuJoCo comparison}
+\textbf{FK.} Each chain uses 100 random configurations within joint limits (seed 0).
+Limits: $10^{-6}\ \mathrm{m}$ position and $10^{-5}\ \mathrm{rad}$ orientation.
 \input{generated/fk_results.tex}
+
+\textbf{IK.} The supplied trajectories use five cycles of 101 phases per chain
+(1,515 poses). Limits: $10^{-5}\ \mathrm{m}$ position and
+$10^{-4}\ \mathrm{rad}$ orientation.
 \input{generated/ik_results.tex}
 
-The largest IK position error is \IKMaxPosition{}~m (about
-$0.00985\ \mathrm{mm}$), compared with the $0.01\ \mathrm{mm}$ limit.
-The largest IK orientation error is \IKMaxOrientation{}~rad.
-The very small FK errors show agreement with the XML geometry, rather
-than the accuracy of a physical robot.
-
-\subsection{Additional checks}
-All twelve regression tests pass. Six check the kinematics: zero poses,
-random poses with a moved base, the cost function, unchanged targets,
-nearby reachable targets and joint limits. They also check that solving
-one chain leaves the base and other chains unchanged. The other six
-check source-file verification and Windows report building.
-
-MuJoCo's \texttt{mj\_forward} updates the site poses without dynamic
-stepping during the comparisons. These tests therefore check kinematics,
-not contact stability, physical calibration or real-robot tracking.
-
-\clearpage
-\subsection{Error over the complete trajectory}
-Figure~\ref{fig:ik} shows every recorded IK sample. Errors are divided by
-their limits, so values below one pass. The five cycles are separated
-by vertical lines. No samples are removed or smoothed.
+IK settings: central-difference $h=10^{-6}$, step $0.1$, at most 5,000
+iterations; stopping at weighted pose cost $E<10^{-8}$.
+All three chains pass both FK and IK limits.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{ik_error_plot.pdf}
-\caption{Position and orientation errors across the five IK cycles.}
+\includegraphics[width=\linewidth,height=78mm,keepaspectratio]{ik_error_plot.pdf}
+\caption{Position and orientation errors over five IK cycles, normalized
+by their limits. Values below one pass.}
 \label{fig:ik}
 \end{figure}
-
-The leg position errors remain close to the limit because the solver
-stops once its weighted cost is small enough. It is not expected to drive
-every target to machine precision. All three chains remain below both
-acceptance limits.
-
-\section{Summary}
-The three D-H models reproduce the foot and head poses in the supplied
-MuJoCo model. The fixed-step IK solver follows the required trajectories
-within the specified position and orientation limits. The main details
-to handle carefully are the joint signs, the final fixed site row and
-the conversion from world coordinates to base coordinates.
 
 \end{document}

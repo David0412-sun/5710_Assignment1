@@ -1,11 +1,10 @@
 # LaTeX report source
 
-This is a course assignment report in a single-column A4 layout with 11 pt
-text, a simple title, and page numbers. Its sections cover the task, forward
-kinematics, inverse kinematics, verification results, and conclusion.
-The D-H tables, necessary equations, and measured error plot are retained,
-with numbered cross-references to figures, tables, and equations. The report
-has no bibliography.
+This course report presents the required answers directly in a single-column
+A4 layout, retaining the existing Times (`ptm`) text and Courier (`pcr`) code
+fonts. It contains the three chains' D-H figures, parameter and axis tables,
+base transforms and joint signs, followed by the FK/IK result tables and
+measured error plot. Explanations are kept brief. The report has no bibliography.
 
 ## Editable files
 
@@ -41,16 +40,22 @@ has no bibliography.
 - `assets/report_dh_panel_metadata.json`: panel crop/source/output records.
 - `assets/assignment_annotation_metadata.json`: annotation input/output
   hashes, numerical intermediate points, and axis/geometry checks.
-- `assets/fk_robot.png`: actual MuJoCo rendering at zero joint angles,
-  beside the FK explanation, with base axes and site labels.
-- `assets/ik_start.png`, `ik_solved.png`: initial and solved robot poses;
-  coloured dots are actual sites and orange diamonds are phase-0.5 targets.
-- `assets/illustration_metadata.json`: joint values, target/actual poses,
-  errors and source hashes for the robot illustrations.
+- `assets/fk_robot.png`: optional zero-pose MuJoCo rendering retained for
+  independent reference; not included in the report.
+- `assets/ik_start.png`, `ik_solved.png`: optional initial/solved robot renders
+  retained for independent reference; not included in the report.
+- `assets/illustration_metadata.json`: saved poses, errors and source hashes
+  for those optional standalone renders. The report builder does not require
+  or validate these renders.
 
-No personal name or student number was supplied. The title identifies the
-course and assignment. Add the required name/student-number details in the
-title area before submission if the course requires them.
+The title identifies the course, assignment and **Group11**:
+
+| Name | Student ID |
+| --- | --- |
+| Sun Hejia | 1155262875 |
+| Long Yifan | 1155262899 |
+| Liang Zhuolun | 1155262896 |
+| Wang Kaiyuan | 1155269457 |
 
 ## Rebuild within the repository
 
@@ -83,18 +88,17 @@ engine. It does not rerun or alter the simulation measurements.
 The builder regenerates the analytical D-H diagrams and checks their axes,
 origins and site poses against MuJoCo. Original vector crops are reused after
 checking their hashes and the original PDF hash when that PDF is available.
-Robot renders are reused after checking their source hashes.
 To recreate the original crops (requires pdfLaTeX and pdfinfo on PATH):
 
 ```powershell
 .\.venv\Scripts\python.exe assignments/assignment_1_kinematics/extract_assignment_figures.py
 ```
 
-To regenerate those images explicitly from the repository root:
+Optional: regenerate the standalone robot renders from the repository root.
+These renders are independent reference material and are not used by the report:
 
 ```powershell
 .\.venv\Scripts\python.exe assignments/assignment_1_kinematics/render_robot_figures.py
-powershell -NoProfile -ExecutionPolicy Bypass -File .\run_assignment.ps1 report
 ```
 
 After editing an original-figure overlay, rebuild the annotated sheets first:
@@ -111,13 +115,12 @@ source handout is never modified. Directly compiling `annotated_figures.tex`
 inside the source package also produces the standalone guide from its
 included annotated PDFs.
 
-The rendering script follows the first 51 phases of the original IK
+The optional rendering script follows the first 51 phases of the original IK
 trajectory (0 through 0.5) for illustration only; it does not replace the
 full five-cycle experiment. `--reuse-state` checks the saved source hashes
-and redraws the saved poses without solving again. These scripts render
-offscreen and require a working MuJoCo OpenGL context. All images are
-already included in the portable source ZIP, so compiling that ZIP does
-not require MuJoCo or OpenGL.
+and redraws the saved poses without solving again. This standalone renderer
+works offscreen and requires a working MuJoCo OpenGL context. Compiling the
+report from the prepared source ZIP does not require MuJoCo or OpenGL.
 
 You can select an engine explicitly:
 
@@ -156,10 +159,10 @@ The repository builder rejects LaTeX errors, unresolved figure/table/equation
 cross-references, missing glyphs and overfull boxes in the final compile log.
 Visual inspection should still be used to confirm the page layout.
 
-- `output/pdf/assignment_1_report.pdf`: the compiled course report.
+- `output/pdf/assignment_1_report_group_11.pdf`: the compiled course report.
 - `output/pdf/assignment_1_annotated_figures.pdf`: annotated original figures.
 - `output/assignment_1_latex_source.zip`: portable LaTeX source project.
-- `output/assignment_1_submission.zip`: updated submission files.
+- `output/assignment_1_submission_group_11.zip`: updated submission files.
 - `output/latex/`: retained compilation log, engine output and build manifest.
 
 Scientific tables use metres and radians. The figure normalizes errors by

@@ -86,16 +86,23 @@ Use `--cycles`, `--samples` and `--parts` for smaller diagnostic runs. Keep the 
 
 ## 测试与报告 / Tests and report
 
-报告包含与三张 D-H 表并排的坐标系图，以及真实 MuJoCo 模型的 FK 零位图、IK 初始/求解后对比图。D-H 图按当前参数计算，机器人插图取原始轨迹前半周期的实际求解状态；图像生成和复现方式见 [报告说明](assignments/assignment_1_kinematics/report/README.md)。
+报告直接给出三条链的 D-H 坐标图、参数及轴向表、基座变换和 signs，以及 FK/IK 结果表和实测误差曲线。原有机器人渲染素材保留为独立参考，不属于报告内容；图像生成和复现方式见 [报告说明](assignments/assignment_1_kinematics/report/README.md)。
 
-报告采用普通课程作业格式：A4 单栏、11 pt 正文、简洁标题和页码，按任务说明、正运动学、逆运动学、验证结果与总结组织内容。保留 D-H 参数表、必要公式、实测误差图，以及图表和公式的编号引用；报告不设参考文献部分。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
+报告采用精简答案式：A4 单栏，保留原有 Times（`ptm`）正文字体和 Courier（`pcr`）代码字体，以必要答案、表格和图像为主，说明保持简短，不设参考文献部分。正文源码位于 `assignments/assignment_1_kinematics/report/assignment_1_report.tex`，可直接编辑。
 
-The report uses a standard single-column A4 layout with 11 pt text, page
-numbers, and sections for the task, FK, IK, results, and conclusion. It retains
-the D-H tables, essential equations, measured error plot, and numbered
-cross-references to figures, tables, and equations. The report has no
-bibliography. The LaTeX build checks for errors, unresolved cross-references,
-missing glyphs, and overfull boxes.
+The report presents the required answers, tables and figures directly in a
+single-column A4 layout, retaining the Times (`ptm`) and Courier (`pcr`) fonts.
+It keeps explanations brief and has no bibliography. The LaTeX build checks
+for errors, unresolved cross-references, missing glyphs, and overfull boxes.
+
+报告小组 / **Group11**:
+
+| 姓名 / Name | 学号 / Student ID |
+| --- | --- |
+| Sun Hejia | 1155262875 |
+| Long Yifan | 1155262899 |
+| Liang Zhuolun | 1155262896 |
+| Wang Kaiyuan | 1155269457 |
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s assignments/assignment_1_kinematics -p 'test_*.py' -v
@@ -111,9 +118,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\setup_windows.ps1 -Report
 
 - `assignments/assignment_1_kinematics/forward_kinematics.py`
 - `assignments/assignment_1_kinematics/inverse_kinematics.py`
-- `output/pdf/assignment_1_report.pdf`：三张 D-H 表、关节 signs、方法与实测比较结果 / D-H tables, signs, method and measured results.
+- `output/pdf/assignment_1_report_group_11.pdf`：三张 D-H 表、关节 signs、方法与实测比较结果 / D-H tables, signs, method and measured results.
 - `output/assignment_1_latex_source.zip`：可在本地或 Overleaf 编译的完整 LaTeX 源码 / Portable LaTeX source, generated tables and vector figure.
-- `output/assignment_1_submission.zip`：按题目要求整理的提交包 / Submission package with both completed scripts, the report, and measured results.
+- `output/assignment_1_submission_group_11.zip`：按题目要求整理的提交包 / Submission package with both completed scripts, the report, and measured results.
 - `assignments/assignment_1_kinematics/results/fk_results.json`
 - `assignments/assignment_1_kinematics/results/ik_results.json`
 
